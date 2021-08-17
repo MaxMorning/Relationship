@@ -1,0 +1,89 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="SwitchButton" TargetType="Button">
+        <Setter Property="Foreground" Value="#333333"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="#DDDDDD"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Viewbox Stretch="Uniform">
+                        <Grid>
+                            <Path
+                                x:Name="PathBackground"
+                                Opacity="{TemplateBinding MinWidth}">
+                                <Path.Fill>
+                                    <SolidColorBrush x:Name="PathFill" Color="#DDDDDD"/>
+                                </Path.Fill>
+                                <Path.Data>
+                                    <PathGeometry Figures="
+                                              M15 0 C0 0, 0 0, 0 15
+                                              L0 45
+                                              C0 60, 0 60, 15 60
+                                              L165 60
+                                              C180 60, 180 60, 180 45
+                                              L180 15
+                                              C180 0, 180 0, 165, 0
+                                              Z"/>
+                                </Path.Data>
+                            </Path>
+                            <Label
+                                Content="{TemplateBinding Content}"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontFamily="微软雅黑"
+                                FontWeight="Normal"
+                                Foreground="#333333"
+                                Opacity="1">
+                                
+                            </Label>
+
+                        </Grid>
+                    </Viewbox>
+
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="PathFill"
+                                        Storyboard.TargetProperty="(SolidColorBrush.Color)"
+                                        From="#DDDDDD"
+                                        To="#CCCCCC"
+                                        Duration="0:0:0.3">
+                                        <ColorAnimation.EasingFunction>
+                                            <ExponentialEase EasingMode="EaseOut"/>
+                                        </ColorAnimation.EasingFunction>
+                                    </ColorAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                        Storyboard.TargetName="PathFill"
+                                        Storyboard.TargetProperty="(SolidColorBrush.Color)"
+                                        From="#CCCCCC"
+                                        To="#DDDDDD"
+                                        Duration="0:0:0.3">
+                                        <ColorAnimation.EasingFunction>
+                                            <ExponentialEase EasingMode="EaseOut"/>
+                                        </ColorAnimation.EasingFunction>
+                                    </ColorAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="PathBackground" Property="Fill" Value="#BBBBBB"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
