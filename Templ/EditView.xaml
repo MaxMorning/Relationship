@@ -7,7 +7,6 @@
         <Setter Property="Foreground" Value="DimGray"/>
         <Setter Property="CaretBrush" Value="Gray"/>
         <Setter Property="Text" Value="6"/>
-        <Setter Property="InputMethod.IsInputMethodEnabled" Value="False"/>
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">

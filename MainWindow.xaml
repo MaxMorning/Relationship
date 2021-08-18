@@ -82,69 +82,94 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
                 <Button
+                    Name="btSwitchStart"
                     Grid.Row="1"
                     Style="{StaticResource SwitchButton}"
                     Content="开 始"
                     FontSize="26"
                     Margin="5"
-                    MinWidth="1">
+                    MinWidth="0"
+                    Click="SwitchButton_Click">
 
                 </Button>
 
                 <Button
+                    Name="btSwitchInfo"
                     Grid.Row="2"
                     Style="{StaticResource SwitchButton}"
                     Content="基本信息"
                     FontSize="26"
                     Margin="5"
-                    MinWidth="1">
+                    MinWidth="0"
+                    Click="SwitchButton_Click">
 
                 </Button>
 
                 <Button
+                    Name="btSwitchSocial"
                     Grid.Row="3"
                     Style="{StaticResource SwitchButton}"
                     Content="社交关系"
                     FontSize="26"
                     Margin="5"
-                    MinWidth="1">
+                    MinWidth="0"
+                    Click="SwitchButton_Click">
 
                 </Button>
 
                 <Button
+                    Name="btSwitchVisualize"
                     Grid.Row="4"
                     Style="{StaticResource SwitchButton}"
                     Content="可视化"
                     FontSize="26"
                     Margin="5"
-                    MinWidth="1">
+                    MinWidth="0"
+                    Click="SwitchButton_Click">
 
                 </Button>
 
                 <Button
+                    Name="btSwitchRelation"
                     Grid.Row="5"
                     Style="{StaticResource SwitchButton}"
                     Content="关联度"
                     FontSize="26"
                     Margin="5"
-                    MinWidth="1">
+                    MinWidth="0"
+                    Click="SwitchButton_Click">
 
                 </Button>
 
                 <Button
+                    Name="btSwitchGroup"
                     Grid.Row="6"
                     Style="{StaticResource SwitchButton}"
                     Content="群 组"
                     FontSize="26"
                     Margin="5"
-                    MinWidth="1">
+                    MinWidth="0"
+                    Click="SwitchButton_Click">
 
                 </Button>
+
+                <Label
+                    Name="lbSwitchRole"
+                        Grid.Row="8"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="18"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#999999"
+                    Margin="0 0 0 10"
+                        Content="">
+                </Label>
             </Grid>
 
             <Canvas
@@ -152,6 +177,7 @@
                 Background="#DDDDDD">
 
                 <Path
+                    Name="pathSwitchMask"
                     Canvas.Top="62.5"
                     Fill="#555555">
                     <Path.Data>
@@ -175,7 +201,8 @@
 
                 <!--Begin Panel-->
                 <Grid
-                    Canvas.Top="-3400"
+                    Name="gridBeginPanel"
+                    Canvas.Top="0"
                     Margin="50 70">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="70"/>
@@ -224,6 +251,7 @@
                     </Label>
 
                     <Button
+                        Name="btStartLoad"
                         Grid.Row="2"
                         Grid.Column="0"
                         Style="{StaticResource SwitchButton}"
@@ -234,21 +262,10 @@
 
                     </Button>
 
-                    <Button
-                        Grid.Row="2"
-                        Grid.Column="3"
-                        Style="{StaticResource SwitchButton}"
-                        Content="跳过"
-                        FontSize="26"
-                        Margin="5"
-                        MinWidth="1">
-
-                    </Button>
-
                     <Label
                         Grid.Row="2"
                         Grid.Column="1"
-                        Grid.ColumnSpan="2"
+                        Grid.ColumnSpan="3"
                         HorizontalContentAlignment="Left"
                         VerticalContentAlignment="Center"
                         FontSize="18"
@@ -289,6 +306,7 @@
                     </Label>
 
                     <TextBox
+                        Name="tbStartIdxName"
                         Grid.Row="5"
                         Grid.Column="1"
                         Style="{StaticResource EditView}"
@@ -305,16 +323,19 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Button
+                            Name="btStartConfirmIdx"
                             Grid.Column="0"
                             Style="{StaticResource SwitchButton}"
                             Content="确认编号"
                             FontSize="26"
                             Margin="5"
-                            MinWidth="1">
+                            MinWidth="1"
+                            Click="btStartConfirmIdx_Click">
 
                         </Button>
 
                         <Button
+                            Name="btStartSearchName"
                             Grid.Column="1"
                             Style="{StaticResource SwitchButton}"
                             Content="搜索姓名"
@@ -326,6 +347,7 @@
                     </Grid>
 
                     <Button
+                        Name="btStartCreateNew"
                         Grid.Row="5"
                         Grid.Column="3"
                         Style="{StaticResource SwitchButton}"
@@ -333,7 +355,8 @@
                         FontSize="26"
                         Margin="5"
                         MinWidth="1"
-                        ToolTip="以文本框内容为姓名新建一个人">
+                        ToolTip="以文本框内容为姓名新建一个人"
+                        Click="btStartCreateNew_Click">
 
                     </Button>
 
@@ -436,16 +459,14 @@
 
                         <StackPanel
                             Orientation="Vertical">
-                            <widget:UserInfoGrid>
-                                
-                            </widget:UserInfoGrid>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
                 
                 <!--Basic Info Panel-->
                 <Grid
-                    Canvas.Top="-2720"
+                    Name="gridInfoPanel"
+                    Canvas.Top="680"
                     Margin="50 70"
                     Width="800"
                     Height="540">
@@ -454,7 +475,7 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
@@ -494,6 +515,7 @@
                     </Label>
 
                     <Label
+                        Name="lbInfoIndex"
                         Grid.Row="1"
                         Grid.Column="2"
                         Grid.ColumnSpan="2"
@@ -522,6 +544,7 @@
                     </Label>
                     
                     <TextBox
+                        Name="tbInfoName"
                         Grid.Row="2"
                         Grid.Column="1"
                         Margin="20 0"
@@ -546,6 +569,7 @@
                     </Label>
 
                     <TextBox
+                        Name="tbInfoGender"
                         Grid.Row="2"
                         Grid.Column="3"
                         Margin="20 0"
@@ -570,6 +594,7 @@
                     </Label>
 
                     <TextBox
+                        Name="tbInfoAge"
                         Grid.Row="3"
                         Grid.Column="1"
                         Margin="20 0"
@@ -578,6 +603,34 @@
                         Text="20">
 
                     </TextBox>
+
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="20"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#555555"
+                        Margin="0 0"
+                        Content="状态">
+
+                    </Label>
+
+                    <Button
+                        Name="btInfoEnable"
+                        Grid.Row="3"
+                        Grid.Column="3"
+                        Height="40"
+                        Style="{StaticResource SwitchButton}"
+                        MinWidth="1"
+                        Content="有效"
+                        Margin="0 0 135 0"
+                        FontSize="28"
+                        Click="btInfoEnable_Click">
+
+                    </Button>
 
                     <Grid
                         Grid.Row="5"
@@ -701,11 +754,27 @@
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
+
+                    <Button
+                        Name="btInfoSave"
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Height="32"
+                        Style="{StaticResource SwitchButton}"
+                        MinWidth="1"
+                        Content="保存"
+                        Margin="0 10 0 0"
+                        FontSize="28"
+                        Click="btInfoSave_Click">
+
+                    </Button>
                 </Grid>
                 
-                <!--Edit Relationship Panel-->
+                <!--Edit Social Relationship Panel-->
                 <Grid
-                    Canvas.Top="-2040"
+                    Name="gridSocialPanel"
+                    Canvas.Top="1360"
                     Margin="50 70"
                     Width="800"
                     Height="540">
@@ -735,6 +804,7 @@
                         Content="社交关系">
 
                     </Label>
+
 
                     <Label
                         Grid.Row="1"
@@ -1063,7 +1133,8 @@
                 
                 <!--Visualization Panel-->
                 <Grid
-                    Canvas.Top="-1360"
+                    Name="gridVisualizePanel"
+                    Canvas.Top="2040"
                     Width="880"
                     Height="640">
                     <Grid.RowDefinitions>
@@ -1267,7 +1338,8 @@
                 
                 <!--Relation Rate Panel-->
                 <Grid
-                    Canvas.Top="-680"
+                    Name="gridRelationPanel"
+                    Canvas.Top="2720"
                     Margin="50 70"
                     Width="820"
                     Height="540">
@@ -1484,7 +1556,8 @@
                 
                 <!--Group Panel-->
                 <Grid
-                    Canvas.Top="0"
+                    Name="gridGroupPanel"
+                    Canvas.Top="3400"
                     Margin="50 70"
                     Width="800"
                     Height="540">
@@ -1496,7 +1569,8 @@
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label
@@ -1532,14 +1606,23 @@
                         Grid.Column="1"
                         Style="{StaticResource EditView}"
                         Text="746"
-                        Margin="0 0 60 0">
+                        Margin="0 0 0 0">
 
                     </TextBox>
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Style="{StaticResource SwitchButton}"
+                        MinWidth="1"
+                        Content="搜索"
+                        Margin="0 0"
+                        FontSize="28">
 
+                    </Button>
                     <Grid
                         Grid.Row="3"
                         Grid.Column="0"
-                        Grid.ColumnSpan="3">
+                        Grid.ColumnSpan="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="250"/>
@@ -1616,10 +1699,10 @@
                             Margin="0 10 0 0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1.2*"/>
                                 <ColumnDefinition Width="0.7*"/>
                                 <ColumnDefinition Width="0.6*"/>
                                 <ColumnDefinition Width="1.5*"/>
-                                <ColumnDefinition Width="1.7*"/>
                                 <ColumnDefinition Width="1.7*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
@@ -1644,10 +1727,10 @@
                             FontFamily="微软雅黑"
                             FontWeight="Normal"
                             Foreground="#555555"
-                            Content="性别">
+                            Content="姓名">
 
                             </Label>
-
+                            
                             <Label
                             Grid.Column="2"
                             HorizontalContentAlignment="Center"
@@ -1656,7 +1739,7 @@
                             FontFamily="微软雅黑"
                             FontWeight="Normal"
                             Foreground="#555555"
-                            Content="年龄">
+                            Content="性别">
 
                             </Label>
 
@@ -1668,7 +1751,7 @@
                             FontFamily="微软雅黑"
                             FontWeight="Normal"
                             Foreground="#555555"
-                            Content="现居地">
+                            Content="年龄">
 
                             </Label>
 
@@ -1680,7 +1763,7 @@
                             FontFamily="微软雅黑"
                             FontWeight="Normal"
                             Foreground="#555555"
-                            Content="工作单位">
+                            Content="现居地">
 
                             </Label>
 
@@ -1692,7 +1775,7 @@
                             FontFamily="微软雅黑"
                             FontWeight="Normal"
                             Foreground="#555555"
-                            Content="就读/毕业院校">
+                            Content="工作单位 / 就读院校">
 
                             </Label>
 
@@ -1719,9 +1802,9 @@
                             VerticalScrollBarVisibility="Disabled">
                             <StackPanel
                                 Orientation="Vertical">
-                                <widget:UserInfoGrid>
+                                <widget:UserInfoDetailWithName>
                                     
-                                </widget:UserInfoGrid>
+                                </widget:UserInfoDetailWithName>
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>

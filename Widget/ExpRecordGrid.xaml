@@ -33,7 +33,7 @@
         FontWeight="Normal"
         Foreground="#555555"
         Margin="0 0"
-        Content="浙江省绍兴市">
+        Content="浙江省-绍兴市">
 
     </Label>
 </Grid>

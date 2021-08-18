@@ -75,6 +75,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AlertDialogWindow.xaml.cs">
+      <DependentUpon>AlertDialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Class\EduGroup.cs" />
+    <Compile Include="Class\Experience.cs" />
+    <Compile Include="Class\Group.cs" />
+    <Compile Include="Class\LiveGroup.cs" />
+    <Compile Include="Class\Person.cs" />
+    <Compile Include="Class\SocialGroup.cs" />
+    <Compile Include="Class\WorkGroup.cs" />
+    <Compile Include="NonLinearEasingFunction.cs" />
     <Compile Include="Widget\ExpRecordGrid.xaml.cs">
       <DependentUpon>ExpRecordGrid.xaml</DependentUpon>
     </Compile>
@@ -84,9 +95,16 @@
     <Compile Include="Widget\GroupRecordGrid.xaml.cs">
       <DependentUpon>GroupRecordGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Widget\UserInfoGrid.xaml.cs">
-      <DependentUpon>UserInfoGrid.xaml</DependentUpon>
+    <Compile Include="Widget\UserInfoDetailWithNameGrid.xaml.cs">
+      <DependentUpon>UserInfoDetailWithNameGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Widget\UserInfoWithoutNameGrid.xaml.cs">
+      <DependentUpon>UserInfoWithoutNameGrid.xaml</DependentUpon>
+    </Compile>
+    <Page Include="AlertDialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -135,7 +153,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Widget\UserInfoGrid.xaml">
+    <Page Include="Widget\UserInfoDetailWithNameGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Widget\UserInfoWithoutNameGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

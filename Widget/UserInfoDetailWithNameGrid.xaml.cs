@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Relationship.Widget
 {
     /// <summary>
-    /// UserInfoGrid.xaml 的交互逻辑
+    /// UserInfoDetailWithName.xaml 的交互逻辑
     /// </summary>
-    public partial class UserInfoGrid : Grid
+    public partial class UserInfoDetailWithName : Grid
     {
-        public UserInfoGrid()
+        public UserInfoDetailWithName()
         {
             InitializeComponent();
         }
