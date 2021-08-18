@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Relationship"
+        xmlns:widget="clr-namespace:Relationship.Widget"
         mc:Ignorable="d"
         Title="人际关系" 
         Height="700"
@@ -108,7 +109,7 @@
                 <Button
                     Grid.Row="3"
                     Style="{StaticResource SwitchButton}"
-                    Content="修 改"
+                    Content="社交关系"
                     FontSize="26"
                     Margin="5"
                     MinWidth="1">
@@ -174,6 +175,7 @@
 
                 <!--Begin Panel-->
                 <Grid
+                    Canvas.Top="-3400"
                     Margin="50 70">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="70"/>
@@ -182,6 +184,9 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="180"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
@@ -268,6 +273,1458 @@
                         Content="Step 1 : 选择某个人 或 新建一个人">
 
                     </Label>
+
+                    <Label
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        HorizontalContentAlignment="Right"
+                        VerticalContentAlignment="Center"
+                        FontSize="18"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#555555"
+                        Margin="20 0"
+                        Content="编号 / 姓名">
+
+                    </Label>
+
+                    <TextBox
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Style="{StaticResource EditView}"
+                        Width="200"
+                        Text="张伟">
+                        
+                    </TextBox>
+
+                    <Grid
+                        Grid.Row="5"
+                        Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Grid.Column="0"
+                            Style="{StaticResource SwitchButton}"
+                            Content="确认编号"
+                            FontSize="26"
+                            Margin="5"
+                            MinWidth="1">
+
+                        </Button>
+
+                        <Button
+                            Grid.Column="1"
+                            Style="{StaticResource SwitchButton}"
+                            Content="搜索姓名"
+                            FontSize="26"
+                            Margin="5"
+                            MinWidth="1">
+
+                        </Button>
+                    </Grid>
+
+                    <Button
+                        Grid.Row="5"
+                        Grid.Column="3"
+                        Style="{StaticResource SwitchButton}"
+                        Content="新建"
+                        FontSize="26"
+                        Margin="5"
+                        MinWidth="1"
+                        ToolTip="以文本框内容为姓名新建一个人">
+
+                    </Button>
+
+                    <Grid
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Margin="0 0 15 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="0.7*"/>
+                            <ColumnDefinition Width="0.6*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="1.7*"/>
+                            <ColumnDefinition Width="1.7*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="编号">
+
+                        </Label>
+
+                        <Label
+                            Grid.Column="1"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="性别">
+
+                        </Label>
+
+                        <Label
+                            Grid.Column="2"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="年龄">
+
+                        </Label>
+
+                        <Label
+                            Grid.Column="3"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="现居地">
+
+                        </Label>
+
+                        <Label
+                            Grid.Column="4"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="工作单位">
+
+                        </Label>
+
+                        <Label
+                            Grid.Column="5"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="就读/毕业院校">
+
+                        </Label>
+                    </Grid>
+                    
+                    <ScrollViewer
+                        Grid.Row="8"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Margin="0 0 0 0"
+                        Style="{StaticResource CustomScrollView}"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Disabled">
+
+                        <StackPanel
+                            Orientation="Vertical">
+                            <widget:UserInfoGrid>
+                                
+                            </widget:UserInfoGrid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+                
+                <!--Basic Info Panel-->
+                <Grid
+                    Canvas.Top="-2720"
+                    Margin="50 70"
+                    Width="800"
+                    Height="540">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="30"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#333333"
+                        Content="基本信息">
+
+                    </Label>
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="24"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#555555"
+                        Content="信息">
+
+                    </Label>
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Grid.ColumnSpan="2"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="24"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#555555"
+                        Content="#12138">
+
+                    </Label>
+
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="20"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#555555"
+                        Margin="0 0"
+                        Content="姓名">
+
+                    </Label>
+                    
+                    <TextBox
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="20 0"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource EditView}"
+                        Text="张伟">
+
+                    </TextBox>
+
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="20"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#555555"
+                        Margin="0 0"
+                        Content="性别">
+
+                    </Label>
+
+                    <TextBox
+                        Grid.Row="2"
+                        Grid.Column="3"
+                        Margin="20 0"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource EditView}"
+                        Text="男">
+
+                    </TextBox>
+
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="20"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#555555"
+                        Margin="0 0"
+                        Content="年龄">
+
+                    </Label>
+
+                    <TextBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="20 0"
+                        HorizontalAlignment="Left"
+                        Style="{StaticResource EditView}"
+                        Text="20">
+
+                    </TextBox>
+
+                    <Grid
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="24"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="居住经历">
+
+                        </Label>
+
+                        <Label
+                            Grid.Column="1"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="24"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="教育经历">
+
+                        </Label>
+
+                        <Label
+                            Grid.Column="2"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="24"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="工作经历">
+
+                        </Label>
+                    </Grid>
+
+                    <Grid
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ScrollViewer
+                            Grid.Column="0"
+                            Style="{StaticResource CustomScrollView}"
+                            VerticalScrollBarVisibility="Auto"
+                            HorizontalScrollBarVisibility="Auto">
+
+                            <StackPanel
+                                Orientation="Vertical">
+                                <Button
+                                    Height="30"
+                                    Style="{StaticResource SwitchButton}"
+                                    MinWidth="1"
+                                    Content="新建"
+                                    FontSize="28">
+                                    
+                                </Button>
+                                <widget:ExpRecordGrid>
+                                    
+                                </widget:ExpRecordGrid>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <ScrollViewer
+                            Grid.Column="1"
+                            Style="{StaticResource CustomScrollView}"
+                            VerticalScrollBarVisibility="Auto"
+                            HorizontalScrollBarVisibility="Auto">
+
+                            <StackPanel
+                                Orientation="Vertical">
+                                <Button
+                                    Height="30"
+                                    Style="{StaticResource SwitchButton}"
+                                    MinWidth="1"
+                                    Content="新建"
+                                    FontSize="28">
+
+                                </Button>
+                                <widget:ExpRecordGrid>
+
+                                </widget:ExpRecordGrid>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <ScrollViewer
+                            Grid.Column="2"
+                            Style="{StaticResource CustomScrollView}"
+                            VerticalScrollBarVisibility="Auto"
+                            HorizontalScrollBarVisibility="Auto">
+
+                            <StackPanel
+                                Orientation="Vertical">
+                                <Button
+                                    Height="30"
+                                    Style="{StaticResource SwitchButton}"
+                                    MinWidth="1"
+                                    Content="新建"
+                                    FontSize="28">
+
+                                </Button>
+                                <widget:ExpRecordGrid>
+
+                                </widget:ExpRecordGrid>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Grid>
+                
+                <!--Edit Relationship Panel-->
+                <Grid
+                    Canvas.Top="-2040"
+                    Margin="50 70"
+                    Width="800"
+                    Height="540">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="30"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#333333"
+                        Content="社交关系">
+
+                    </Label>
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="24"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#555555"
+                        Content="好友">
+
+                    </Label>
+
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Height="40"
+                        Style="{StaticResource SwitchButton}"
+                        MinWidth="1"
+                        Content="添加好友"
+                        FontSize="28">
+
+                    </Button>
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="24"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#555555"
+                        Content="群组"
+                        Margin="5 0 0 0">
+
+                    </Label>
+
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Height="40"
+                        Style="{StaticResource SwitchButton}"
+                        MinWidth="1"
+                        Content="添加群组"
+                        FontSize="28">
+
+                    </Button>
+
+                    <Grid
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="10 0"
+                         Height="40">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="75"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                                    Grid.Column="0"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="编号">
+
+                        </Label>
+
+                        <Label
+                                    Grid.Column="1"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="姓名">
+
+                        </Label>
+
+                        <Label
+                                    Grid.Column="2"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="性别">
+
+                        </Label>
+
+                        <Label
+                                    Grid.Column="3"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="年龄">
+
+                        </Label>
+                    </Grid>
+                    
+                    <ScrollViewer
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="10"
+                        Style="{StaticResource CustomScrollView}">
+
+                        <StackPanel
+                            Orientation="Vertical">
+                            <!--Friend Widget-->
+                            <Grid
+                                Height="40">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="75"/>
+                                    <ColumnDefinition Width="75"/>
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="12139">
+
+                                </Label>
+
+                                <Label
+                                    Grid.Column="1"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="张大伟">
+
+                                </Label>
+
+                                <Label
+                                    Grid.Column="2"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="女">
+
+                                </Label>
+
+                                <Label
+                                    Grid.Column="3"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="20">
+
+                                </Label>
+                            </Grid>
+
+                            <widget:FriendRecordGrid>
+                                
+                            </widget:FriendRecordGrid>
+                        </StackPanel>
+                        
+                    </ScrollViewer>
+
+                    <Path
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Grid.RowSpan="3"
+                        Fill="#CCCCCC"
+                        Margin="6 0">
+                        <Path.Data>
+                            <PathGeometry Figures="
+                                          M0 4 C0 0, 0 0, 4 0
+                                          C8 0, 8 0, 8 4
+                                          L8 466
+                                          C8 470, 8 470, 4 470
+                                          C0 470, 0 470, 0 466
+                                          Z"/>
+                        </Path.Data>
+                    </Path>
+                    
+                    <Grid
+                        Grid.Row="2"
+                        Grid.Column="3"
+                        Grid.ColumnSpan="2"
+                        Margin="10 0"
+                         Height="40">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                                    Grid.Column="0"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="编号">
+
+                        </Label>
+
+                        <Label
+                                    Grid.Column="1"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="群组名">
+
+                        </Label>
+
+                        <Label
+                                    Grid.Column="2"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="规模">
+
+                        </Label>
+                    </Grid>
+
+                    <ScrollViewer
+                        Grid.Row="3"
+                        Grid.Column="3"
+                        Grid.ColumnSpan="2"
+                        Margin="10"
+                        Style="{StaticResource CustomScrollView}">
+
+                        <StackPanel
+                            Orientation="Vertical">
+                            <!--Friend Widget-->
+                            <Grid
+                                Height="40">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="1213888">
+
+                                </Label>
+
+                                <Label
+                                    Grid.Column="1"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="张伟工作组">
+
+                                </Label>
+
+                                <Label
+                                    Grid.Column="2"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="1388">
+
+                                </Label>
+                            </Grid>
+
+                            <widget:GroupRecordGrid>
+                                
+                            </widget:GroupRecordGrid>
+                        </StackPanel>
+
+                    </ScrollViewer>
+                </Grid>
+                
+                <!--Visualization Panel-->
+                <Grid
+                    Canvas.Top="-1360"
+                    Width="880"
+                    Height="640">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="300"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="350"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="4"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="30"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#333333"
+                        Content="可视化">
+
+                    </Label>
+
+                    <Canvas
+                        Name="VisualizeDrawCanvas"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.RowSpan="4"
+                        Grid.ColumnSpan="3">
+                        
+                    </Canvas>
+
+                    <Thumb
+                        Name="VisualizeThumb"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.RowSpan="4"
+                        Grid.ColumnSpan="3"
+                        Background="White"
+                        Opacity="0">
+                        
+                    </Thumb>
+                    
+                    <Path
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Fill="#DDDDDD"
+                        Opacity="0.5">
+                        <Path.Data>
+                            <PathGeometry Figures="
+                                          M0 30 C0 0, 0 0, 30 0
+                                          L320 0
+                                          C350 0, 350 0, 350 30
+                                          L350 270
+                                          C350 300, 350 300, 320 300
+                                          L30 300
+                                          C0 300, 0 300, 0 270
+                                          Z"/>
+                        </Path.Data>
+                    </Path>
+
+                    <Grid
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Margin="15 15 15 10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="20"
+                            FontFamily="微软雅黑"
+                            FontWeight="Bold"
+                            Foreground="#333333"
+                            Content="可视化设置">
+
+                        </Label>
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#333333"
+                            Margin="10 0"
+                            Content="展示层级">
+
+                        </Label>
+
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Style="{StaticResource EditView}"
+                            Width="190">
+                            
+                        </TextBox>
+
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#333333"
+                            Margin="10 0"
+                            Content="引力系数">
+
+                        </Label>
+
+                        <TextBox
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Style="{StaticResource EditView}"
+                            Width="190"
+                            Text="0.05">
+
+                        </TextBox>
+
+                        <Label
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#333333"
+                            Margin="10 0"
+                            Content="斥力系数">
+
+                        </Label>
+
+                        <TextBox
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Style="{StaticResource EditView}"
+                            Width="190"
+                            Text="0.10">
+
+                        </TextBox>
+
+                        <Label
+                            Grid.Row="4"
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Right"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#333333"
+                            Margin="10 0"
+                            Content="迭代次数">
+
+                        </Label>
+
+                        <TextBox
+                            Grid.Row="4"
+                            Grid.Column="1"
+                            Style="{StaticResource EditView}"
+                            Width="190"
+                            Text="6">
+
+                        </TextBox>
+
+                        <Button
+                            Grid.Row="5"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Style="{StaticResource SwitchButton}"
+                            MinWidth="1"
+                            Content="确认"
+                            FontSize="24"
+                            Margin="0 5 0 0">
+                            
+                        </Button>
+                    </Grid>
+                </Grid>
+                
+                <!--Relation Rate Panel-->
+                <Grid
+                    Canvas.Top="-680"
+                    Margin="50 70"
+                    Width="820"
+                    Height="540">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="400"/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="30"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#333333"
+                        Content="关联度">
+
+                    </Label>
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="24"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#555555"
+                        Content="可能认识的人">
+
+                    </Label>
+
+                    <Grid
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="10 0"
+                         Height="40">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="75"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Margin="0 0"
+                            Content="编号">
+
+                        </Label>
+
+                        <Label
+                            Grid.Column="1"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Margin="0 0"
+                            Content="姓名">
+
+                        </Label>
+
+                        <Label
+                            Grid.Column="2"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Margin="0 0"
+                            Content="性别">
+
+                        </Label>
+
+                        <Label
+                                    Grid.Column="3"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="年龄">
+
+                        </Label>
+                    </Grid>
+
+                    <ScrollViewer
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="10"
+                        Style="{StaticResource CustomScrollView}">
+
+                        <StackPanel
+                            Orientation="Vertical">
+                            <!--Possible Friend Widget-->
+                            <widget:FriendRecordGrid>
+
+                            </widget:FriendRecordGrid>
+                        </StackPanel>
+
+                    </ScrollViewer>
+
+                    <Path
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.RowSpan="3"
+                        Fill="#CCCCCC"
+                        Margin="6 0">
+                        <Path.Data>
+                            <PathGeometry Figures="
+                                          M0 4 C0 0, 0 0, 4 0
+                                          C8 0, 8 0, 8 4
+                                          L8 466
+                                          C8 470, 8 470, 4 470
+                                          C0 470, 0 470, 0 466
+                                          Z"/>
+                        </Path.Data>
+                    </Path>
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="24"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#555555"
+                        Margin="10 0 0 0"
+                        Content="检索关系">
+
+                    </Label>
+
+                    <Grid
+                        Margin="10 0 0 0"
+                        Grid.Row="2"
+                        Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox
+                            Grid.Column="0"
+                            Style="{StaticResource EditView}"
+                            Text="15332"
+                            Margin="20 0 0 0">
+                            
+                        </TextBox>
+
+                        <Button
+                            Grid.Column="1"
+                            Height="40"
+                            Style="{StaticResource SwitchButton}"
+                            MinWidth="1"
+                            Content="以编号检索"
+                            Margin="0"
+                            FontSize="26">
+
+                        </Button>
+                    </Grid>
+
+                    <ScrollViewer
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        Margin="10"
+                        Style="{StaticResource CustomScrollView}">
+
+                        <StackPanel
+                            Orientation="Vertical">
+                            <!--Possible Friend Widget-->
+                            <widget:FriendRecordGrid>
+
+                            </widget:FriendRecordGrid>
+
+                            <Label
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                FontSize="20"
+                                FontFamily="微软雅黑"
+                                FontWeight="Normal"
+                                Foreground="#555555"
+                                Margin="0 5"
+                                Content="⇓ 好友">
+
+                            </Label>
+
+                            <widget:FriendRecordGrid>
+
+                            </widget:FriendRecordGrid>
+                        </StackPanel>
+
+                    </ScrollViewer>
+                </Grid>
+                
+                <!--Group Panel-->
+                <Grid
+                    Canvas.Top="0"
+                    Margin="50 70"
+                    Width="800"
+                    Height="540">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="30"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#333333"
+                        Content="群组">
+
+                    </Label>
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontSize="20"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#555555"
+                        Margin="0 0"
+                        Content="编号">
+
+                    </Label>
+
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Style="{StaticResource EditView}"
+                        Text="746"
+                        Margin="0 0 60 0">
+
+                    </TextBox>
+
+                    <Grid
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="20"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Margin="0 0"
+                            Content="群名">
+
+                        </Label>
+
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Style="{StaticResource EditView}"
+                            Text="相亲相爱一家人"
+                            Margin="0 0 10 0">
+
+                        </TextBox>
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="20"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Margin="0 0"
+                            Content="成员编号">
+
+                        </Label>
+                        
+                        <TextBox
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            Style="{StaticResource EditView}"
+                            Text="15223"
+                            Margin="0 0 0 0">
+
+                        </TextBox>
+
+                        <Button
+                            Grid.Row="0"
+                            Grid.Column="4"
+                            Style="{StaticResource SwitchButton}"
+                            MinWidth="1"
+                            Content="移出群聊"
+                            Margin="0"
+                            FontSize="26">
+
+                        </Button>
+
+                        <Grid
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="5"
+                            Margin="0 10 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="0.7*"/>
+                                <ColumnDefinition Width="0.6*"/>
+                                <ColumnDefinition Width="1.5*"/>
+                                <ColumnDefinition Width="1.7*"/>
+                                <ColumnDefinition Width="1.7*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="编号">
+
+                            </Label>
+
+                            <Label
+                            Grid.Column="1"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="性别">
+
+                            </Label>
+
+                            <Label
+                            Grid.Column="2"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="年龄">
+
+                            </Label>
+
+                            <Label
+                            Grid.Column="3"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="现居地">
+
+                            </Label>
+
+                            <Label
+                            Grid.Column="4"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="工作单位">
+
+                            </Label>
+
+                            <Label
+                            Grid.Column="5"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="就读/毕业院校">
+
+                            </Label>
+
+                            <Label
+                                Grid.Column="6"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                FontSize="18"
+                                FontFamily="微软雅黑"
+                                FontWeight="Normal"
+                                Foreground="#555555"
+                                Content="操作">
+
+                            </Label>
+                        </Grid>
+
+                        <ScrollViewer
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="5"
+                            Margin="0 0 0 0"
+                            Style="{StaticResource CustomScrollView}"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Disabled">
+                            <StackPanel
+                                Orientation="Vertical">
+                                <widget:UserInfoGrid>
+                                    
+                                </widget:UserInfoGrid>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
                 </Grid>
             </Canvas>
         </Grid>

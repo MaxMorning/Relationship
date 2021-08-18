@@ -75,6 +75,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Widget\ExpRecordGrid.xaml.cs">
+      <DependentUpon>ExpRecordGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Widget\FriendRecordGrid.xaml.cs">
+      <DependentUpon>FriendRecordGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Widget\GroupRecordGrid.xaml.cs">
+      <DependentUpon>GroupRecordGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Widget\UserInfoGrid.xaml.cs">
+      <DependentUpon>UserInfoGrid.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -91,6 +103,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Templ\CustomScrollView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templ\EditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Templ\MinButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -102,6 +122,22 @@
     <Page Include="Templ\WindowTempl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Widget\ExpRecordGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Widget\FriendRecordGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Widget\GroupRecordGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Widget\UserInfoGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
