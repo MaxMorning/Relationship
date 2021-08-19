@@ -364,16 +364,16 @@
                     </Button>
 
                     <Grid
-                        Grid.Row="7"
-                        Grid.Column="0"
-                        Grid.ColumnSpan="4"
-                        Margin="0 0 15 0">
+                            Grid.Row="7"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="5"
+                            Margin="0 0 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1.2*"/>
                             <ColumnDefinition Width="0.7*"/>
                             <ColumnDefinition Width="0.6*"/>
                             <ColumnDefinition Width="1.5*"/>
-                            <ColumnDefinition Width="1.7*"/>
                             <ColumnDefinition Width="1.7*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
@@ -398,7 +398,7 @@
                             FontFamily="微软雅黑"
                             FontWeight="Normal"
                             Foreground="#555555"
-                            Content="性别">
+                            Content="姓名">
 
                         </Label>
 
@@ -410,7 +410,7 @@
                             FontFamily="微软雅黑"
                             FontWeight="Normal"
                             Foreground="#555555"
-                            Content="年龄">
+                            Content="性别">
 
                         </Label>
 
@@ -422,7 +422,7 @@
                             FontFamily="微软雅黑"
                             FontWeight="Normal"
                             Foreground="#555555"
-                            Content="现居地">
+                            Content="年龄">
 
                         </Label>
 
@@ -434,7 +434,7 @@
                             FontFamily="微软雅黑"
                             FontWeight="Normal"
                             Foreground="#555555"
-                            Content="工作单位">
+                            Content="现居地">
 
                         </Label>
 
@@ -446,7 +446,7 @@
                             FontFamily="微软雅黑"
                             FontWeight="Normal"
                             Foreground="#555555"
-                            Content="就读/毕业院校">
+                            Content="工作单位 / 就读院校">
 
                         </Label>
                     </Grid>
@@ -1816,9 +1816,7 @@
                             VerticalScrollBarVisibility="Disabled">
                             <StackPanel
                                 Orientation="Vertical">
-                                <widget:UserInfoDetailWithName>
-                                    
-                                </widget:UserInfoDetailWithName>
+                                
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>

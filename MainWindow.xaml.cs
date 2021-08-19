@@ -328,11 +328,22 @@ namespace Relationship
             // todo parallel
             foreach (Person person in Person.persons)
             {
-                if (person.name == key)
+                if (FuzzySearch(person.name, key))
                 {
-                    spStartSearchResult.Children.Add(new UserInfoWithoutNameGrid(person));
+                    RoutedEventHandler routedEventHandler = (sArg, eArg) =>
+                    {
+                        SetRole(person);
+                        InitPanel(1, person.id);
+                        SwitchPanel(1, null);
+                    };
+                    spStartSearchResult.Children.Add(new UserInfoDetailWithName(person, "选择", routedEventHandler));
                 }
             }
+        }
+
+        private static bool FuzzySearch(string name, string key)
+        {
+            return name.Contains(key);
         }
 
         private void btStartLoad_Click(object sender, RoutedEventArgs e)

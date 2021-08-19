@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Relationship.Widget"
              mc:Ignorable="d" 
-             Height="32"
-             Width="800">
+             Height="36"
+             Width="800"
+             Background="#EEEEEE">
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="1*"/>
         <ColumnDefinition Width="1.2*"/>
@@ -57,6 +58,7 @@
     </Label>
 
     <Label
+        Name="lbUserInfoAge"
             Grid.Column="3"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
@@ -69,6 +71,7 @@
     </Label>
 
     <Label
+        Name="lbUserInfoArea"
             Grid.Column="4"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
@@ -81,6 +84,7 @@
     </Label>
 
     <Label
+        Name="lbUserInfoPlace"
             Grid.Column="5"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
@@ -92,11 +96,13 @@
 
     </Label>
     <Button
+        Name="btUserInfo"
             Grid.Column="6"
             Style="{StaticResource SwitchButton}"
             MinWidth="1"
             Content="移除"
-            FontSize="26">
+        Margin="0 3"
+            FontSize="30">
 
     </Button>
 </Grid>

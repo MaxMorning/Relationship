@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Relationship.Class;
 
 namespace Relationship.Widget
 {
@@ -20,9 +21,24 @@ namespace Relationship.Widget
     /// </summary>
     public partial class UserInfoDetailWithName : Grid
     {
-        public UserInfoDetailWithName()
+        private Person relatedPerson;
+
+        public UserInfoDetailWithName(Person person, string buttonName, RoutedEventHandler eventHandler)
         {
             InitializeComponent();
+
+            relatedPerson = person;
+            lbUserInfoID.Content = person.id;
+            lbUserInfoName.Content = person.name;
+            lbUserInfoGender.Content = person.gender;
+            lbUserInfoArea.Content = person.GetRecentLive(out _);
+
+            string recentEdu = person.GetRecentEdu(out int eduMonthIdx);
+            string recentWork = person.GetRecentWork(out int workMonthIdx);
+            lbUserInfoPlace.Content = eduMonthIdx >= workMonthIdx ? recentEdu : recentWork;
+
+            btUserInfo.Content = buttonName;
+            btUserInfo.Click += eventHandler;
         }
     }
 }
