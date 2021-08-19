@@ -8,10 +8,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Templ/WindowTempl.xaml"/>
                 <ResourceDictionary Source="/Templ/SwitchButton.xaml"/>
+                <ResourceDictionary Source="/Templ/LightButton.xaml"/>
                 <ResourceDictionary Source="/Templ/CloseButton.xaml"/>
                 <ResourceDictionary Source="/Templ/MinButton.xaml"/>
                 <ResourceDictionary Source="/Templ/EditView.xaml"/>
                 <ResourceDictionary Source="/Templ/CustomScrollView.xaml"/>
+                <ResourceDictionary Source="/Templ/CustomContextMenu.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -8,6 +8,9 @@ namespace Relationship.Class
 {
     class WorkGroup : Group
     {
-        public static List<WorkGroup> workGroups = new List<WorkGroup>();
+        public List<Experience> relatedExp = new List<Experience>();
+
+        public new const string relationName = "同事";
+        public static Dictionary<string, WorkGroup> workGroups = new Dictionary<string, WorkGroup>();
     }
 }

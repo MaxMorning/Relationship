@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Relationship.Class
 {
-    public class LiveGroup
+    public class LiveGroup : Group
     {
-        public static List<LiveGroup> liveGroups = new List<LiveGroup>();
-        public int stage;
-        public List<LiveGroup> childGroups = new List<LiveGroup>();
+        public List<Experience> relatedExp = new List<Experience>();
+
+        public new const string relationName = "同乡";
+        public static Dictionary<string, LiveGroup> liveGroups = new Dictionary<string, LiveGroup>();
     }
 }

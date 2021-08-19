@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using Relationship.Class;
+using Relationship.Widget;
 
 
 namespace Relationship
@@ -28,11 +29,25 @@ namespace Relationship
             EasingMode = EasingMode.EaseIn
         };
 
+        public static int THREAD_NUM;
+        public static MainWindow mainWindow;
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
 
+            mainWindow = this;
+            Database.LoadProperties();
+            
+            bool initLoad = Database.ParseFile("database.txt");
+            if (initLoad)
+            {
+                lbStartLoadStatus.Content = "已加载： database.txt";
+            }
+            else
+            {
+                lbStartLoadStatus.Content = "未加载";
+            }
             // 左侧切换栏
             switchButtons[0] = btSwitchStart;
             switchButtons[1] = btSwitchInfo;
@@ -68,10 +83,9 @@ namespace Relationship
             }
         }
 
-        private int currentID = 0;
         private bool currentPersonEnable = true;
         private Person infoPanelPerson = null;
-        private void InitPanel(int panelIdx, int personID)
+        public void InitPanel(int panelIdx, int personID)
         {
             switch (panelIdx)
             {
@@ -92,10 +106,38 @@ namespace Relationship
                         {
                             btInfoEnable.Content = "无效";
                         }
+
+
+                        // Exp area set
+                        spInfoLive.Children.Clear();
+                        foreach (Experience experience in currentPerson.liveExp)
+                        {
+                            spInfoLive.Children.Add(new ExpRecordGrid(experience, 0));
+                        }
+
+                        spInfoEdu.Children.Clear();
+                        foreach (Experience experience in currentPerson.eduExp)
+                        {
+                            spInfoEdu.Children.Add(new ExpRecordGrid(experience, 1));
+                        }
+
+                        spInfoWork.Children.Clear();
+                        foreach (Experience experience in currentPerson.workExp)
+                        {
+                            spInfoWork.Children.Add(new ExpRecordGrid(experience, 2));
+                        }
+                        break;
+                    }
+
+                case 2:
+                    {
+                        FreshFriendList();
+                        FreshGroupList();
                         break;
                     }
             }
         }
+        
         // 左侧切换栏实现
         private Button[] switchButtons = new Button[6];
         private int currentPanelIdx = 0;
@@ -115,15 +157,21 @@ namespace Relationship
                 return;
             }
 
-
-            SwitchPanel(clickIdx, (sArg, eArg) =>
+            if (clickIdx != 3 && clickIdx != 4)
             {
-                InitPanel(clickIdx, currentID);
-            });
-
+                InitPanel(clickIdx, role.id);
+                SwitchPanel(clickIdx, null);
+            }
+            else
+            {
+                SwitchPanel(clickIdx, (sArg, eArg) =>
+                {
+                    InitPanel(clickIdx, role.id);
+                });
+            }
         }
 
-        private double SwitchPanel(int targetPanelIdx, EventHandler eventHandlerAfterAnim)
+        public double SwitchPanel(int targetPanelIdx, EventHandler eventHandlerAfterAnim)
         {
             for (int i = 0; i < 6; ++i)
             {
@@ -160,8 +208,8 @@ namespace Relationship
             return animTime;
         }
 
-        private Person role = null;
-        private void SetRole(Person person)
+        public Person role = null;
+        public void SetRole(Person person)
         {
             role = person;
             if (person.name.Length == 2)
@@ -184,6 +232,8 @@ namespace Relationship
             {
                 index = -1;
             }
+            
+            spStartSearchResult.Children.Clear();
 
             if (index < 0 || index >= Person.persons.Count)
             {
@@ -267,6 +317,108 @@ namespace Relationship
             }
 
            
+        }
+
+        private void btStartSearchName_Click(object sender, RoutedEventArgs e)
+        {
+            spStartSearchResult.Children.Clear();
+            //List<UserInfoWithoutNameGrid> searchResult = new List<UserInfoWithoutNameGrid>();
+            string key = tbStartIdxName.Text;
+
+            // todo parallel
+            foreach (Person person in Person.persons)
+            {
+                if (person.name == key)
+                {
+                    spStartSearchResult.Children.Add(new UserInfoWithoutNameGrid(person));
+                }
+            }
+        }
+
+        private void btStartLoad_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+            bool? selectResult = dialog.ShowDialog();
+            if (selectResult == true)
+            {
+                bool loadSuccess = Database.ParseFile(dialog.FileName);
+                if (loadSuccess)
+                {
+                    lbStartLoadStatus.Content = "已加载: " + dialog.FileName;
+                }
+                else
+                {
+                    lbStartLoadStatus.Content = "载入错误: " + dialog.FileName;
+
+                    Person.persons.Clear();
+                    LiveGroup.liveGroups.Clear();
+                    EduGroup.eduGroups.Clear();
+                    SocialGroup.socialGroups.Clear();
+                    WorkGroup.workGroups.Clear();
+                }
+            }
+        }
+
+        private void btInfoNewLive_Click(object sender, RoutedEventArgs e)
+        {
+            Experience newExperience = new Experience();
+            newExperience.owner = infoPanelPerson;
+
+            EditExpWindow editExpWindow = new EditExpWindow(newExperience, 0);
+            editExpWindow.ShowEditDialog();
+
+            infoPanelPerson.RepaintExp(0);
+        }
+
+        private void btInfoNewEdu_Click(object sender, RoutedEventArgs e)
+        {
+            Experience newExperience = new Experience();
+            newExperience.owner = infoPanelPerson;
+
+            EditExpWindow editExpWindow = new EditExpWindow(newExperience, 1);
+            editExpWindow.ShowEditDialog();
+
+            infoPanelPerson.RepaintExp(1);
+        }
+
+        private void btInfoNewWork_Click(object sender, RoutedEventArgs e)
+        {
+            Experience newExperience = new Experience();
+            newExperience.owner = infoPanelPerson;
+
+            EditExpWindow editExpWindow = new EditExpWindow(newExperience, 2);
+            editExpWindow.ShowEditDialog();
+
+            infoPanelPerson.RepaintExp(2);
+        }
+
+        // Social Panel
+        public void FreshFriendList()
+        {
+            spSocialFriend.Children.Clear();
+
+            foreach (Person friend in role.friends)
+            {
+                if (friend.enable)
+                {
+                    spSocialFriend.Children.Add(new FriendRecordGrid(friend, -1));
+                }
+            }
+        }
+
+        public void FreshGroupList()
+        {
+            spSocialGroup.Children.Clear();
+
+            foreach (SocialGroup socialGroup in role.socialGroups)
+            {
+                spSocialGroup.Children.Add(new GroupRecordGrid(socialGroup));
+            }
+        }
+
+        private void btSocialAddFriend_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

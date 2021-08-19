@@ -8,14 +8,15 @@
              Height="30"
              Background="#EEEEEE">
     <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="120"/>
+        <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
     <Label
+        Name="lbExpRecordTime"
         Grid.Column="0"
-        HorizontalContentAlignment="Center"
+        HorizontalContentAlignment="Left"
         VerticalContentAlignment="Center"
-        FontSize="12"
+        FontSize="14"
         FontFamily="微软雅黑"
         FontWeight="Normal"
         Foreground="#555555"
@@ -25,15 +26,42 @@
     </Label>
 
     <Label
+        Name="lbExpRecordValue"
         Grid.Column="1"
-        HorizontalContentAlignment="Center"
+        HorizontalContentAlignment="Left"
         VerticalContentAlignment="Center"
-        FontSize="12"
+        FontSize="14"
         FontFamily="微软雅黑"
         FontWeight="Normal"
         Foreground="#555555"
-        Margin="0 0"
+        Margin="5 0 0 0"
         Content="浙江省-绍兴市">
 
     </Label>
+
+    <Grid.ContextMenu>
+        <ContextMenu>
+            <Button
+                Name="btExpRecordEdit"
+                Style="{StaticResource LightButton}"
+                Content="编辑"
+                FontSize="24"
+                Height="30"
+                MinWidth="1"
+                Click="btExpRecordEdit_Click">
+                
+            </Button>
+
+            <Button
+                Name="btExpRecordDelete"
+                Style="{StaticResource LightButton}"
+                Content="删除"
+                FontSize="24"
+                Height="30"
+                MinWidth="1"
+                Click="btExpRecordDelete_Click">
+
+            </Button>
+        </ContextMenu>
+    </Grid.ContextMenu>
 </Grid>

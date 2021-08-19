@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Relationship.Class;
 
 namespace Relationship.Widget
 {
@@ -20,9 +21,34 @@ namespace Relationship.Widget
     /// </summary>
     public partial class FriendRecordGrid : Grid
     {
-        public FriendRecordGrid()
+        private Person relatedPerson;
+        private int commonNum;
+        public FriendRecordGrid(Person person, int num)
         {
             InitializeComponent();
+
+            relatedPerson = person;
+            commonNum = num;
+
+            lbFriendRecordID.Content = person.id;
+            lbFriendRecordName.Content = person.name + (num < 0 ? "" : (" (" + num.ToString() + ")"));
+            lbFriendRecordGender.Content = person.gender;
+            lbFriendRecordAge.Content = person.age;
+        }
+
+        private void contextmenuFriendRecord_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            if (commonNum >= 0)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void btFriendRecordDelete_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.mainWindow.role.BreakUpFriend(relatedPerson);
+            MainWindow.mainWindow.FreshFriendList();
+            MainWindow.mainWindow.Focus();
         }
     }
 }

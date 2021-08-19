@@ -1,0 +1,201 @@
+﻿<Window x:Class="Relationship.EditExpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Relationship"
+        mc:Ignorable="d"
+        Title="修改记录"
+        Height="400"
+        Width="600"
+        AllowsTransparency="True"
+        OpacityMask="White" 
+        WindowStyle="None" 
+        Background="Transparent"
+        Style="{StaticResource CustomWindow}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Path
+            Grid.Row="0"
+            Grid.RowSpan="9"
+            Grid.Column="0"
+            Grid.ColumnSpan="4"
+            Fill="#EEEEEE"
+            Stretch="Fill">
+            <Path.Data>
+                <PathGeometry Figures="
+                      M0 25 C0 0, 0 0, 25 0
+                      L550 0
+                      C575 0, 575 0, 575 25
+                      L575 400
+                      C575 425, 575 425, 550 425
+                      L25 425
+                      C0 425, 0 425, 0 400
+                      Z"/>
+            </Path.Data>
+        </Path>
+
+        <Grid
+            Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="12*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Rectangle
+                Name="rectEditExpTop"
+                Grid.Row="0"
+                Margin="5 5 0 0"
+                Fill="#00FFFFFF"
+                Stretch="Fill"
+                MouseLeftButtonDown="rectEditExpTop_MouseLeftButtonDown">
+
+            </Rectangle>
+
+            <Button
+                Name="btEditExpClose"
+                Grid.Column="1"
+                Style="{StaticResource CloseButton}"
+                Click="btEditExpClose_Click">
+                
+            </Button>
+        </Grid>
+
+        <Label
+            Grid.Row="1"
+            Grid.Column="0"
+            HorizontalContentAlignment="Left"
+            VerticalContentAlignment="Bottom"
+            FontSize="28"
+            FontFamily="微软雅黑"
+            FontWeight="Normal"
+            Margin="20 0"
+            Foreground="#333333"
+            Content="修改记录">
+
+        </Label>
+
+        <Grid
+            Grid.Row="3"
+            Margin="20 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Grid.Column="0"
+                HorizontalContentAlignment="Right"
+                VerticalContentAlignment="Center"
+                FontSize="18"
+                FontFamily="微软雅黑"
+                FontWeight="Normal"
+                Foreground="#555555"
+                Content="开始时间">
+
+            </Label>
+
+            <TextBox
+                Name="tbEditExpBeginTime"
+                Grid.Column="1"
+                Style="{StaticResource EditView}"
+                Text="2001.08"
+                Width="180">
+                
+            </TextBox>
+
+            <Label
+                Grid.Column="2"
+                HorizontalContentAlignment="Right"
+                VerticalContentAlignment="Center"
+                FontSize="18"
+                FontFamily="微软雅黑"
+                FontWeight="Normal"
+                Foreground="#555555"
+                Content="结束时间">
+
+            </Label>
+
+            <TextBox
+                Name="tbEditExpEndTime"
+                Grid.Column="3"
+                Style="{StaticResource EditView}"
+                Text="2019.08"
+                Width="180">
+
+            </TextBox>
+        </Grid>
+
+        <Grid
+            Grid.Row="5"
+            Margin="20 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Label
+                Grid.Column="0"
+                HorizontalContentAlignment="Right"
+                VerticalContentAlignment="Center"
+                FontSize="18"
+                FontFamily="微软雅黑"
+                FontWeight="Normal"
+                Foreground="#555555"
+                Content="记录值">
+
+            </Label>
+
+            <TextBox
+                Name="tbEditExpValue"
+                Grid.Column="1"
+                Style="{StaticResource EditView}"
+                Text="浙江省绍兴市"
+                Width="180">
+
+            </TextBox>
+        </Grid>
+
+        <Grid
+            Grid.Row="7">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Button
+                Name="btEditExpConfirm"
+                Grid.Column="1"
+                Style="{StaticResource SwitchButton}"
+                MinWidth="1"
+                Content="确认"
+                FontSize="26"
+                Click="btEditExpConfirm_Click">
+                
+            </Button>
+
+            <Button
+                Grid.Column="3"
+                Style="{StaticResource SwitchButton}"
+                MinWidth="1"
+                Content="取消"
+                FontSize="26"
+                Click="btEditExpClose_Click">
+
+            </Button>
+        </Grid>
+    </Grid>
+</Window>

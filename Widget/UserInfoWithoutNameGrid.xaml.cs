@@ -21,10 +21,12 @@ namespace Relationship.Widget
     /// </summary>
     public partial class UserInfoWithoutNameGrid : Grid
     {
+        private Person relatedPerson;
         public UserInfoWithoutNameGrid(Person person)
         {
             InitializeComponent();
 
+            relatedPerson = person;
             lbUserInfoID.Content = person.id;
             lbUserInfoAge.Content = person.age;
             lbUserInfoGender.Content = person.gender;
@@ -35,7 +37,13 @@ namespace Relationship.Widget
 
         private void btUserInfoSelect_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow mainWindowInst = Application.Current.Windows
+                                    .Cast<Window>()
+                                    .FirstOrDefault(window => window is MainWindow) as MainWindow;
 
+            mainWindowInst.SetRole(relatedPerson);
+            mainWindowInst.InitPanel(1, relatedPerson.id);
+            mainWindowInst.SwitchPanel(1, null);
         }
     }
 }

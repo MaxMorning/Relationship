@@ -5,13 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Relationship.Widget"
              mc:Ignorable="d" 
-             Height="40">
+             Height="40"
+             Background="#EEEEEE">
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="100"/>
         <ColumnDefinition Width="1*"/>
         <ColumnDefinition Width="100"/>
     </Grid.ColumnDefinitions>
     <Label
+        Name="lbGroupRecordID"
         Grid.Column="0"
         HorizontalContentAlignment="Center"
         VerticalContentAlignment="Center"
@@ -25,6 +27,7 @@
     </Label>
 
     <Label
+        Name="lbGroupRecordName"
         Grid.Column="1"
         HorizontalContentAlignment="Center"
         VerticalContentAlignment="Center"
@@ -38,6 +41,7 @@
     </Label>
 
     <Label
+        Name="lbGroupRecordSize"
         Grid.Column="2"
         HorizontalContentAlignment="Center"
         VerticalContentAlignment="Center"
@@ -49,4 +53,20 @@
         Content="1388">
 
     </Label>
+
+    <Grid.ContextMenu>
+        <ContextMenu
+            Name="contextmenuGroupRecord">
+            <Button
+                Name="btGroupRecordDelete"
+                Style="{StaticResource LightButton}"
+                Content="移除"
+                FontSize="24"
+                Height="30"
+                MinWidth="1"
+                Click="btGroupRecordDelete_Click">
+
+            </Button>
+        </ContextMenu>
+    </Grid.ContextMenu>
 </Grid>

@@ -258,11 +258,13 @@
                         Content="加载"
                         FontSize="26"
                         Margin="5"
-                        MinWidth="1">
+                        MinWidth="1"
+                        Click="btStartLoad_Click">
 
                     </Button>
 
                     <Label
+                        Name="lbStartLoadStatus"
                         Grid.Row="2"
                         Grid.Column="1"
                         Grid.ColumnSpan="3"
@@ -341,7 +343,8 @@
                             Content="搜索姓名"
                             FontSize="26"
                             Margin="5"
-                            MinWidth="1">
+                            MinWidth="1"
+                            Click="btStartSearchName_Click">
 
                         </Button>
                     </Grid>
@@ -454,10 +457,11 @@
                         Grid.ColumnSpan="4"
                         Margin="0 0 0 0"
                         Style="{StaticResource CustomScrollView}"
-                        HorizontalScrollBarVisibility="Auto"
-                        VerticalScrollBarVisibility="Disabled">
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto">
 
                         <StackPanel
+                            Name="spStartSearchResult"
                             Orientation="Vertical">
                         </StackPanel>
                     </ScrollViewer>
@@ -476,7 +480,7 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="80"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -641,7 +645,12 @@
                             <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
                         <Label
+                            Grid.Row="0"
                             Grid.Column="0"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
@@ -654,6 +663,7 @@
                         </Label>
 
                         <Label
+                            Grid.Row="0"
                             Grid.Column="1"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
@@ -666,6 +676,7 @@
                         </Label>
 
                         <Label
+                            Grid.Row="0"
                             Grid.Column="2"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
@@ -676,6 +687,45 @@
                             Content="工作经历">
 
                         </Label>
+
+                        <Button
+                            Name="btInfoNewLive"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Height="30"
+                            Style="{StaticResource SwitchButton}"
+                            MinWidth="1"
+                            Content="新建"
+                            FontSize="28"
+                            Click="btInfoNewLive_Click">
+
+                        </Button>
+
+                        <Button
+                            Name="btInfoNewEdu"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Height="30"
+                            Style="{StaticResource SwitchButton}"
+                            MinWidth="1"
+                            Content="新建"
+                            FontSize="28"
+                            Click="btInfoNewEdu_Click">
+
+                        </Button>
+
+                        <Button
+                            Name="btInfoNewWork"
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Height="30"
+                            Style="{StaticResource SwitchButton}"
+                            MinWidth="1"
+                            Content="新建"
+                            FontSize="28"
+                            Click="btInfoNewWork_Click">
+
+                        </Button>
                     </Grid>
 
                     <Grid
@@ -692,21 +742,14 @@
                             Grid.Column="0"
                             Style="{StaticResource CustomScrollView}"
                             VerticalScrollBarVisibility="Auto"
-                            HorizontalScrollBarVisibility="Auto">
+                            HorizontalScrollBarVisibility="Auto"
+                            Margin="5 0">
 
                             <StackPanel
+                                Name="spInfoLive"
                                 Orientation="Vertical">
-                                <Button
-                                    Height="30"
-                                    Style="{StaticResource SwitchButton}"
-                                    MinWidth="1"
-                                    Content="新建"
-                                    FontSize="28">
-                                    
-                                </Button>
-                                <widget:ExpRecordGrid>
-                                    
-                                </widget:ExpRecordGrid>
+                                
+                                
                             </StackPanel>
                         </ScrollViewer>
 
@@ -714,21 +757,13 @@
                             Grid.Column="1"
                             Style="{StaticResource CustomScrollView}"
                             VerticalScrollBarVisibility="Auto"
-                            HorizontalScrollBarVisibility="Auto">
+                            HorizontalScrollBarVisibility="Auto"
+                            Margin="5 0">
 
                             <StackPanel
+                                Name="spInfoEdu"
                                 Orientation="Vertical">
-                                <Button
-                                    Height="30"
-                                    Style="{StaticResource SwitchButton}"
-                                    MinWidth="1"
-                                    Content="新建"
-                                    FontSize="28">
 
-                                </Button>
-                                <widget:ExpRecordGrid>
-
-                                </widget:ExpRecordGrid>
                             </StackPanel>
                         </ScrollViewer>
 
@@ -736,21 +771,13 @@
                             Grid.Column="2"
                             Style="{StaticResource CustomScrollView}"
                             VerticalScrollBarVisibility="Auto"
-                            HorizontalScrollBarVisibility="Auto">
+                            HorizontalScrollBarVisibility="Auto"
+                            Margin="5 0">
 
                             <StackPanel
+                                Name="spInfoWork"
                                 Orientation="Vertical">
-                                <Button
-                                    Height="30"
-                                    Style="{StaticResource SwitchButton}"
-                                    MinWidth="1"
-                                    Content="新建"
-                                    FontSize="28">
 
-                                </Button>
-                                <widget:ExpRecordGrid>
-
-                                </widget:ExpRecordGrid>
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>
@@ -820,13 +847,15 @@
                     </Label>
 
                     <Button
+                        Name="btSocialAddFriend"
                         Grid.Row="1"
                         Grid.Column="1"
                         Height="40"
                         Style="{StaticResource SwitchButton}"
                         MinWidth="1"
                         Content="添加好友"
-                        FontSize="28">
+                        FontSize="28"
+                        Click="btSocialAddFriend_Click">
 
                     </Button>
 
@@ -928,6 +957,7 @@
                         Style="{StaticResource CustomScrollView}">
 
                         <StackPanel
+                            Name="spSocialFriend"
                             Orientation="Vertical">
                             <!--Friend Widget-->
                             <Grid
@@ -990,10 +1020,6 @@
 
                                 </Label>
                             </Grid>
-
-                            <widget:FriendRecordGrid>
-                                
-                            </widget:FriendRecordGrid>
                         </StackPanel>
                         
                     </ScrollViewer>
@@ -1074,6 +1100,7 @@
                         Style="{StaticResource CustomScrollView}">
 
                         <StackPanel
+                            Name="spSocialGroup"
                             Orientation="Vertical">
                             <!--Friend Widget-->
                             <Grid
@@ -1122,10 +1149,6 @@
 
                                 </Label>
                             </Grid>
-
-                            <widget:GroupRecordGrid>
-                                
-                            </widget:GroupRecordGrid>
                         </StackPanel>
 
                     </ScrollViewer>
@@ -1454,9 +1477,7 @@
                         <StackPanel
                             Orientation="Vertical">
                             <!--Possible Friend Widget-->
-                            <widget:FriendRecordGrid>
-
-                            </widget:FriendRecordGrid>
+                            
                         </StackPanel>
 
                     </ScrollViewer>
@@ -1530,9 +1551,6 @@
                         <StackPanel
                             Orientation="Vertical">
                             <!--Possible Friend Widget-->
-                            <widget:FriendRecordGrid>
-
-                            </widget:FriendRecordGrid>
 
                             <Label
                                 HorizontalContentAlignment="Center"
@@ -1545,10 +1563,6 @@
                                 Content="⇓ 好友">
 
                             </Label>
-
-                            <widget:FriendRecordGrid>
-
-                            </widget:FriendRecordGrid>
                         </StackPanel>
 
                     </ScrollViewer>

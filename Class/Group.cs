@@ -8,9 +8,7 @@ namespace Relationship.Class
 {
     public abstract class Group
     {
-        public int id;
         public string name;
-        public List<Experience> relatedExp = new List<Experience>();
         public string relationName;
     }
 }

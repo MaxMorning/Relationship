@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Relationship.Class;
 
 namespace Relationship.Widget
 {
@@ -20,9 +21,22 @@ namespace Relationship.Widget
     /// </summary>
     public partial class GroupRecordGrid : Grid
     {
-        public GroupRecordGrid()
+        private SocialGroup relatedSocialGroup;
+        public GroupRecordGrid(SocialGroup socialGroup)
         {
             InitializeComponent();
+
+            relatedSocialGroup = socialGroup;
+            lbGroupRecordID.Content = socialGroup.id;
+            lbGroupRecordName.Content = socialGroup.name;
+            lbGroupRecordSize.Content = socialGroup.members.Count;
+        }
+
+        private void btGroupRecordDelete_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.mainWindow.role.QuitSocialGroup(relatedSocialGroup);
+            MainWindow.mainWindow.FreshGroupList();
+            MainWindow.mainWindow.Focus();
         }
     }
 }

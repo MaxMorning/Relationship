@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Relationship.Widget"
              mc:Ignorable="d" 
-             Height="40">
+             Height="40"
+             Background="#EEEEEE">
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="100"/>
         <ColumnDefinition Width="1*"/>
@@ -13,6 +14,7 @@
         <ColumnDefinition Width="75"/>
     </Grid.ColumnDefinitions>
     <Label
+        Name="lbFriendRecordID"
         Grid.Column="0"
         HorizontalContentAlignment="Center"
         VerticalContentAlignment="Center"
@@ -26,6 +28,7 @@
     </Label>
 
     <Label
+        Name="lbFriendRecordName"
         Grid.Column="1"
         HorizontalContentAlignment="Center"
         VerticalContentAlignment="Center"
@@ -39,6 +42,7 @@
     </Label>
 
     <Label
+        Name="lbFriendRecordGender"
         Grid.Column="2"
         HorizontalContentAlignment="Center"
         VerticalContentAlignment="Center"
@@ -52,6 +56,7 @@
     </Label>
 
     <Label
+        Name="lbFriendRecordAge"
         Grid.Column="3"
         HorizontalContentAlignment="Center"
         VerticalContentAlignment="Center"
@@ -63,4 +68,21 @@
         Content="20">
 
     </Label>
+
+    <Grid.ContextMenu>
+        <ContextMenu
+            Name="contextmenuFriendRecord"
+            ContextMenuOpening="contextmenuFriendRecord_ContextMenuOpening">
+            <Button
+                Name="btFriendRecordDelete"
+                Style="{StaticResource LightButton}"
+                Content="移除"
+                FontSize="24"
+                Height="30"
+                MinWidth="1"
+                Click="btFriendRecordDelete_Click">
+
+            </Button>
+        </ContextMenu>
+    </Grid.ContextMenu>
 </Grid>

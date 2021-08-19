@@ -78,6 +78,7 @@
     <Compile Include="AlertDialogWindow.xaml.cs">
       <DependentUpon>AlertDialogWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Class\Database.cs" />
     <Compile Include="Class\EduGroup.cs" />
     <Compile Include="Class\Experience.cs" />
     <Compile Include="Class\Group.cs" />
@@ -85,6 +86,9 @@
     <Compile Include="Class\Person.cs" />
     <Compile Include="Class\SocialGroup.cs" />
     <Compile Include="Class\WorkGroup.cs" />
+    <Compile Include="EditExpWindow.xaml.cs">
+      <DependentUpon>EditExpWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NonLinearEasingFunction.cs" />
     <Compile Include="Widget\ExpRecordGrid.xaml.cs">
       <DependentUpon>ExpRecordGrid.xaml</DependentUpon>
@@ -105,6 +109,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="EditExpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -121,6 +129,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Templ\CustomContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Templ\CustomScrollView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -130,6 +142,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Templ\MinButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templ\LightButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
