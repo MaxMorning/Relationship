@@ -341,7 +341,7 @@ namespace Relationship
             }
         }
 
-        private static bool FuzzySearch(string name, string key)
+        public static bool FuzzySearch(string name, string key)
         {
             return name.Contains(key);
         }
@@ -429,7 +429,14 @@ namespace Relationship
 
         private void btSocialAddFriend_Click(object sender, RoutedEventArgs e)
         {
+            SearchPersonWindow searchPersonWindow = new SearchPersonWindow();
+            searchPersonWindow.ShowSearchDialog();
 
+            if (searchPersonWindow.selectPerson != null)
+            {
+                role.MakeFriend(searchPersonWindow.selectPerson);
+                FreshFriendList();
+            }
         }
     }
 }
