@@ -47,5 +47,12 @@ namespace Relationship.Widget
             MainWindow.mainWindow.FreshFriendList();
             MainWindow.mainWindow.Focus();
         }
+
+        private void btFriendRecordGetInfo_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.mainWindow.InitPanel(1, relatedPerson.id);
+            MainWindow.mainWindow.SwitchPanel(1, null);
+            MainWindow.mainWindow.Focus();
+        }
     }
 }

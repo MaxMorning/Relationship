@@ -135,6 +135,14 @@ namespace Relationship
                         FreshGroupList();
                         break;
                     }
+
+                case 5:
+                    {
+                        groupPanelGroup = null;
+                        gridGroupDetail.Opacity = 0;
+                        btGroupSave.Opacity = 0;
+                        break;
+                    }
             }
         }
         
@@ -326,17 +334,17 @@ namespace Relationship
             string key = tbStartIdxName.Text;
 
             // todo parallel
-            for (int idx = 0; idx < Person.persons.Count; ++idx)
+            foreach (Person person in Person.persons)
             {
-                if (FuzzySearch(Person.persons[idx].name, key))
+                if (FuzzySearch(person.name, key))
                 {
                     RoutedEventHandler routedEventHandler = (sArg, eArg) =>
                     {
-                        SetRole(Person.persons[idx]);
-                        InitPanel(1, Person.persons[idx].id);
+                        SetRole(person);
+                        InitPanel(1, person.id);
                         SwitchPanel(1, null);
                     };
-                    spStartSearchResult.Children.Add(new UserInfoDetailWithName(Person.persons[idx], "选择", routedEventHandler));
+                    spStartSearchResult.Children.Add(new UserInfoDetailWithName(person, "选择", routedEventHandler));
                 }
             }
         }
@@ -464,6 +472,129 @@ namespace Relationship
                     role.JoinSocialGroup(searchGroupWindow.selectSocialGroup);
                 }
                 FreshGroupList();
+            }
+        }
+
+        // Group Panel
+        private SocialGroup groupPanelGroup = null;
+        private void btGroupSearch_Click(object sender, RoutedEventArgs e)
+        {
+            int index;
+            try
+            {
+                index = int.Parse(tbGroupIdx.Text);
+            }
+            catch (FormatException)
+            {
+                index = -1;
+            }
+
+            spGroupMemberList.Children.Clear();
+
+            if (index < 0 || index >= SocialGroup.socialGroups.Count)
+            {
+                AlertDialogWindow alertDialogWindow = new AlertDialogWindow("您输入的编号非法，请检查。");
+                alertDialogWindow.ShowAlertDialog();
+            }
+            else
+            {
+                groupPanelGroup = SocialGroup.socialGroups[index];
+                SetGroupPanel();
+            }
+        }
+
+        private void SetGroupPanel()
+        {
+            gridGroupDetail.Opacity = 1;
+            btGroupSave.Opacity = 1;
+
+            tbGroupGroupName.Text = groupPanelGroup.name;
+            tbGroupMemberIdx.Text = "";
+
+            FreshGroupMemberList(false);
+        }
+
+        private void FreshGroupMemberList(bool sort)
+        {
+            spGroupMemberList.Children.Clear();
+
+            if (sort)
+            {
+                groupPanelGroup.members.Sort(Person.Compare);
+            }
+            foreach (Person person in groupPanelGroup.members)
+            {
+                if (person.enable)
+                {
+                    RoutedEventHandler routedEventHandler = (sArg, eArg) =>
+                    {
+                        person.QuitSocialGroup(groupPanelGroup);
+                        FreshGroupMemberList(false);
+                    };
+                    spGroupMemberList.Children.Add(new UserInfoDetailWithName(person, "移除", routedEventHandler));
+                }
+            }
+        }
+
+        private void tbGroupAddMember_Click(object sender, RoutedEventArgs e)
+        {
+            int index;
+            try
+            {
+                index = int.Parse(tbGroupMemberIdx.Text);
+            }
+            catch (FormatException)
+            {
+                index = -1;
+            }
+
+            if (index < 0 || index >= Person.persons.Count)
+            {
+                AlertDialogWindow alertDialogWindow = new AlertDialogWindow("您输入的编号非法，请检查。");
+                alertDialogWindow.ShowAlertDialog();
+            }
+            else
+            {
+                Person addMember = Person.persons[index];
+                addMember.JoinSocialGroup(groupPanelGroup);
+                FreshGroupMemberList(true);
+            }
+        }
+
+        private void btGroupSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbGroupGroupName.Text.Length > 0)
+            {
+                groupPanelGroup.name = tbGroupGroupName.Text;
+            }
+            else
+            {
+                AlertDialogWindow alertDialogWindow = new AlertDialogWindow("群组名称不能为空，请检查。");
+                alertDialogWindow.ShowAlertDialog();
+            }
+        }
+
+        private void btGroupCreate_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbGroupIdx.Text.Length > 0)
+            {
+                SocialGroup newSocialGroup = new SocialGroup(tbGroupIdx.Text);
+                newSocialGroup.id = SocialGroup.socialGroups.Count;
+                SocialGroup.socialGroups.Add(newSocialGroup);
+                groupPanelGroup = newSocialGroup;
+
+                tbGroupGroupName.Text = newSocialGroup.name;
+                tbGroupIdx.Text = newSocialGroup.id.ToString();
+
+                btGroupSave.Opacity = 1;
+                gridGroupDetail.Opacity = 1;
+
+                FreshGroupMemberList(false);
+            }
+            else
+            {
+                AlertDialogWindow alertDialogWindow = new AlertDialogWindow("群组名称不能为空，请检查。");
+                alertDialogWindow.ShowAlertDialog();
             }
         }
     }

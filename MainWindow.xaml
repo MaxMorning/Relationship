@@ -1587,6 +1587,8 @@
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="220"/>
                         <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="120"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Label
@@ -1613,32 +1615,63 @@
                         FontWeight="Normal"
                         Foreground="#555555"
                         Margin="0 0"
-                        Content="编号">
+                        Content="编号/新群">
 
                     </Label>
 
                     <TextBox
+                        Name="tbGroupIdx"
                         Grid.Row="1"
                         Grid.Column="1"
                         Style="{StaticResource EditView}"
-                        Text="746"
+                        Text="0"
                         Margin="0 0 0 0">
 
                     </TextBox>
                     <Button
+                        Name="btGroupSearch"
                         Grid.Row="1"
                         Grid.Column="2"
                         Style="{StaticResource SwitchButton}"
                         MinWidth="1"
                         Content="搜索"
                         Margin="0 0"
-                        FontSize="28">
+                        FontSize="28"
+                        Click="btGroupSearch_Click">
 
                     </Button>
+
+                    <Button
+                        Name="btGroupCreate"
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        Style="{StaticResource SwitchButton}"
+                        MinWidth="1"
+                        Content="新建群组"
+                        Margin="20 0 0 0"
+                        FontSize="28"
+                        Click="btGroupCreate_Click">
+
+                    </Button>
+                    
+                    <Button
+                        Name="btGroupSave"
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Style="{StaticResource SwitchButton}"
+                        MinWidth="1"
+                        Content="保存群名"
+                        Margin="20 0 0 0"
+                        FontSize="28"
+                        Click="btGroupSave_Click">
+
+                    </Button>
+                    
                     <Grid
+                        Name="gridGroupDetail"
                         Grid.Row="3"
                         Grid.Column="0"
-                        Grid.ColumnSpan="4">
+                        Grid.ColumnSpan="6">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="250"/>
@@ -1649,7 +1682,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="50"/>
-                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Label
                             Grid.Row="0"
@@ -1666,6 +1699,7 @@
                         </Label>
 
                         <TextBox
+                            Name="tbGroupGroupName"
                             Grid.Row="0"
                             Grid.Column="1"
                             Style="{StaticResource EditView}"
@@ -1689,22 +1723,25 @@
                         </Label>
                         
                         <TextBox
+                            Name="tbGroupMemberIdx"
                             Grid.Row="0"
                             Grid.Column="3"
                             Style="{StaticResource EditView}"
-                            Text="15223"
+                            Text=""
                             Margin="0 0 0 0">
 
                         </TextBox>
 
                         <Button
+                            Name="tbGroupAddMember"
                             Grid.Row="0"
                             Grid.Column="4"
                             Style="{StaticResource SwitchButton}"
                             MinWidth="1"
-                            Content="移出群聊"
+                            Content="加入群组"
                             Margin="0"
-                            FontSize="26">
+                            FontSize="26"
+                            Click="tbGroupAddMember_Click">
 
                         </Button>
 
@@ -1814,9 +1851,10 @@
                             Grid.ColumnSpan="5"
                             Margin="0 0 0 0"
                             Style="{StaticResource CustomScrollView}"
-                            HorizontalScrollBarVisibility="Auto"
-                            VerticalScrollBarVisibility="Disabled">
+                            HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto">
                             <StackPanel
+                                Name="spGroupMemberList"
                                 Orientation="Vertical">
                                 
                             </StackPanel>

@@ -31,6 +31,7 @@ namespace Relationship.Widget
             lbUserInfoID.Content = person.id;
             lbUserInfoName.Content = person.name;
             lbUserInfoGender.Content = person.gender;
+            lbUserInfoAge.Content = person.age;
             lbUserInfoArea.Content = person.GetRecentLive(out _);
 
             string recentEdu = person.GetRecentEdu(out int eduMonthIdx);

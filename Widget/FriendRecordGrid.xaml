@@ -73,6 +73,17 @@
         <ContextMenu
             Name="contextmenuFriendRecord">
             <Button
+                Name="btFriendRecordGetInfo"
+                Style="{StaticResource LightButton}"
+                Content="查看"
+                FontSize="24"
+                Height="30"
+                MinWidth="1"
+                Click="btFriendRecordGetInfo_Click">
+
+            </Button>
+            
+            <Button
                 Name="btFriendRecordDelete"
                 Style="{StaticResource LightButton}"
                 Content="移除"

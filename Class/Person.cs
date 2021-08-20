@@ -39,8 +39,11 @@ namespace Relationship.Class
 
         public void JoinSocialGroup(SocialGroup socialGroup)
         {
-            socialGroups.Add(socialGroup);
-            socialGroup.members.Add(this);
+            if (!this.socialGroups.Contains(socialGroup))
+            {
+                socialGroups.Add(socialGroup);
+                socialGroup.members.Add(this);
+            }
         }
 
         public void QuitSocialGroup(SocialGroup socialGroup)

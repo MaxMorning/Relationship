@@ -89,6 +89,7 @@
     <Compile Include="EditExpWindow.xaml.cs">
       <DependentUpon>EditExpWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="NonLinearEasingFunction.cs" />
     <Compile Include="SearchGroupWindow.xaml.cs">
       <DependentUpon>SearchGroupWindow.xaml</DependentUpon>
