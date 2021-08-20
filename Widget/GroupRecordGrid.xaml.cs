@@ -22,7 +22,8 @@ namespace Relationship.Widget
     public partial class GroupRecordGrid : Grid
     {
         private SocialGroup relatedSocialGroup;
-        public GroupRecordGrid(SocialGroup socialGroup)
+
+        public GroupRecordGrid(SocialGroup socialGroup, bool showContext)
         {
             InitializeComponent();
 
@@ -30,6 +31,11 @@ namespace Relationship.Widget
             lbGroupRecordID.Content = socialGroup.id;
             lbGroupRecordName.Content = socialGroup.name;
             lbGroupRecordSize.Content = socialGroup.members.Count;
+
+            if (!showContext)
+            {
+                this.ContextMenu = null;
+            }
         }
 
         private void btGroupRecordDelete_Click(object sender, RoutedEventArgs e)

@@ -408,6 +408,7 @@ namespace Relationship
         {
             spSocialFriend.Children.Clear();
 
+            role.friends.Sort(Person.Compare);
             foreach (Person friend in role.friends)
             {
                 if (friend.enable)
@@ -421,9 +422,10 @@ namespace Relationship
         {
             spSocialGroup.Children.Clear();
 
+            role.socialGroups.Sort(SocialGroup.Compare);
             foreach (SocialGroup socialGroup in role.socialGroups)
             {
-                spSocialGroup.Children.Add(new GroupRecordGrid(socialGroup));
+                spSocialGroup.Children.Add(new GroupRecordGrid(socialGroup, true));
             }
         }
 
@@ -434,8 +436,34 @@ namespace Relationship
 
             if (searchPersonWindow.selectPerson != null)
             {
-                role.MakeFriend(searchPersonWindow.selectPerson);
+                if (role.friends.Contains(searchPersonWindow.selectPerson))
+                {
+                    role.BreakUpFriend(searchPersonWindow.selectPerson);
+                }
+                else
+                {
+                    role.MakeFriend(searchPersonWindow.selectPerson);
+                }
                 FreshFriendList();
+            }
+        }
+
+        private void btSocialEditGroup_Click(object sender, RoutedEventArgs e)
+        {
+            SearchGroupWindow searchGroupWindow = new SearchGroupWindow();
+            searchGroupWindow.ShowSearchDialog();
+
+            if (searchGroupWindow.selectSocialGroup != null)
+            {
+                if (role.socialGroups.Contains(searchGroupWindow.selectSocialGroup))
+                {
+                    role.QuitSocialGroup(searchGroupWindow.selectSocialGroup);
+                }
+                else
+                {
+                    role.JoinSocialGroup(searchGroupWindow.selectSocialGroup);
+                }
+                FreshGroupList();
             }
         }
     }

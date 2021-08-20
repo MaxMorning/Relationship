@@ -34,13 +34,10 @@ namespace Relationship.Widget
             lbFriendRecordName.Content = person.name + (num < 0 ? "" : (" (" + num.ToString() + ")"));
             lbFriendRecordGender.Content = person.gender;
             lbFriendRecordAge.Content = person.age;
-        }
 
-        private void contextmenuFriendRecord_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        {
-            if (commonNum >= 0)
+            if (num >= 0)
             {
-                e.Handled = true;
+                this.ContextMenu = null;
             }
         }
 

@@ -78,7 +78,7 @@
             FontWeight="Normal"
             Margin="20 0"
             Foreground="#333333"
-            Content="搜索">
+            Content="选择人员">
 
         </Label>
         

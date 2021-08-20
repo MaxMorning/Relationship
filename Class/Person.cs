@@ -152,5 +152,21 @@ namespace Relationship.Class
             monthIdx = maxMonth;
             return latestLive;
         }
+
+        public static int Compare(Person person0, Person person1)
+        {
+            if (person0.id < person1.id)
+            {
+                return -1;
+            }
+            else if (person0.id == person1.id)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
     }
 }

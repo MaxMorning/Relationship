@@ -20,5 +20,21 @@ namespace Relationship.Class
             this.id = SocialGroup.socialGroups.Count;
             SocialGroup.socialGroups.Add(this);
         }
+
+        public static int Compare(SocialGroup socialGroup0, SocialGroup socialGroup1)
+        {
+            if (socialGroup0.id < socialGroup1.id)
+            {
+                return -1;
+            }
+            else if (socialGroup0.id == socialGroup1.id)
+            {
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+        }
     }
 }

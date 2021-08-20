@@ -71,8 +71,7 @@
 
     <Grid.ContextMenu>
         <ContextMenu
-            Name="contextmenuFriendRecord"
-            ContextMenuOpening="contextmenuFriendRecord_ContextMenuOpening">
+            Name="contextmenuFriendRecord">
             <Button
                 Name="btFriendRecordDelete"
                 Style="{StaticResource LightButton}"

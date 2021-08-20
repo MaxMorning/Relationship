@@ -90,6 +90,9 @@
       <DependentUpon>EditExpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="NonLinearEasingFunction.cs" />
+    <Compile Include="SearchGroupWindow.xaml.cs">
+      <DependentUpon>SearchGroupWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchPersonWindow.xaml.cs">
       <DependentUpon>SearchPersonWindow.xaml</DependentUpon>
     </Compile>
@@ -128,6 +131,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SearchGroupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SearchPersonWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

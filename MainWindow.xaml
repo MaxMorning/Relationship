@@ -853,7 +853,7 @@
                         Height="40"
                         Style="{StaticResource SwitchButton}"
                         MinWidth="1"
-                        Content="添加好友"
+                        Content="修改好友"
                         FontSize="28"
                         Click="btSocialAddFriend_Click">
 
@@ -874,13 +874,15 @@
                     </Label>
 
                     <Button
+                        Name="btSocialEditGroup"
                         Grid.Row="1"
                         Grid.Column="4"
                         Height="40"
                         Style="{StaticResource SwitchButton}"
                         MinWidth="1"
-                        Content="添加群组"
-                        FontSize="28">
+                        Content="修改群组"
+                        FontSize="28"
+                        Click="btSocialEditGroup_Click">
 
                     </Button>
 

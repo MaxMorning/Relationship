@@ -25,6 +25,7 @@ namespace Relationship
 
         public SearchPersonWindow()
         {
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
         }
 
@@ -69,6 +70,7 @@ namespace Relationship
             else
             {
                 selectPerson = Person.persons[index];
+                this.Close();
             }
         }
 
@@ -81,14 +83,22 @@ namespace Relationship
             foreach (Person person in Person.persons)
             {
                 // todo parallel
-                if (person.enable && MainWindow.FuzzySearch(person.name, key) && !MainWindow.mainWindow.role.friends.Contains(person))
+                if (person.enable && MainWindow.FuzzySearch(person.name, key))
                 {
                     RoutedEventHandler routedEventHandler = (sArg, eArg) =>
                     {
                         selectPerson = person;
                         this.Close();
                     };
-                    spSearchSearchResult.Children.Add(new UserInfoDetailWithName(person, "添加", routedEventHandler));
+                    if (MainWindow.mainWindow.role.friends.Contains(person))
+                    {
+                        spSearchSearchResult.Children.Add(new UserInfoDetailWithName(person, "移除", routedEventHandler));
+                    }
+                    else
+                    {
+                        spSearchSearchResult.Children.Add(new UserInfoDetailWithName(person, "添加", routedEventHandler));
+                    }
+
                 }
             }
         }
