@@ -657,5 +657,111 @@ namespace Relationship
                 }
             }
         }
+
+        // Visualize Panel
+        private void btVisualizeStart_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private double prevHoriChange = 0;
+        private double prevVerChange = 0;
+        private double currentScaleRate = 1;
+        private void thumbVisualize_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            double currentLeft = Canvas.GetLeft(vbVisualizeCanvasViewbox);
+            double currentTop = Canvas.GetTop(vbVisualizeCanvasViewbox);
+
+            double newCanvasLeft = currentLeft + e.HorizontalChange - prevHoriChange;
+            Canvas.SetLeft(vbVisualizeCanvasViewbox, newCanvasLeft);
+
+            double newCanvasTop = currentTop + e.VerticalChange - prevVerChange;
+            Canvas.SetTop(vbVisualizeCanvasViewbox, newCanvasTop);
+
+            prevHoriChange = e.HorizontalChange;
+            prevVerChange = e.VerticalChange;
+        }
+
+        private void thumbVisualize_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            prevHoriChange = 0;
+            prevVerChange = 0;
+        }
+
+        private void thumbVisualize_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta == 0)
+            {
+                return;
+            }
+
+            double destination = e.Delta / Math.Abs(e.Delta);
+
+            if (currentScaleRate < 0.3 && destination < 0)
+            {
+                return;
+            }
+
+            if (currentScaleRate > 5 && destination > 0)
+            {
+                return;
+            }
+
+            currentScaleRate += destination * 0.1;
+            Point targetZoomFocus = e.GetPosition(vbVisualizeCanvasViewbox);
+
+            scaletransVisualizeDrawCanvas.ScaleX = currentScaleRate;
+            scaletransVisualizeDrawCanvas.ScaleY = currentScaleRate;
+
+            Point cursorPosAfter = e.GetPosition(vbVisualizeCanvasViewbox);
+
+            double deltaX = targetZoomFocus.X * destination * 0.1;
+            double deltaY = targetZoomFocus.Y * destination * 0.1;
+
+            double newCanvasLeft = Canvas.GetLeft(vbVisualizeCanvasViewbox) - deltaX;
+            double newCanvasTop = Canvas.GetTop(vbVisualizeCanvasViewbox) - deltaY;
+            Canvas.SetLeft(vbVisualizeCanvasViewbox, newCanvasLeft);
+            Canvas.SetTop(vbVisualizeCanvasViewbox, newCanvasTop);
+        }
+
+        private void thumbVisualize_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Storyboard storyboard = new Storyboard();
+            double durationTime = Math.Sqrt(Math.Pow(Canvas.GetLeft(vbVisualizeCanvasViewbox), 2) + Math.Pow(Canvas.GetTop(vbVisualizeCanvasViewbox), 2)) / 1000;
+            DoubleAnimation leftAnim = new DoubleAnimation(0, new Duration(TimeSpan.FromSeconds(durationTime)));
+            leftAnim.EasingFunction = nonLinearEasingFunction;
+            Storyboard.SetTarget(leftAnim, vbVisualizeCanvasViewbox);
+            Storyboard.SetTargetProperty(leftAnim, new PropertyPath("(Canvas.Left)"));
+            storyboard.Children.Add(leftAnim);
+
+            DoubleAnimation topAnim = new DoubleAnimation(0, new Duration(TimeSpan.FromSeconds(durationTime)));
+            topAnim.EasingFunction = nonLinearEasingFunction;
+            Storyboard.SetTarget(topAnim, vbVisualizeCanvasViewbox);
+            Storyboard.SetTargetProperty(topAnim, new PropertyPath("(Canvas.Top)"));
+            storyboard.Children.Add(topAnim);
+
+            DoubleAnimation scaleXAnim = new DoubleAnimation(1, new Duration(TimeSpan.FromSeconds(durationTime)));
+            scaleXAnim.EasingFunction = nonLinearEasingFunction;
+            Storyboard.SetTarget(scaleXAnim, vbVisualizeCanvasViewbox);
+            Storyboard.SetTargetProperty(scaleXAnim, new PropertyPath("RenderTransform.ScaleX"));
+            storyboard.Children.Add(scaleXAnim);
+
+            DoubleAnimation scaleYAnim = new DoubleAnimation(1, new Duration(TimeSpan.FromSeconds(durationTime)));
+            scaleYAnim.EasingFunction = nonLinearEasingFunction;
+            Storyboard.SetTarget(scaleYAnim, vbVisualizeCanvasViewbox);
+            Storyboard.SetTargetProperty(scaleYAnim, new PropertyPath("RenderTransform.ScaleY"));
+            storyboard.Children.Add(scaleYAnim);
+
+            storyboard.Completed += (sArg, eArg) =>
+            {
+                storyboard.Remove(vbVisualizeCanvasViewbox);
+                Canvas.SetLeft(vbVisualizeCanvasViewbox,0);
+                Canvas.SetTop(vbVisualizeCanvasViewbox,0);
+                scaletransVisualizeDrawCanvas.ScaleX = 1;
+                scaletransVisualizeDrawCanvas.ScaleY = 1;
+                currentScaleRate = 1;
+            };
+            storyboard.Begin(vbVisualizeCanvasViewbox, true);
+        }
     }
 }

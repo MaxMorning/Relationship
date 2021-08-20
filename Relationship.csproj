@@ -106,11 +106,11 @@
     <Compile Include="Widget\GroupRecordGrid.xaml.cs">
       <DependentUpon>GroupRecordGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Widget\PersonDot.xaml.cs">
+      <DependentUpon>PersonDot.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Widget\UserInfoDetailWithNameGrid.xaml.cs">
       <DependentUpon>UserInfoDetailWithNameGrid.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Widget\UserInfoWithoutNameGrid.xaml.cs">
-      <DependentUpon>UserInfoWithoutNameGrid.xaml</DependentUpon>
     </Compile>
     <Page Include="AlertDialogWindow.xaml">
       <SubType>Designer</SubType>
@@ -184,11 +184,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Widget\UserInfoDetailWithNameGrid.xaml">
+    <Page Include="Widget\PersonDot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Widget\UserInfoWithoutNameGrid.xaml">
+    <Page Include="Widget\UserInfoDetailWithNameGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

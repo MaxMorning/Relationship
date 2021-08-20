@@ -1189,22 +1189,44 @@
                     </Label>
 
                     <Canvas
-                        Name="VisualizeDrawCanvas"
+                        Name="canvasVisualizeMotherCanvas"
                         Grid.Row="0"
                         Grid.Column="0"
                         Grid.RowSpan="4"
                         Grid.ColumnSpan="3">
-                        
+
+                        <Viewbox
+                            Name="vbVisualizeCanvasViewbox"
+                            Stretch="None"
+                            Canvas.Left="0"
+                            Canvas.Top="0">
+                            <Viewbox.RenderTransform>
+                                <ScaleTransform x:Name="scaletransVisualizeDrawCanvas" ScaleX="1" ScaleY="1"/>
+                            </Viewbox.RenderTransform>
+                            <Canvas
+                                Name="canvasVisualizeDrawCanvas">
+                                <Label
+                                    Canvas.Left="300"
+                                    Canvas.Top="300"
+                                    Content="Test">
+                                    
+                                </Label>
+                            </Canvas>
+                        </Viewbox>
                     </Canvas>
 
                     <Thumb
-                        Name="VisualizeThumb"
+                        Name="thumbVisualize"
                         Grid.Row="0"
                         Grid.Column="0"
                         Grid.RowSpan="4"
                         Grid.ColumnSpan="3"
                         Background="White"
-                        Opacity="0">
+                        Opacity="0"
+                        DragDelta="thumbVisualize_DragDelta"
+                        DragCompleted="thumbVisualize_DragCompleted"
+                        MouseWheel="thumbVisualize_MouseWheel"
+                        MouseDoubleClick="thumbVisualize_MouseDoubleClick">
                         
                     </Thumb>
                     
@@ -1348,14 +1370,16 @@
                         </TextBox>
 
                         <Button
+                            Name="btVisualizeStart"
                             Grid.Row="5"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
                             Style="{StaticResource SwitchButton}"
                             MinWidth="1"
-                            Content="确认"
+                            Content="开始"
                             FontSize="24"
-                            Margin="0 5 0 0">
+                            Margin="0 5 0 0"
+                            Click="btVisualizeStart_Click">
                             
                         </Button>
                     </Grid>
@@ -1571,8 +1595,71 @@
                         
                     </Grid>
 
-                    <ScrollViewer
+                    <Grid
                         Grid.Row="2"
+                        Grid.Column="2"
+                        Margin="10 0"
+                         Height="40">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="75"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Margin="0 0"
+                            Content="编号">
+
+                        </Label>
+
+                        <Label
+                            Grid.Column="1"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Margin="0 0"
+                            Content="姓名">
+
+                        </Label>
+
+                        <Label
+                            Grid.Column="2"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontSize="18"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Margin="0 0"
+                            Content="性别">
+
+                        </Label>
+
+                        <Label
+                                    Grid.Column="3"
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="18"
+                                    FontFamily="微软雅黑"
+                                    FontWeight="Normal"
+                                    Foreground="#555555"
+                                    Margin="0 0"
+                                    Content="年龄">
+
+                        </Label>
+                    </Grid>
+                    <ScrollViewer
+                        Grid.Row="3"
                         Grid.Column="2"
                         Grid.RowSpan="2"
                         Margin="10"
@@ -1653,7 +1740,7 @@
                         Grid.Row="1"
                         Grid.Column="1"
                         Style="{StaticResource EditView}"
-                        Text="0"
+                        Text=""
                         Margin="0 0 0 0">
 
                     </TextBox>
