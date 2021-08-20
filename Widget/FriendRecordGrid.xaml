@@ -93,6 +93,17 @@
                 Click="btFriendRecordDelete_Click">
 
             </Button>
+
+            <Button
+                Name="btFriendRecordAddFriend"
+                Style="{StaticResource LightButton}"
+                Content="添加好友"
+                FontSize="24"
+                Height="30"
+                MinWidth="1"
+                Click="btFriendRecordAddFriend_Click">
+
+            </Button>
         </ContextMenu>
     </Grid.ContextMenu>
 </Grid>

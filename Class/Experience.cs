@@ -28,5 +28,25 @@ namespace Relationship.Class
                 return 1;
             }
         }
+
+        public bool HaveRelation(Experience experience)
+        {
+            if (beginMonthIdx >= experience.beginMonthIdx && beginMonthIdx <= experience.endMonthIdx)
+            {
+                return true;
+            }
+
+            if (endMonthIdx >= experience.beginMonthIdx && endMonthIdx <= experience.endMonthIdx)
+            {
+                return true;
+            }
+
+            if (beginMonthIdx <= experience.beginMonthIdx && endMonthIdx >= experience.endMonthIdx)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

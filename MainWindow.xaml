@@ -313,7 +313,7 @@
                         Grid.Column="1"
                         Style="{StaticResource EditView}"
                         Width="200"
-                        Text="张伟">
+                        Text="">
                         
                     </TextBox>
 
@@ -1393,18 +1393,40 @@
 
                     </Label>
 
-                    <Label
+                    <Grid
                         Grid.Row="1"
-                        Grid.Column="0"
-                        HorizontalContentAlignment="Left"
-                        VerticalContentAlignment="Center"
-                        FontSize="24"
-                        FontFamily="微软雅黑"
-                        FontWeight="Normal"
-                        Foreground="#555555"
-                        Content="可能认识的人">
+                        Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
 
-                    </Label>
+                        <Label
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Center"
+                            FontSize="24"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Content="可能认识的人">
+
+                        </Label>
+
+                        <Button
+                            Name="btRelationPossibleFriend"
+                            Grid.Column="1"
+                            Height="40"
+                            Style="{StaticResource SwitchButton}"
+                            MinWidth="1"
+                            Content="检索"
+                            Margin="0 0 20 0"
+                            FontSize="30"
+                            Click="btRelationPossibleFriend_Click">
+
+                        </Button>
+                    </Grid>
+                    
 
                     <Grid
                         Grid.Row="2"
@@ -1477,6 +1499,7 @@
                         Style="{StaticResource CustomScrollView}">
 
                         <StackPanel
+                            Name="spPossibleFriend"
                             Orientation="Vertical">
                             <!--Possible Friend Widget-->
                             
@@ -1501,19 +1524,40 @@
                         </Path.Data>
                     </Path>
 
-                    <Label
+                    <Grid
                         Grid.Row="1"
-                        Grid.Column="2"
-                        HorizontalContentAlignment="Left"
-                        VerticalContentAlignment="Center"
-                        FontSize="24"
-                        FontFamily="微软雅黑"
-                        FontWeight="Normal"
-                        Foreground="#555555"
-                        Margin="10 0 0 0"
-                        Content="检索关系">
+                        Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Center"
+                            FontSize="24"
+                            FontFamily="微软雅黑"
+                            FontWeight="Normal"
+                            Foreground="#555555"
+                            Margin="30 0 0 0"
+                            Content="检索关系">
 
-                    </Label>
+                        </Label>
+
+                        <Button
+                            Name="btRelationChooseTarget"
+                            Grid.Column="1"
+                            Height="40"
+                            Style="{StaticResource SwitchButton}"
+                            MinWidth="1"
+                            Content="选择对象"
+                            Margin="0 0 20 0"
+                            FontSize="30"
+                            Click="btRelationChooseTarget_Click">
+
+                        </Button>
+                    </Grid>
+                    
 
                     <Grid
                         Margin="10 0 0 0"
@@ -1524,33 +1568,18 @@
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBox
-                            Grid.Column="0"
-                            Style="{StaticResource EditView}"
-                            Text="15332"
-                            Margin="20 0 0 0">
-                            
-                        </TextBox>
-
-                        <Button
-                            Grid.Column="1"
-                            Height="40"
-                            Style="{StaticResource SwitchButton}"
-                            MinWidth="1"
-                            Content="以编号检索"
-                            Margin="0"
-                            FontSize="26">
-
-                        </Button>
+                        
                     </Grid>
 
                     <ScrollViewer
-                        Grid.Row="3"
+                        Grid.Row="2"
                         Grid.Column="2"
+                        Grid.RowSpan="2"
                         Margin="10"
                         Style="{StaticResource CustomScrollView}">
 
                         <StackPanel
+                            Name="spRelationRelationship"
                             Orientation="Vertical">
                             <!--Possible Friend Widget-->
 

@@ -35,9 +35,14 @@ namespace Relationship.Widget
             lbFriendRecordGender.Content = person.gender;
             lbFriendRecordAge.Content = person.age;
 
-            if (num >= 0)
+            if (num == -1)
             {
-                this.ContextMenu = null;
+                this.ContextMenu.Items.Remove(btFriendRecordDelete);
+                this.ContextMenu.Items.Remove(btFriendRecordGetInfo);
+            }
+            else
+            {
+                this.ContextMenu.Items.Remove(btFriendRecordAddFriend);
             }
         }
 
@@ -52,6 +57,15 @@ namespace Relationship.Widget
         {
             MainWindow.mainWindow.InitPanel(1, relatedPerson.id);
             MainWindow.mainWindow.SwitchPanel(1, null);
+            MainWindow.mainWindow.Focus();
+        }
+
+        private void btFriendRecordAddFriend_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.mainWindow.role.MakeFriend(relatedPerson);
+            MainWindow.mainWindow.role.friends.Sort(Person.Compare);
+            MainWindow.mainWindow.btRelationPossibleFriend_Click(null, null);
+
             MainWindow.mainWindow.Focus();
         }
     }

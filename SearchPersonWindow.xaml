@@ -112,7 +112,7 @@
                 Grid.Column="1"
                 Style="{StaticResource EditView}"
                 Width="200"
-                Text="张伟">
+                Text="">
 
             </TextBox>
 
@@ -134,8 +134,7 @@
                 Content="搜索姓名"
                 FontSize="26"
                 Margin="5"
-                MinWidth="1"
-                Click="btSearchSearchName_Click">
+                MinWidth="1">
 
             </Button>
         </Grid>

@@ -27,6 +27,15 @@ namespace Relationship
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
+
+            if (MainWindow.mainWindow.currentPanelIdx == 4)
+            {
+                btSearchSearchName.Click += SearchPerson;
+            }
+            else
+            {
+                btSearchSearchName.Click += btSearchSearchName_Click;
+            }
         }
 
         private void rectSearchPersonTop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -99,6 +108,27 @@ namespace Relationship
                         spSearchSearchResult.Children.Add(new UserInfoDetailWithName(person, "添加", routedEventHandler));
                     }
 
+                }
+            }
+        }
+
+        private void SearchPerson(object sender, RoutedEventArgs e)
+        {
+            spSearchSearchResult.Children.Clear();
+            string key = tbSearchIdxName.Text;
+
+            // todo parallel
+            foreach (Person person in Person.persons)
+            {
+                // todo parallel
+                if (person.enable && person != MainWindow.mainWindow.role && MainWindow.FuzzySearch(person.name, key))
+                {
+                    RoutedEventHandler routedEventHandler = (sArg, eArg) =>
+                    {
+                        selectPerson = person;
+                        this.Close();
+                    };
+                    spSearchSearchResult.Children.Add(new UserInfoDetailWithName(person, "选择", routedEventHandler));
                 }
             }
         }

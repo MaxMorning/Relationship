@@ -136,6 +136,13 @@ namespace Relationship
                         break;
                     }
 
+                case 4:
+                    {
+                        spPossibleFriend.Children.Clear();
+                        spRelationRelationship.Children.Clear();
+                        break;
+                    }
+
                 case 5:
                     {
                         groupPanelGroup = null;
@@ -148,7 +155,7 @@ namespace Relationship
         
         // 左侧切换栏实现
         private Button[] switchButtons = new Button[6];
-        private int currentPanelIdx = 0;
+        public int currentPanelIdx = 0;
         private Grid[] panelGrids = new Grid[6];
         private void SwitchButton_Click(object sender, RoutedEventArgs e)
         {
@@ -165,18 +172,8 @@ namespace Relationship
                 return;
             }
 
-            if (clickIdx != 3 && clickIdx != 4)
-            {
-                InitPanel(clickIdx, role.id);
-                SwitchPanel(clickIdx, null);
-            }
-            else
-            {
-                SwitchPanel(clickIdx, (sArg, eArg) =>
-                {
-                    InitPanel(clickIdx, role.id);
-                });
-            }
+            InitPanel(clickIdx, role.id);
+            SwitchPanel(clickIdx, null);
         }
 
         public double SwitchPanel(int targetPanelIdx, EventHandler eventHandlerAfterAnim)
@@ -595,6 +592,69 @@ namespace Relationship
             {
                 AlertDialogWindow alertDialogWindow = new AlertDialogWindow("群组名称不能为空，请检查。");
                 alertDialogWindow.ShowAlertDialog();
+            }
+        }
+
+        // Relationship Panel
+        private void btRelationChooseTarget_Click(object sender, RoutedEventArgs e)
+        {
+            SearchPersonWindow searchPersonWindow = new SearchPersonWindow();
+            searchPersonWindow.ShowSearchDialog();
+
+            if (searchPersonWindow.selectPerson != null)
+            {
+                List<Person> relationChain = role.GetRelationship(searchPersonWindow.selectPerson, out List<string> relations);
+
+                if (relationChain != null)
+                {
+                    spRelationRelationship.Children.Clear();
+                    spRelationRelationship.Children.Add(new FriendRecordGrid(role, -1));
+
+                    for (int i = 1; i < relationChain.Count; ++i)
+                    {
+                        spRelationRelationship.Children.Add(Person.GetRelationLabel(relations[i]));
+                        spRelationRelationship.Children.Add(new FriendRecordGrid(relationChain[i], -2));
+                    }
+                }
+                else
+                {
+                    AlertDialogWindow alertDialogWindow = new AlertDialogWindow("未找到从" + role.name + "到" + searchPersonWindow.selectPerson.name + "的关系。");
+                    alertDialogWindow.ShowAlertDialog();
+                }
+            }
+        }
+
+        public void btRelationPossibleFriend_Click(object sender, RoutedEventArgs e)
+        {
+            List<Person> possibleFriend = role.PossibleFriend(out List<int> commonFriendCount);
+
+            SortPossibleFriend(possibleFriend, commonFriendCount);
+            spPossibleFriend.Children.Clear();
+            for (int i = 0; i < possibleFriend.Count; ++i)
+            {
+                spPossibleFriend.Children.Add(new FriendRecordGrid(possibleFriend[i], commonFriendCount[i]));
+            }
+        }
+
+        // todo parallel
+        private void SortPossibleFriend(List<Person> possibleFriend, List<int> commonFriendCount)
+        {
+            for (int i = commonFriendCount.Count - 1; i >= 0; --i)
+            {
+                for (int j = 0; j < i; ++j)
+                {
+                    if (commonFriendCount[j] < commonFriendCount[j + 1])
+                    {
+                        int tempInt = commonFriendCount[j];
+                        Person tempPerson = possibleFriend[j];
+
+                        commonFriendCount[j] = commonFriendCount[j + 1];
+                        possibleFriend[j] = possibleFriend[j + 1];
+
+                        commonFriendCount[j + 1] = tempInt;
+                        possibleFriend[j + 1] = tempPerson;
+                    }
+                }
             }
         }
     }
