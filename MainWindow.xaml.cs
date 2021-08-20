@@ -217,6 +217,7 @@ namespace Relationship
         public void SetRole(Person person)
         {
             role = person;
+            canvasVisualizeDrawCanvas.Children.Clear();
             if (person.name.Length == 2)
             {
                 lbSwitchRole.Content = person.name[0] + " " + person.name[1];
@@ -661,7 +662,251 @@ namespace Relationship
         // Visualize Panel
         private void btVisualizeStart_Click(object sender, RoutedEventArgs e)
         {
+            if (((Button)sender).MinWidth < 0.5)
+            {
+                return;
+            }
+            try
+            {
+                int totalLayer = int.Parse(tbVisualizeLayer.Text);
+                if (totalLayer <= 1)
+                {
+                    AlertDialogWindow alertDialogWindow = new AlertDialogWindow("展示层数不能小于2。");
+                    alertDialogWindow.ShowAlertDialog();
+                    return;
+                }
+                PersonDot.gravityRate = double.Parse(tbVisualizeGravity.Text);
+                PersonDot.repulsiveRate = double.Parse(tbVisualizeRepulsive.Text);
+                int iterTime = int.Parse(tbVisualizeIterTime.Text);
+                if (iterTime < 1)
+                {
+                    AlertDialogWindow alertDialogWindow = new AlertDialogWindow("迭代次数不能小于1。");
+                    alertDialogWindow.ShowAlertDialog();
+                    return;
+                }
 
+                ((Button)sender).MinWidth = 0;
+                // set lists
+                PersonDot.allPersonDots.Clear();
+                canvasVisualizeDrawCanvas.Children.Clear();
+                Dictionary<int, RelationLine> uniqueRelations = new Dictionary<int, RelationLine>();
+                HashSet<Person> uniquePerson = new HashSet<Person>();
+
+                List<Person>[] personInLayers = new List<Person>[totalLayer + 1];
+                for (int i = 0; i < totalLayer + 1; ++i)
+                {
+                    personInLayers[i] = new List<Person>();
+                }
+
+                // clear temp
+                for (int i = 0; i < Person.persons.Count; ++i)
+                {
+                    Person.persons[i].tempSchoolmates = null;
+                    Person.persons[i].tempColleagues = null;
+                    Person.persons[i].tempCitizens = null;
+                }
+
+                personInLayers[0].Add(role);
+                PersonDot roleDot = new PersonDot(role, null);
+                PersonDot.allPersonDots.Add(roleDot);
+                uniquePerson.Add(role);
+                for (int i = 0; i < totalLayer; ++i)
+                {
+                    for (int idx = 0; idx < personInLayers[i].Count; ++idx)
+                    {
+                        // check friends
+                        for (int j = 0; j < personInLayers[i][idx].friends.Count; ++j)
+                        {
+                            Person person = personInLayers[i][idx].friends[j];
+                            if (person.enable)
+                            {
+                                if (!uniquePerson.Contains(person))
+                                {
+                                    PersonDot personDot = new PersonDot(person, personInLayers[i][idx].relatedDot);
+                                    PersonDot.allPersonDots.Add(personDot);
+                                    personInLayers[i + 1].Add(person);
+                                    uniquePerson.Add(person);
+                                }
+
+                                int key = person.id > personInLayers[i][idx].id ? personInLayers[i][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[i][idx].id;
+                                bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+
+                                if (!searchSuccess || relationLine.relationRate < Person.friendRate)
+                                {
+                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.friendRate);
+                                }
+                            }
+                        }
+
+                        // check schoolmates
+                        HashSet<Person> relatedSchoolmates = personInLayers[i][idx].GetRelatedSchoolmates();
+                        foreach (Person person in relatedSchoolmates)
+                        {
+                            if (person.enable)
+                            {
+                                if (!uniquePerson.Contains(person))
+                                {
+                                    PersonDot personDot = new PersonDot(person, personInLayers[i][idx].relatedDot);
+                                    PersonDot.allPersonDots.Add(personDot);
+                                    personInLayers[i + 1].Add(person);
+                                    uniquePerson.Add(person);
+                                }
+
+                                int key = person.id > personInLayers[i][idx].id ? personInLayers[i][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[i][idx].id;
+                                bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+
+                                if (!searchSuccess || relationLine.relationRate < Person.schoolmateRate)
+                                {
+                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.schoolmateRate);
+                                }
+                            }
+                        }
+
+                        // check colleagues
+                        HashSet<Person> relatedColleagues = personInLayers[i][idx].GetRelatedColleagues();
+                        foreach (Person person in relatedColleagues)
+                        {
+                            if (person.enable)
+                            {
+                                if (!uniquePerson.Contains(person))
+                                {
+                                    PersonDot personDot = new PersonDot(person, personInLayers[i][idx].relatedDot);
+                                    PersonDot.allPersonDots.Add(personDot);
+                                    personInLayers[i + 1].Add(person);
+                                    uniquePerson.Add(person);
+                                }
+
+                                int key = person.id > personInLayers[i][idx].id ? personInLayers[i][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[i][idx].id;
+                                bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+
+                                if (!searchSuccess || relationLine.relationRate < Person.colleagueRate)
+                                {
+                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.colleagueRate);
+                                }
+                            }
+                        }
+
+                        // check citizens
+                        HashSet<Person> relatedCitizens = personInLayers[i][idx].GetRelatedCitizens();
+                        foreach (Person person in relatedCitizens)
+                        {
+                            if (person.enable)
+                            {
+                                if (!uniquePerson.Contains(person))
+                                {
+                                    PersonDot personDot = new PersonDot(person, personInLayers[i][idx].relatedDot);
+                                    PersonDot.allPersonDots.Add(personDot);
+                                    personInLayers[i + 1].Add(person);
+                                    uniquePerson.Add(person);
+                                }
+
+                                int key = person.id > personInLayers[i][idx].id ? personInLayers[i][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[i][idx].id;
+                                bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+
+                                if (!searchSuccess || relationLine.relationRate < Person.citizenRate)
+                                {
+                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.citizenRate);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // last layer process
+                for (int idx = 0; idx < personInLayers[totalLayer].Count; ++idx)
+                {
+                    // check friends
+                    for (int j = 0; j < personInLayers[totalLayer][idx].friends.Count; ++j)
+                    {
+                        Person person = personInLayers[totalLayer][idx].friends[j];
+                        if (person.enable)
+                        {
+                            int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
+                            bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+
+                            if (!searchSuccess || relationLine.relationRate < Person.friendRate)
+                            {
+                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.friendRate);
+                            }
+                        }
+                    }
+
+                    // check schoolmates
+                    HashSet<Person> relatedSchoolmates = personInLayers[totalLayer][idx].GetRelatedSchoolmates();
+                    foreach (Person person in relatedSchoolmates)
+                    {
+                        if (person.enable)
+                        {
+                            int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
+                            bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+
+                            if (!searchSuccess || relationLine.relationRate < Person.schoolmateRate)
+                            {
+                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.schoolmateRate);
+                            }
+                        }
+                    }
+
+                    // check colleagues
+                    HashSet<Person> relatedColleagues = personInLayers[totalLayer][idx].GetRelatedColleagues();
+                    foreach (Person person in relatedColleagues)
+                    {
+                        if (person.enable)
+                        {
+                            int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
+                            bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+
+                            if (!searchSuccess || relationLine.relationRate < Person.colleagueRate)
+                            {
+                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.colleagueRate);
+                            }
+                        }
+                    }
+
+                    // check citizens
+                    HashSet<Person> relatedCitizens = personInLayers[totalLayer][idx].GetRelatedCitizens();
+                    foreach (Person person in relatedCitizens)
+                    {
+                        if (person.enable)
+                        {
+                            int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
+                            bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+
+                            if (!searchSuccess || relationLine.relationRate < Person.citizenRate)
+                            {
+                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.citizenRate);
+                            }
+                        }
+                    }
+                }
+
+                // write to allLinks
+                RelationLine.allLinks.Clear();
+                foreach (RelationLine relationLine in uniqueRelations.Values)
+                {
+                    relationLine.personDot0.links.Add(relationLine);
+                    relationLine.personDot1.links.Add(relationLine);
+                    RelationLine.allLinks.Add(relationLine);
+                    canvasVisualizeDrawCanvas.Children.Add(relationLine);
+                }
+
+                for (int i = 0; i < PersonDot.allPersonDots.Count; ++i)
+                {
+                    canvasVisualizeDrawCanvas.Children.Add(PersonDot.allPersonDots[i]);
+                }
+
+                // start iter
+                for (int i = 0; i < iterTime; ++i)
+                {
+                    PersonDot.ExecEpoch();
+                }
+                ((Button)sender).MinWidth = 1;
+            }
+            catch (Exception)
+            {
+                AlertDialogWindow alertDialogWindow = new AlertDialogWindow("存在非法输入，请检查。");
+                alertDialogWindow.ShowAlertDialog();
+            }
         }
 
         private double prevHoriChange = 0;
@@ -702,7 +947,7 @@ namespace Relationship
                 return;
             }
 
-            if (currentScaleRate > 5 && destination > 0)
+            if (currentScaleRate > 3 && destination > 0)
             {
                 return;
             }
@@ -755,8 +1000,8 @@ namespace Relationship
             storyboard.Completed += (sArg, eArg) =>
             {
                 storyboard.Remove(vbVisualizeCanvasViewbox);
-                Canvas.SetLeft(vbVisualizeCanvasViewbox,0);
-                Canvas.SetTop(vbVisualizeCanvasViewbox,0);
+                Canvas.SetLeft(vbVisualizeCanvasViewbox, 0);
+                Canvas.SetTop(vbVisualizeCanvasViewbox, 0);
                 scaletransVisualizeDrawCanvas.ScaleX = 1;
                 scaletransVisualizeDrawCanvas.ScaleY = 1;
                 currentScaleRate = 1;

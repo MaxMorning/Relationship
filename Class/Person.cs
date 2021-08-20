@@ -16,6 +16,7 @@ namespace Relationship.Class
         public string name;
         public string gender;
         public int age;
+        public PersonDot relatedDot;
         public List<Person> friends = new List<Person>();
         public List<Experience> liveExp = new List<Experience>();
         public List<Experience> eduExp = new List<Experience>();

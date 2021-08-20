@@ -1188,6 +1188,21 @@
 
                     </Label>
 
+                    <Thumb
+                        Name="thumbVisualize"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.RowSpan="4"
+                        Grid.ColumnSpan="3"
+                        Background="White"
+                        Opacity="0"
+                        DragDelta="thumbVisualize_DragDelta"
+                        DragCompleted="thumbVisualize_DragCompleted"
+                        MouseWheel="thumbVisualize_MouseWheel"
+                        MouseDoubleClick="thumbVisualize_MouseDoubleClick">
+
+                    </Thumb>
+                    
                     <Canvas
                         Name="canvasVisualizeMotherCanvas"
                         Grid.Row="0"
@@ -1209,27 +1224,12 @@
                                     Canvas.Left="300"
                                     Canvas.Top="300"
                                     Content="Test">
-                                    
+
                                 </Label>
                             </Canvas>
                         </Viewbox>
                     </Canvas>
 
-                    <Thumb
-                        Name="thumbVisualize"
-                        Grid.Row="0"
-                        Grid.Column="0"
-                        Grid.RowSpan="4"
-                        Grid.ColumnSpan="3"
-                        Background="White"
-                        Opacity="0"
-                        DragDelta="thumbVisualize_DragDelta"
-                        DragCompleted="thumbVisualize_DragCompleted"
-                        MouseWheel="thumbVisualize_MouseWheel"
-                        MouseDoubleClick="thumbVisualize_MouseDoubleClick">
-                        
-                    </Thumb>
-                    
                     <Path
                         Grid.Row="3"
                         Grid.Column="2"
@@ -1293,6 +1293,7 @@
                         </Label>
 
                         <TextBox
+                            Name="tbVisualizeLayer"
                             Grid.Row="1"
                             Grid.Column="1"
                             Style="{StaticResource EditView}"
@@ -1315,6 +1316,7 @@
                         </Label>
 
                         <TextBox
+                            Name="tbVisualizeGravity"
                             Grid.Row="2"
                             Grid.Column="1"
                             Style="{StaticResource EditView}"
@@ -1338,11 +1340,12 @@
                         </Label>
 
                         <TextBox
+                            Name="tbVisualizeRepulsive"
                             Grid.Row="3"
                             Grid.Column="1"
                             Style="{StaticResource EditView}"
                             Width="190"
-                            Text="0.10">
+                            Text="5.00">
 
                         </TextBox>
 
@@ -1361,6 +1364,7 @@
                         </Label>
 
                         <TextBox
+                            Name="tbVisualizeIterTime"
                             Grid.Row="4"
                             Grid.Column="1"
                             Style="{StaticResource EditView}"

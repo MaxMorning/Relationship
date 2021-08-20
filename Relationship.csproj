@@ -109,6 +109,9 @@
     <Compile Include="Widget\PersonDot.xaml.cs">
       <DependentUpon>PersonDot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Widget\RelationLine.xaml.cs">
+      <DependentUpon>RelationLine.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Widget\UserInfoDetailWithNameGrid.xaml.cs">
       <DependentUpon>UserInfoDetailWithNameGrid.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Widget\PersonDot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Widget\RelationLine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
