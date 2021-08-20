@@ -73,9 +73,9 @@ namespace Relationship.Class
                 case 0:
                     {
                         MainWindow.mainWindow.spInfoLive.Children.Clear();
-                        foreach (Experience experience in liveExp)
+                        for (int idx = 0; idx < liveExp.Count; ++idx)
                         {
-                            MainWindow.mainWindow.spInfoLive.Children.Add(new ExpRecordGrid(experience, 0));
+                            MainWindow.mainWindow.spInfoLive.Children.Add(new ExpRecordGrid(liveExp[idx], 0));
                         }
                         break;
                     }
@@ -83,9 +83,9 @@ namespace Relationship.Class
                 case 1:
                     {
                         MainWindow.mainWindow.spInfoEdu.Children.Clear();
-                        foreach (Experience experience in eduExp)
+                        for (int idx = 0; idx < eduExp.Count; ++idx)
                         {
-                            MainWindow.mainWindow.spInfoEdu.Children.Add(new ExpRecordGrid(experience, 1));
+                            MainWindow.mainWindow.spInfoEdu.Children.Add(new ExpRecordGrid(eduExp[idx], 1));
                         }
                         break;
                     }
@@ -93,9 +93,9 @@ namespace Relationship.Class
                 case 2:
                     {
                         MainWindow.mainWindow.spInfoWork.Children.Clear();
-                        foreach (Experience experience in workExp)
+                        for (int idx = 0; idx < workExp.Count; ++idx)
                         {
-                            MainWindow.mainWindow.spInfoWork.Children.Add(new ExpRecordGrid(experience, 2));
+                            MainWindow.mainWindow.spInfoWork.Children.Add(new ExpRecordGrid(workExp[idx], 2));
                         }
                         break;
                     }
@@ -106,12 +106,12 @@ namespace Relationship.Class
         {
             int maxMonth = -2147483647;
             string latestEdu = "无";
-            foreach (Experience experience in eduExp)
+            for (int idx = 0; idx < eduExp.Count; ++idx)
             {
-                if (experience.endMonthIdx > maxMonth)
+                if (eduExp[idx].endMonthIdx > maxMonth)
                 {
-                    maxMonth = experience.endMonthIdx;
-                    latestEdu = experience.relatedGroup.name;
+                    maxMonth = eduExp[idx].endMonthIdx;
+                    latestEdu = eduExp[idx].relatedGroup.name;
                 }
             }
 
@@ -123,12 +123,12 @@ namespace Relationship.Class
         {
             int maxMonth = -2147483647;
             string latestWork = "无";
-            foreach (Experience experience in workExp)
+            for (int idx = 0; idx < workExp.Count; ++idx)
             {
-                if (experience.endMonthIdx > maxMonth)
+                if (workExp[idx].endMonthIdx > maxMonth)
                 {
-                    maxMonth = experience.endMonthIdx;
-                    latestWork = experience.relatedGroup.name;
+                    maxMonth = workExp[idx].endMonthIdx;
+                    latestWork = workExp[idx].relatedGroup.name;
                 }
             }
 
@@ -140,12 +140,12 @@ namespace Relationship.Class
         {
             int maxMonth = -2147483647;
             string latestLive = "无";
-            foreach (Experience experience in liveExp)
+            for (int idx = 0; idx < liveExp.Count; ++idx)
             {
-                if (experience.endMonthIdx > maxMonth)
+                if (liveExp[idx].endMonthIdx > maxMonth)
                 {
-                    maxMonth = experience.endMonthIdx;
-                    latestLive = experience.relatedGroup.name;
+                    maxMonth = liveExp[idx].endMonthIdx;
+                    latestLive = liveExp[idx].relatedGroup.name;
                 }
             }
 

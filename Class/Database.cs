@@ -22,11 +22,11 @@ namespace Relationship.Class
                 string buffer = System.Text.Encoding.ASCII.GetString(bufferByte);
                 string[] decodeResult = buffer.Split(new char[] { ' ', '=', '\n' });
                 List<string> realResult = new List<string>();
-                foreach (string str in decodeResult)
+                for (int idx = 0; idx < decodeResult.Length; ++idx)
                 {
-                    if (str.Length != 0)
+                    if (decodeResult[idx].Length != 0)
                     {
-                        realResult.Add(str);
+                        realResult.Add(decodeResult[idx]);
                     }
                 }
                 for (int i = 0; i < realResult.Count; i += 2)

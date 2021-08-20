@@ -110,21 +110,21 @@ namespace Relationship
 
                         // Exp area set
                         spInfoLive.Children.Clear();
-                        foreach (Experience experience in currentPerson.liveExp)
+                        for (int i = 0; i < currentPerson.liveExp.Count; ++i)
                         {
-                            spInfoLive.Children.Add(new ExpRecordGrid(experience, 0));
+                            spInfoLive.Children.Add(new ExpRecordGrid(currentPerson.liveExp[i], 0));
                         }
 
                         spInfoEdu.Children.Clear();
-                        foreach (Experience experience in currentPerson.eduExp)
+                        for (int i = 0; i < currentPerson.eduExp.Count; ++i)
                         {
-                            spInfoEdu.Children.Add(new ExpRecordGrid(experience, 1));
+                            spInfoEdu.Children.Add(new ExpRecordGrid(currentPerson.eduExp[i], 1));
                         }
 
                         spInfoWork.Children.Clear();
-                        foreach (Experience experience in currentPerson.workExp)
+                        for (int i = 0; i < currentPerson.workExp.Count; ++i)
                         {
-                            spInfoWork.Children.Add(new ExpRecordGrid(experience, 2));
+                            spInfoWork.Children.Add(new ExpRecordGrid(currentPerson.workExp[i], 2));
                         }
                         break;
                     }
@@ -326,17 +326,17 @@ namespace Relationship
             string key = tbStartIdxName.Text;
 
             // todo parallel
-            foreach (Person person in Person.persons)
+            for (int idx = 0; idx < Person.persons.Count; ++idx)
             {
-                if (FuzzySearch(person.name, key))
+                if (FuzzySearch(Person.persons[idx].name, key))
                 {
                     RoutedEventHandler routedEventHandler = (sArg, eArg) =>
                     {
-                        SetRole(person);
-                        InitPanel(1, person.id);
+                        SetRole(Person.persons[idx]);
+                        InitPanel(1, Person.persons[idx].id);
                         SwitchPanel(1, null);
                     };
-                    spStartSearchResult.Children.Add(new UserInfoDetailWithName(person, "选择", routedEventHandler));
+                    spStartSearchResult.Children.Add(new UserInfoDetailWithName(Person.persons[idx], "选择", routedEventHandler));
                 }
             }
         }
@@ -409,11 +409,11 @@ namespace Relationship
             spSocialFriend.Children.Clear();
 
             role.friends.Sort(Person.Compare);
-            foreach (Person friend in role.friends)
+            for (int idx = 0; idx < role.friends.Count; ++idx)
             {
-                if (friend.enable)
+                if (role.friends[idx].enable)
                 {
-                    spSocialFriend.Children.Add(new FriendRecordGrid(friend, -1));
+                    spSocialFriend.Children.Add(new FriendRecordGrid(role.friends[idx], -1));
                 }
             }
         }
@@ -423,9 +423,9 @@ namespace Relationship
             spSocialGroup.Children.Clear();
 
             role.socialGroups.Sort(SocialGroup.Compare);
-            foreach (SocialGroup socialGroup in role.socialGroups)
+            for (int idx = 0; idx < role.socialGroups.Count; ++idx)
             {
-                spSocialGroup.Children.Add(new GroupRecordGrid(socialGroup, true));
+                spSocialGroup.Children.Add(new GroupRecordGrid(role.socialGroups[idx], true));
             }
         }
 
