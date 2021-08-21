@@ -27,6 +27,7 @@ namespace Relationship.Widget
         public static Random random = new Random();
 
         public Person relatedPerson;
+        public Point speed = new Point(0, 0);
         public List<PersonDot> noLinkPersonDot = new List<PersonDot>();
         public List<RelationLine> links = new List<RelationLine>();
         
@@ -48,8 +49,8 @@ namespace Relationship.Widget
                 double parentLeft = Canvas.GetLeft(parent);
                 double parentTop = Canvas.GetTop(parent);
 
-                Canvas.SetLeft(this, parentLeft + random.Next(-100, 100));
-                Canvas.SetTop(this, parentTop + random.Next(-100, 100));
+                Canvas.SetLeft(this, parentLeft + random.Next(-200, 200));
+                Canvas.SetTop(this, parentTop + random.Next(-200, 200));
             }
         }
 
@@ -63,17 +64,22 @@ namespace Relationship.Widget
         {
             Point point = new Point(0, 0);
 
+            double dotLeft = Canvas.GetLeft(this);
+            double dotTop = Canvas.GetTop(this);
+
             for (int i = 0; i < links.Count; ++i)
             {
                 double deltaLength = links[i].Width - 100;
                 double angle = links[i].rotateTransform.Angle * Math.PI / 180;
+                if (links[i].personDot0 != this)
+                {
+                    angle += Math.PI;
+                }
 
-                point.X -= gravityRate * deltaLength * Math.Cos(angle); 
-                point.Y -= gravityRate * deltaLength * Math.Sin(angle); 
+                point.X += gravityRate * deltaLength * Math.Cos(angle);
+                point.Y += gravityRate * deltaLength * Math.Sin(angle);
             }
 
-            double dotLeft = Canvas.GetLeft(this);
-            double dotTop = Canvas.GetTop(this);
             for (int i = 0; i < noLinkPersonDot.Count; ++i)
             {
                 double noLinkLeft = Canvas.GetLeft(noLinkPersonDot[i]);
@@ -83,25 +89,62 @@ namespace Relationship.Widget
                 double force;
                 if (length < 15)
                 {
-                    force = 100;
+                    force = PersonDot.repulsiveRate / 225;
                 }
                 else
                 {
                     force = repulsiveRate / Math.Pow(length, 2);
                 }
-                point.X += force * (dotLeft - noLinkLeft) / length;
-                point.Y += force * (dotTop - noLinkTop) / length;
+                point.X -= force * (noLinkLeft - dotLeft) / length;
+                point.Y -= force * (noLinkTop - dotTop) / length;
+            }
+
+            double targetLength = Math.Sqrt(Math.Pow(point.X, 2) + Math.Pow(point.Y, 2));
+            if (targetLength > 5)
+            {
+                point.X *= 5 / targetLength;
+                point.Y *= 5 / targetLength;
             }
             return point;
         }
 
-        public static void ExecEpoch()
+        public void SetNoLinks()
+        {
+            HashSet<PersonDot> linkedSet = new HashSet<PersonDot>(links.Count);
+            linkedSet.Add(this);
+            for (int i = 0; i < links.Count; ++i)
+            {
+                if (this == links[i].personDot0)
+                {
+                    linkedSet.Add(links[i].personDot1);
+                }
+                else
+                {
+                    linkedSet.Add(links[i].personDot0);
+                }
+            }
+
+            for (int i = 0; i < PersonDot.allPersonDots.Count; ++i)
+            {
+                if (!linkedSet.Contains(PersonDot.allPersonDots[i]))
+                {
+                    noLinkPersonDot.Add(PersonDot.allPersonDots[i]);
+                }
+            }
+        }
+
+        public static void ExecEpoch(double damping)
         {
             for (int i = 0; i < allPersonDots.Count; ++i)
             {
                 Point deltaForce = allPersonDots[i].MoveDelta();
-                Canvas.SetLeft(allPersonDots[i], Canvas.GetLeft(allPersonDots[i]) + deltaForce.X);
-                Canvas.SetTop(allPersonDots[i], Canvas.GetTop(allPersonDots[i]) + deltaForce.Y);
+
+                allPersonDots[i].speed.X += deltaForce.X * damping;
+                allPersonDots[i].speed.Y += deltaForce.Y * damping;
+
+                Canvas.SetLeft(allPersonDots[i], Canvas.GetLeft(allPersonDots[i]) + deltaForce.X * damping);
+                Canvas.SetTop(allPersonDots[i], Canvas.GetTop(allPersonDots[i]) + deltaForce.Y * damping);
+                
             }
 
             for (int i = 0; i < RelationLine.allLinks.Count; ++i)

@@ -41,6 +41,7 @@ namespace Relationship.Widget
                 this.personDot1 = personDot1;
             }
             relationRate = rate;
+            SetPosition();
         }
 
         public void SetPosition()
@@ -56,7 +57,8 @@ namespace Relationship.Widget
             this.Width = length;
 
             Canvas.SetLeft(this, person0Left + 7.5);
-            Canvas.SetTop(this, person0Top + 7.5);
+            Canvas.SetTop(this, person0Top + 7.5 - 2.5);
+            ToolTip = Width;
         }
     }
 }

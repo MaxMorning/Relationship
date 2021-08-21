@@ -136,6 +136,11 @@ namespace Relationship
                         break;
                     }
 
+                case 3:
+                    {
+                        break;
+                    }
+
                 case 4:
                     {
                         spPossibleFriend.Children.Clear();
@@ -218,6 +223,8 @@ namespace Relationship
         {
             role = person;
             canvasVisualizeDrawCanvas.Children.Clear();
+            canvasLeftBias = 0;
+            canvasTopBias = 0;
             if (person.name.Length == 2)
             {
                 lbSwitchRole.Content = person.name[0] + " " + person.name[1];
@@ -660,6 +667,8 @@ namespace Relationship
         }
 
         // Visualize Panel
+        private double canvasLeftBias = 0;
+        private double canvasTopBias = 0;
         private void btVisualizeStart_Click(object sender, RoutedEventArgs e)
         {
             if (((Button)sender).MinWidth < 0.5)
@@ -686,6 +695,7 @@ namespace Relationship
                 }
 
                 ((Button)sender).MinWidth = 0;
+                btVisualizeContIter.MinWidth = 0;
                 // set lists
                 PersonDot.allPersonDots.Clear();
                 canvasVisualizeDrawCanvas.Children.Clear();
@@ -819,7 +829,7 @@ namespace Relationship
                     for (int j = 0; j < personInLayers[totalLayer][idx].friends.Count; ++j)
                     {
                         Person person = personInLayers[totalLayer][idx].friends[j];
-                        if (person.enable)
+                        if (person.enable && uniquePerson.Contains(person))
                         {
                             int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
                             bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
@@ -835,7 +845,7 @@ namespace Relationship
                     HashSet<Person> relatedSchoolmates = personInLayers[totalLayer][idx].GetRelatedSchoolmates();
                     foreach (Person person in relatedSchoolmates)
                     {
-                        if (person.enable)
+                        if (person.enable && uniquePerson.Contains(person))
                         {
                             int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
                             bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
@@ -851,7 +861,7 @@ namespace Relationship
                     HashSet<Person> relatedColleagues = personInLayers[totalLayer][idx].GetRelatedColleagues();
                     foreach (Person person in relatedColleagues)
                     {
-                        if (person.enable)
+                        if (person.enable && uniquePerson.Contains(person))
                         {
                             int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
                             bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
@@ -867,7 +877,7 @@ namespace Relationship
                     HashSet<Person> relatedCitizens = personInLayers[totalLayer][idx].GetRelatedCitizens();
                     foreach (Person person in relatedCitizens)
                     {
-                        if (person.enable)
+                        if (person.enable && uniquePerson.Contains(person))
                         {
                             int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
                             bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
@@ -893,14 +903,26 @@ namespace Relationship
                 for (int i = 0; i < PersonDot.allPersonDots.Count; ++i)
                 {
                     canvasVisualizeDrawCanvas.Children.Add(PersonDot.allPersonDots[i]);
+
+                    // set nolinks
+                    PersonDot.allPersonDots[i].SetNoLinks();
                 }
 
                 // start iter
+                double damping = 1;
                 for (int i = 0; i < iterTime; ++i)
                 {
-                    PersonDot.ExecEpoch();
+                    PersonDot.ExecEpoch(damping);
+                    damping *= 0.95;
                 }
+
+                canvasLeftBias = 400 - Canvas.GetLeft(roleDot);
+                canvasTopBias = 300 - Canvas.GetTop(roleDot);
+                Canvas.SetLeft(vbVisualizeCanvasViewbox, canvasLeftBias);
+                Canvas.SetTop(vbVisualizeCanvasViewbox, canvasTopBias);
+
                 ((Button)sender).MinWidth = 1;
+                btVisualizeContIter.MinWidth = 1;
             }
             catch (Exception)
             {
@@ -942,26 +964,34 @@ namespace Relationship
 
             double destination = e.Delta / Math.Abs(e.Delta);
 
-            if (currentScaleRate < 0.3 && destination < 0)
+            if (currentScaleRate < 0.01 && destination < 0)
             {
                 return;
             }
 
-            if (currentScaleRate > 3 && destination > 0)
+            if (currentScaleRate > 8 && destination > 0)
             {
                 return;
             }
 
-            currentScaleRate += destination * 0.1;
+            double prevScaleRate = currentScaleRate;
+            if (destination > 0)
+            {
+                currentScaleRate *= 1.11111;
+            }
+            else
+            {
+                currentScaleRate *= 0.9;
+            }
+            //currentScaleRate += destination * 0.1;
             Point targetZoomFocus = e.GetPosition(vbVisualizeCanvasViewbox);
 
             scaletransVisualizeDrawCanvas.ScaleX = currentScaleRate;
             scaletransVisualizeDrawCanvas.ScaleY = currentScaleRate;
 
-            Point cursorPosAfter = e.GetPosition(vbVisualizeCanvasViewbox);
 
-            double deltaX = targetZoomFocus.X * destination * 0.1;
-            double deltaY = targetZoomFocus.Y * destination * 0.1;
+            double deltaX = targetZoomFocus.X * (currentScaleRate - prevScaleRate);
+            double deltaY = targetZoomFocus.Y * (currentScaleRate - prevScaleRate);
 
             double newCanvasLeft = Canvas.GetLeft(vbVisualizeCanvasViewbox) - deltaX;
             double newCanvasTop = Canvas.GetTop(vbVisualizeCanvasViewbox) - deltaY;
@@ -973,13 +1003,13 @@ namespace Relationship
         {
             Storyboard storyboard = new Storyboard();
             double durationTime = Math.Sqrt(Math.Pow(Canvas.GetLeft(vbVisualizeCanvasViewbox), 2) + Math.Pow(Canvas.GetTop(vbVisualizeCanvasViewbox), 2)) / 1000;
-            DoubleAnimation leftAnim = new DoubleAnimation(0, new Duration(TimeSpan.FromSeconds(durationTime)));
+            DoubleAnimation leftAnim = new DoubleAnimation(canvasLeftBias, new Duration(TimeSpan.FromSeconds(durationTime)));
             leftAnim.EasingFunction = nonLinearEasingFunction;
             Storyboard.SetTarget(leftAnim, vbVisualizeCanvasViewbox);
             Storyboard.SetTargetProperty(leftAnim, new PropertyPath("(Canvas.Left)"));
             storyboard.Children.Add(leftAnim);
 
-            DoubleAnimation topAnim = new DoubleAnimation(0, new Duration(TimeSpan.FromSeconds(durationTime)));
+            DoubleAnimation topAnim = new DoubleAnimation(canvasTopBias, new Duration(TimeSpan.FromSeconds(durationTime)));
             topAnim.EasingFunction = nonLinearEasingFunction;
             Storyboard.SetTarget(topAnim, vbVisualizeCanvasViewbox);
             Storyboard.SetTargetProperty(topAnim, new PropertyPath("(Canvas.Top)"));
@@ -1000,13 +1030,49 @@ namespace Relationship
             storyboard.Completed += (sArg, eArg) =>
             {
                 storyboard.Remove(vbVisualizeCanvasViewbox);
-                Canvas.SetLeft(vbVisualizeCanvasViewbox, 0);
-                Canvas.SetTop(vbVisualizeCanvasViewbox, 0);
+                Canvas.SetLeft(vbVisualizeCanvasViewbox, canvasLeftBias);
+                Canvas.SetTop(vbVisualizeCanvasViewbox, canvasTopBias);
                 scaletransVisualizeDrawCanvas.ScaleX = 1;
                 scaletransVisualizeDrawCanvas.ScaleY = 1;
                 currentScaleRate = 1;
             };
             storyboard.Begin(vbVisualizeCanvasViewbox, true);
+        }
+
+        private void btVisualizeContIter_Click(object sender, RoutedEventArgs e)
+        {
+            if (btVisualizeContIter.MinWidth < 0.5)
+            {
+                return;
+            }
+
+            try
+            {
+                PersonDot.gravityRate = double.Parse(tbVisualizeGravity.Text);
+                PersonDot.repulsiveRate = double.Parse(tbVisualizeRepulsive.Text);
+                int iterTime = int.Parse(tbVisualizeIterTime.Text);
+                if (iterTime < 1)
+                {
+                    AlertDialogWindow alertDialogWindow = new AlertDialogWindow("迭代次数不能小于1。");
+                    alertDialogWindow.ShowAlertDialog();
+                    return;
+                }
+
+                btVisualizeStart.MinWidth = 0;
+                btVisualizeContIter.MinWidth = 0;
+                for (int i = 0; i < iterTime; ++i)
+                {
+                    PersonDot.ExecEpoch(1);
+                }
+
+                btVisualizeStart.MinWidth = 1;
+                btVisualizeContIter.MinWidth = 1;
+            }
+            catch (Exception)
+            {
+                AlertDialogWindow alertDialogWindow = new AlertDialogWindow("存在非法输入，请检查。");
+                alertDialogWindow.ShowAlertDialog();
+            }
         }
     }
 }

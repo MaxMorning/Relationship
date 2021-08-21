@@ -35,7 +35,7 @@ namespace Relationship.Widget
             lbFriendRecordGender.Content = person.gender;
             lbFriendRecordAge.Content = person.age;
 
-            if (num == -1)
+            if (num != -1)
             {
                 this.ContextMenu.Items.Remove(btFriendRecordDelete);
                 this.ContextMenu.Items.Remove(btFriendRecordGetInfo);

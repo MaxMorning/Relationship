@@ -1174,20 +1174,6 @@
                         <ColumnDefinition Width="350"/>
                     </Grid.ColumnDefinitions>
 
-                    <Label
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Grid.ColumnSpan="4"
-                        HorizontalContentAlignment="Left"
-                        VerticalContentAlignment="Center"
-                        FontSize="30"
-                        FontFamily="微软雅黑"
-                        FontWeight="Normal"
-                        Foreground="#333333"
-                        Content="可视化">
-
-                    </Label>
-
                     <Thumb
                         Name="thumbVisualize"
                         Grid.Row="0"
@@ -1208,7 +1194,8 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Grid.RowSpan="4"
-                        Grid.ColumnSpan="3">
+                        Grid.ColumnSpan="3"
+                        ClipToBounds="True">
 
                         <Viewbox
                             Name="vbVisualizeCanvasViewbox"
@@ -1220,12 +1207,6 @@
                             </Viewbox.RenderTransform>
                             <Canvas
                                 Name="canvasVisualizeDrawCanvas">
-                                <Label
-                                    Canvas.Left="300"
-                                    Canvas.Top="300"
-                                    Content="Test">
-
-                                </Label>
                             </Canvas>
                         </Viewbox>
                     </Canvas>
@@ -1248,6 +1229,20 @@
                         </Path.Data>
                     </Path>
 
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="4"
+                        HorizontalContentAlignment="Left"
+                        VerticalContentAlignment="Center"
+                        FontSize="30"
+                        FontFamily="微软雅黑"
+                        FontWeight="Normal"
+                        Foreground="#333333"
+                        Content="可视化">
+
+                    </Label>
+                    
                     <Grid
                         Grid.Row="3"
                         Grid.Column="2"
@@ -1321,7 +1316,7 @@
                             Grid.Column="1"
                             Style="{StaticResource EditView}"
                             Width="190"
-                            Text="0.05">
+                            Text="0.001">
 
                         </TextBox>
 
@@ -1345,7 +1340,7 @@
                             Grid.Column="1"
                             Style="{StaticResource EditView}"
                             Width="190"
-                            Text="5.00">
+                            Text="10000">
 
                         </TextBox>
 
@@ -1373,19 +1368,39 @@
 
                         </TextBox>
 
-                        <Button
-                            Name="btVisualizeStart"
+                        <Grid
                             Grid.Row="5"
                             Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Style="{StaticResource SwitchButton}"
-                            MinWidth="1"
-                            Content="开始"
-                            FontSize="24"
-                            Margin="0 5 0 0"
-                            Click="btVisualizeStart_Click">
-                            
-                        </Button>
+                            Grid.ColumnSpan="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button
+                                Name="btVisualizeStart"
+                                Grid.Column="0"
+                                Style="{StaticResource SwitchButton}"
+                                MinWidth="1"
+                                Content="开始"
+                                FontSize="24"
+                                Margin="0 5 0 0"
+                                Click="btVisualizeStart_Click">
+
+                            </Button>
+
+                            <Button
+                                Name="btVisualizeContIter"
+                                Grid.Column="1"
+                                Style="{StaticResource SwitchButton}"
+                                MinWidth="0"
+                                Content="继续迭代"
+                                FontSize="24"
+                                Margin="0 5 0 0"
+                                Click="btVisualizeContIter_Click">
+
+                            </Button>
+                        </Grid>
+                        
                     </Grid>
                 </Grid>
                 

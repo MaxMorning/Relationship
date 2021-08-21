@@ -92,7 +92,7 @@ namespace Relationship
             foreach (Person person in Person.persons)
             {
                 // todo parallel
-                if (person.enable && MainWindow.FuzzySearch(person.name, key))
+                if (person.enable && MainWindow.mainWindow.role != person && MainWindow.FuzzySearch(person.name, key))
                 {
                     RoutedEventHandler routedEventHandler = (sArg, eArg) =>
                     {
