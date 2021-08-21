@@ -232,5 +232,87 @@ namespace Relationship.Class
                 return false;
             }
         }
+
+        public static bool StoreToFile(string filePath)
+        {
+            try
+            {
+                int personCount = Person.persons.Count;
+                int groupCount = SocialGroup.socialGroups.Count;
+                int liveExpCount = 0;
+                int eduExpCount = 0;
+                int workExpCount = 0;
+                int friendPairCount = 0;
+
+                List<string> allStr = new List<string>();
+                for (int i = 0; i < personCount; ++i)
+                {
+                    allStr.Add(Person.persons[i].ToString());
+                }
+
+                for (int i = 0; i < groupCount; ++i)
+                {
+                    allStr.Add(SocialGroup.socialGroups[i].ToString());
+                }
+                // store live exp
+                for (int i = 0; i < personCount; ++i)
+                {
+                    for (int j = 0; j < Person.persons[i].liveExp.Count; ++j)
+                    {
+                        ++liveExpCount;
+                        allStr.Add(Person.persons[i].liveExp[j].ToString());
+                    }
+                }
+
+                // store edu exp
+                for (int i = 0; i < personCount; ++i)
+                {
+                    for (int j = 0; j < Person.persons[i].eduExp.Count; ++j)
+                    {
+                        ++eduExpCount;
+                        allStr.Add(Person.persons[i].eduExp[j].ToString());
+                    }
+                }
+
+                // store work exp
+                for (int i = 0; i < personCount; ++i)
+                {
+                    for (int j = 0; j < Person.persons[i].workExp.Count; ++j)
+                    {
+                        ++workExpCount;
+                        allStr.Add(Person.persons[i].workExp[j].ToString());
+                    }
+                }
+
+                // friend pairs
+                for (int i = 0; i < personCount; ++i)
+                {
+                    for (int j = 0; j < Person.persons[i].friends.Count; ++j)
+                    {
+                        if (i < Person.persons[i].friends[j].id)
+                        {
+                            ++friendPairCount;
+                            allStr.Add(i.ToString() + " " + Person.persons[i].friends[j].id.ToString());
+                        }
+                    }
+                }
+
+                string finalStr = string.Format("{0} {1} {2} {3} {4} {5}\n", personCount, groupCount, liveExpCount, eduExpCount, workExpCount, friendPairCount);
+                for (int i = 0; i < allStr.Count; ++i)
+                {
+                    finalStr += allStr[i] + '\n';
+                }
+
+                byte[] tempBytes = Encoding.UTF8.GetBytes(finalStr);
+                FileStream fileOutStream = new FileStream(filePath, FileMode.Create);
+                fileOutStream.Write(tempBytes, 0, tempBytes.Length - 1);
+                fileOutStream.Close();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

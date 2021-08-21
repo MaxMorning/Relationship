@@ -509,5 +509,12 @@ namespace Relationship.Class
 
             return relationChain;
         }
+
+        public override string ToString()
+        {
+            string retStr = name + " " + gender + " " + age.ToString() + " " + enable.ToString();
+
+            return retStr;
+        }
     }
 }

@@ -48,5 +48,11 @@ namespace Relationship.Class
 
             return false;
         }
+
+        public override string ToString()
+        {
+            string retStr = beginMonthIdx.ToString() + " " + endMonthIdx.ToString() + " " + relatedGroup.name + " " + owner.id.ToString();
+            return retStr;
+        }
     }
 }

@@ -78,6 +78,9 @@
     <Compile Include="AlertDialogWindow.xaml.cs">
       <DependentUpon>AlertDialogWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BeforeCloseWindow.xaml.cs">
+      <DependentUpon>BeforeCloseWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Class\Database.cs" />
     <Compile Include="Class\EduGroup.cs" />
     <Compile Include="Class\Experience.cs" />
@@ -117,6 +120,10 @@
       <DependentUpon>UserInfoDetailWithNameGrid.xaml</DependentUpon>
     </Compile>
     <Page Include="AlertDialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BeforeCloseWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

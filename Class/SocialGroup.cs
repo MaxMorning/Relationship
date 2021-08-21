@@ -21,6 +21,16 @@ namespace Relationship.Class
             SocialGroup.socialGroups.Add(this);
         }
 
+        public override string ToString()
+        {
+            string retStr = name;
+            for (int i = 0; i < members.Count; ++i)
+            {
+                retStr += " " + members[i].id.ToString();
+            }
+            return retStr;
+        }
+
         public static int Compare(SocialGroup socialGroup0, SocialGroup socialGroup1)
         {
             if (socialGroup0.id < socialGroup1.id)

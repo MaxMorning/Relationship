@@ -31,6 +31,8 @@ namespace Relationship
 
         public static int THREAD_NUM;
         public static MainWindow mainWindow;
+
+        public static string filePath = null;
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -42,6 +44,7 @@ namespace Relationship
             bool initLoad = Database.ParseFile("database.txt");
             if (initLoad)
             {
+                filePath = "database.txt";
                 lbStartLoadStatus.Content = "已加载： database.txt";
             }
             else
@@ -67,7 +70,13 @@ namespace Relationship
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            BeforeCloseWindow beforeCloseWindow = new BeforeCloseWindow();
+            beforeCloseWindow.ShowSaveDialog();
+
+            if (beforeCloseWindow.shouldClose)
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
         }
 
         private void MinButton_Click(object sender, RoutedEventArgs e)
@@ -373,6 +382,7 @@ namespace Relationship
                 bool loadSuccess = Database.ParseFile(dialog.FileName);
                 if (loadSuccess)
                 {
+                    filePath = dialog.FileName;
                     lbStartLoadStatus.Content = "已加载: " + dialog.FileName;
                 }
                 else
