@@ -1364,7 +1364,7 @@
                             Grid.Column="1"
                             Style="{StaticResource EditView}"
                             Width="190"
-                            Text="6">
+                            Text="100">
 
                         </TextBox>
 

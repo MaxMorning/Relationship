@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -52,6 +53,8 @@ namespace Relationship.Widget
                 Canvas.SetLeft(this, parentLeft + random.Next(-200, 200));
                 Canvas.SetTop(this, parentTop + random.Next(-200, 200));
             }
+
+            this.Background = new SolidColorBrush(LabColorSpace.LabToRGB(33, LabColorSpace.LabA, LabColorSpace.LabB));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -151,6 +154,38 @@ namespace Relationship.Widget
             {
                 RelationLine.allLinks[i].SetPosition();
             }
+        }
+
+        private void Button_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ExponentialEase exponentialEase = new ExponentialEase()
+            {
+                EasingMode = EasingMode.EaseOut
+            };
+            ColorAnimation colorAnimation = new ColorAnimation(LabColorSpace.LabToRGB(63, LabColorSpace.LabA, LabColorSpace.LabB), new Duration(TimeSpan.FromSeconds(0.3)));
+            colorAnimation.EasingFunction = exponentialEase;
+            Storyboard.SetTarget(colorAnimation, this);
+            Storyboard.SetTargetProperty(colorAnimation, new PropertyPath("(Button.Background).(SolidColorBrush.Color)"));
+
+            Storyboard storyboard = new Storyboard();
+            storyboard.Children.Add(colorAnimation);
+            storyboard.Begin();
+        }
+
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ExponentialEase exponentialEase = new ExponentialEase()
+            {
+                EasingMode = EasingMode.EaseOut
+            };
+            ColorAnimation colorAnimation = new ColorAnimation(LabColorSpace.LabToRGB(33, LabColorSpace.LabA, LabColorSpace.LabB), new Duration(TimeSpan.FromSeconds(0.3)));
+            colorAnimation.EasingFunction = exponentialEase;
+            Storyboard.SetTarget(colorAnimation, this);
+            Storyboard.SetTargetProperty(colorAnimation, new PropertyPath("(Button.Background).(SolidColorBrush.Color)"));
+
+            Storyboard storyboard = new Storyboard();
+            storyboard.Children.Add(colorAnimation);
+            storyboard.Begin();
         }
     }
 }

@@ -17,6 +17,7 @@
         <ColumnDefinition Width="10"/>
     </Grid.ColumnDefinitions>
     <Path
+        Name="pathLine"
         Fill="#BBBBBB"
         Grid.Column="1"
         Stretch="Fill">

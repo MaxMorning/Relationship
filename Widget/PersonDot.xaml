@@ -7,55 +7,20 @@
              mc:Ignorable="d" 
              Height="15"
              Width="15"
+             MouseEnter="Button_MouseEnter"
+             MouseLeave="Button_MouseLeave"
              Click="Button_Click">
+    <Button.Background>
+        <SolidColorBrush x:Name="backBrush" Color="#888888"/>
+    </Button.Background>
     <Button.Template>
         <ControlTemplate>
             <Ellipse
                 Name="backEllipse"
                 Height="{TemplateBinding Height}"
-                Width="{TemplateBinding Width}">
-                <Ellipse.Fill>
-                    <SolidColorBrush x:Name="backFill" Color="#888888"/>
-                </Ellipse.Fill>
+                Width="{TemplateBinding Width}"
+                Fill="{TemplateBinding Background}">
             </Ellipse>
-
-            <ControlTemplate.Triggers>
-                <EventTrigger RoutedEvent="MouseEnter">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <ColorAnimation
-                                Storyboard.TargetName="backFill"
-                                Storyboard.TargetProperty="(SolidColorBrush.Color)"
-                                From="#888888"
-                                To="#555555"
-                                Duration="0:0:0.3">
-                                <ColorAnimation.EasingFunction>
-                                    <ExponentialEase EasingMode="EaseOut"/>
-                                </ColorAnimation.EasingFunction>
-
-                            </ColorAnimation>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-
-                <EventTrigger RoutedEvent="MouseLeave">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <ColorAnimation
-                                Storyboard.TargetName="backFill"
-                                Storyboard.TargetProperty="(SolidColorBrush.Color)"
-                                From="#555555"
-                                To="#888888"
-                                Duration="0:0:0.3">
-                                <ColorAnimation.EasingFunction>
-                                    <ExponentialEase EasingMode="EaseOut"/>
-                                </ColorAnimation.EasingFunction>
-
-                            </ColorAnimation>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-            </ControlTemplate.Triggers>
         </ControlTemplate>
     </Button.Template>
 </Button>

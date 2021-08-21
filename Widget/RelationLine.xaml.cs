@@ -26,7 +26,7 @@ namespace Relationship.Widget
         public PersonDot personDot0;
         public PersonDot personDot1;
         public double relationRate;
-        public RelationLine(PersonDot personDot0, PersonDot personDot1, double rate)
+        public RelationLine(PersonDot personDot0, PersonDot personDot1, double rate, string relationName)
         {
             InitializeComponent();
 
@@ -41,6 +41,9 @@ namespace Relationship.Widget
                 this.personDot1 = personDot1;
             }
             relationRate = rate;
+
+            pathLine.Fill = new SolidColorBrush(LabColorSpace.LabToRGB(rate * 60 +33, LabColorSpace.LabA, LabColorSpace.LabB));
+            ToolTip = relationName;
             SetPosition();
         }
 
@@ -58,7 +61,6 @@ namespace Relationship.Widget
 
             Canvas.SetLeft(this, person0Left + 7.5);
             Canvas.SetTop(this, person0Top + 7.5 - 2.5);
-            ToolTip = Width;
         }
     }
 }

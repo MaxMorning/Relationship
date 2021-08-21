@@ -225,6 +225,11 @@ namespace Relationship
             canvasVisualizeDrawCanvas.Children.Clear();
             canvasLeftBias = 0;
             canvasTopBias = 0;
+
+            Random random = new Random();
+            LabColorSpace.LabA = random.NextDouble() * 88 - 128;
+            LabColorSpace.LabB = random.NextDouble() * 100 - 50;
+
             if (person.name.Length == 2)
             {
                 lbSwitchRole.Content = person.name[0] + " " + person.name[1];
@@ -743,7 +748,7 @@ namespace Relationship
 
                                 if (!searchSuccess || relationLine.relationRate < Person.friendRate)
                                 {
-                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.friendRate);
+                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.friendRate, "好友");
                                 }
                             }
                         }
@@ -767,7 +772,7 @@ namespace Relationship
 
                                 if (!searchSuccess || relationLine.relationRate < Person.schoolmateRate)
                                 {
-                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.schoolmateRate);
+                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.schoolmateRate, "校友");
                                 }
                             }
                         }
@@ -791,7 +796,7 @@ namespace Relationship
 
                                 if (!searchSuccess || relationLine.relationRate < Person.colleagueRate)
                                 {
-                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.colleagueRate);
+                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.colleagueRate, "同事");
                                 }
                             }
                         }
@@ -815,7 +820,7 @@ namespace Relationship
 
                                 if (!searchSuccess || relationLine.relationRate < Person.citizenRate)
                                 {
-                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.citizenRate);
+                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.citizenRate, "同乡");
                                 }
                             }
                         }
@@ -836,7 +841,7 @@ namespace Relationship
 
                             if (!searchSuccess || relationLine.relationRate < Person.friendRate)
                             {
-                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.friendRate);
+                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.friendRate, "好友");
                             }
                         }
                     }
@@ -852,7 +857,7 @@ namespace Relationship
 
                             if (!searchSuccess || relationLine.relationRate < Person.schoolmateRate)
                             {
-                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.schoolmateRate);
+                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.schoolmateRate, "校友");
                             }
                         }
                     }
@@ -868,7 +873,7 @@ namespace Relationship
 
                             if (!searchSuccess || relationLine.relationRate < Person.colleagueRate)
                             {
-                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.colleagueRate);
+                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.colleagueRate, "同事");
                             }
                         }
                     }
@@ -884,7 +889,7 @@ namespace Relationship
 
                             if (!searchSuccess || relationLine.relationRate < Person.citizenRate)
                             {
-                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.citizenRate);
+                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.citizenRate, "同乡");
                             }
                         }
                     }
