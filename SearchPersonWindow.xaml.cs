@@ -88,10 +88,8 @@ namespace Relationship
             spSearchSearchResult.Children.Clear();
             string key = tbSearchIdxName.Text;
 
-            // todo parallel
             foreach (Person person in Person.persons)
             {
-                // todo parallel
                 if (person.enable && MainWindow.mainWindow.role != person && MainWindow.FuzzySearch(person.name, key))
                 {
                     RoutedEventHandler routedEventHandler = (sArg, eArg) =>
@@ -117,10 +115,8 @@ namespace Relationship
             spSearchSearchResult.Children.Clear();
             string key = tbSearchIdxName.Text;
 
-            // todo parallel
             foreach (Person person in Person.persons)
             {
-                // todo parallel
                 if (person.enable && person != MainWindow.mainWindow.role && MainWindow.FuzzySearch(person.name, key))
                 {
                     RoutedEventHandler routedEventHandler = (sArg, eArg) =>

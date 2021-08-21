@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Relationship"
         xmlns:widget="clr-namespace:Relationship.Widget"
         mc:Ignorable="d"
-        Title="人际关系" 
+        Title="人际" 
         Height="700"
         Width="1100"
         MinHeight="600"

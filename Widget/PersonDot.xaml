@@ -9,6 +9,7 @@
              Width="15"
              MouseEnter="Button_MouseEnter"
              MouseLeave="Button_MouseLeave"
+             MouseWheel="Button_MouseWheel"
              Click="Button_Click">
     <Button.Background>
         <SolidColorBrush x:Name="backBrush" Color="#888888"/>

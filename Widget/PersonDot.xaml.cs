@@ -28,7 +28,7 @@ namespace Relationship.Widget
         public static Random random = new Random();
 
         public Person relatedPerson;
-        public Point speed = new Point(0, 0);
+        public Point position = new Point(0, 0);
         public List<PersonDot> noLinkPersonDot = new List<PersonDot>();
         public List<RelationLine> links = new List<RelationLine>();
         
@@ -44,6 +44,10 @@ namespace Relationship.Widget
             {
                 Canvas.SetLeft(this, 400);
                 Canvas.SetTop(this, 300);
+                position.X = 400;
+                position.Y = 300;
+                relatedPerson.position.X = 400;
+                relatedPerson.position.Y = 300;
             }
             else
             {
@@ -52,6 +56,11 @@ namespace Relationship.Widget
 
                 Canvas.SetLeft(this, parentLeft + random.Next(-200, 200));
                 Canvas.SetTop(this, parentTop + random.Next(-200, 200));
+                position.X = Canvas.GetLeft(this);
+                position.Y = Canvas.GetTop(this);
+
+                relatedPerson.position.X = Canvas.GetLeft(this);
+                relatedPerson.position.Y = Canvas.GetTop(this);
             }
 
             this.Background = new SolidColorBrush(LabColorSpace.LabToRGB(33, LabColorSpace.LabA, LabColorSpace.LabB));
@@ -127,26 +136,36 @@ namespace Relationship.Widget
                 }
             }
 
+            relatedPerson.noLinkPersonDot.Clear();
             for (int i = 0; i < PersonDot.allPersonDots.Count; ++i)
             {
                 if (!linkedSet.Contains(PersonDot.allPersonDots[i]))
                 {
                     noLinkPersonDot.Add(PersonDot.allPersonDots[i]);
+                    relatedPerson.noLinkPersonDot.Add(PersonDot.allPersonDots[i].relatedPerson);
                 }
             }
         }
 
         public static void ExecEpoch()
         {
+            for (int index = 0; index < allPersonDots.Count; ++index)
+            {
+                Point deltaForce = allPersonDots[index].MoveDelta();
+
+                allPersonDots[index].position.X += deltaForce.X;
+                allPersonDots[index].position.Y += deltaForce.Y;
+            }
+        }
+
+        public static void ApplyPosition()
+        {
             for (int i = 0; i < allPersonDots.Count; ++i)
             {
-                Point deltaForce = allPersonDots[i].MoveDelta();
-
-                Canvas.SetLeft(allPersonDots[i], Canvas.GetLeft(allPersonDots[i]) + deltaForce.X);
-                Canvas.SetTop(allPersonDots[i], Canvas.GetTop(allPersonDots[i]) + deltaForce.Y);
-                
+                Canvas.SetLeft(allPersonDots[i], allPersonDots[i].position.X);
+                Canvas.SetTop(allPersonDots[i], allPersonDots[i].position.Y);
             }
-
+                
             for (int i = 0; i < RelationLine.allLinks.Count; ++i)
             {
                 RelationLine.allLinks[i].SetPosition();
@@ -183,6 +202,11 @@ namespace Relationship.Widget
             Storyboard storyboard = new Storyboard();
             storyboard.Children.Add(colorAnimation);
             storyboard.Begin();
+        }
+
+        private void Button_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            MainWindow.mainWindow.thumbVisualize_MouseWheel(sender, e);
         }
     }
 }

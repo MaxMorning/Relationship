@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:Relationship.Widget"
              mc:Ignorable="d" 
              Height="3"
-             Width="220">
+             Width="220"
+             MouseWheel="Grid_MouseWheel">
     <Grid.RenderTransform>
         <RotateTransform x:Name="rotateTransform" Angle="0" CenterX="0" CenterY="2.5"/>
     </Grid.RenderTransform>

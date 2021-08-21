@@ -68,5 +68,10 @@ namespace Relationship.Widget
             Canvas.SetLeft(this, person0Left + 7.5);
             Canvas.SetTop(this, person0Top + 7.5 - 1.5);
         }
+
+        private void Grid_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            MainWindow.mainWindow.thumbVisualize_MouseWheel(sender, e);
+        }
     }
 }

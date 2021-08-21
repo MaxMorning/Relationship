@@ -48,10 +48,8 @@ namespace Relationship
             spSearchGroupButton.Children.Clear();
             string key = tbSearchIdxName.Text;
 
-            // todo parallel
             foreach (SocialGroup socialGroup in SocialGroup.socialGroups)
             {
-                // todo parallel
                 if (MainWindow.FuzzySearch(socialGroup.name, key))
                 {
                     spSearchGroup.Children.Add(new GroupRecordGrid(socialGroup, false));

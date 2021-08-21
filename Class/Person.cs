@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Relationship.Widget;
@@ -302,7 +303,7 @@ namespace Relationship.Class
                 SocialGroup relatedGroup = this.socialGroups[i];
                 for (int j = 0; j < relatedGroup.members.Count; ++j)
                 {
-                    if (relatedGroup.members[j].enable)
+                    if (relatedGroup.members[j].enable && relatedGroup.members[j] != this)
                     {
                         relatedGroupmates.Add(relatedGroup.members[j]);
                     }
@@ -566,6 +567,82 @@ namespace Relationship.Class
             string retStr = name + " " + gender + " " + age.ToString() + " " + enable.ToString();
 
             return retStr;
+        }
+
+        public static List<Person> allPersonDots = new List<Person>();
+        public Point position = new Point(0, 0);
+        public List<Person> noLinkPersonDot = new List<Person>();
+        public List<Person> links = new List<Person>();
+
+        public Point MoveDelta()
+        {
+            Point point = new Point(0, 0);
+
+            double dotLeft = this.position.X;
+            double dotTop = this.position.Y;
+
+            for (int i = 0; i < links.Count; ++i)
+            {
+                double oriLength = Math.Sqrt(Math.Pow(dotLeft - links[i].position.X, 2) + Math.Pow(dotTop - links[i].position.Y, 2));
+                double deltaLength = oriLength - 200;
+
+                point.X += PersonDot.gravityRate * deltaLength * (links[i].position.X - dotLeft) / oriLength;
+                point.Y += PersonDot.gravityRate * deltaLength * (links[i].position.Y - dotTop) / oriLength;
+            }
+
+            for (int i = 0; i < noLinkPersonDot.Count; ++i)
+            {
+                double noLinkLeft = noLinkPersonDot[i].position.X;
+                double noLinkTop = noLinkPersonDot[i].position.Y;
+                double length = Math.Sqrt(Math.Pow(noLinkLeft - dotLeft, 2) + Math.Pow(noLinkTop - dotTop, 2));
+
+                double force;
+                if (length < 15)
+                {
+                    force = PersonDot.repulsiveRate / 225;
+                }
+                else
+                {
+                    force = PersonDot.repulsiveRate / Math.Pow(length, 2);
+                }
+                point.X -= force * (noLinkLeft - dotLeft) / length;
+                point.Y -= force * (noLinkTop - dotTop) / length;
+            }
+
+            double targetLength = Math.Sqrt(Math.Pow(point.X, 2) + Math.Pow(point.Y, 2));
+            if (targetLength > 5)
+            {
+                point.X *= 5 / targetLength;
+                point.Y *= 5 / targetLength;
+            }
+            return point;
+        }
+
+        public static void ExecEpoch()
+        {
+            ParallelOptions parallelOptions = new ParallelOptions();
+            parallelOptions.MaxDegreeOfParallelism = MainWindow.THREAD_NUM;
+            Parallel.For(0, allPersonDots.Count, parallelOptions, (index) =>
+            {
+                Point deltaForce = allPersonDots[index].MoveDelta();
+
+                allPersonDots[index].position.X += deltaForce.X;
+                allPersonDots[index].position.Y += deltaForce.Y;
+            });
+        }
+
+        public static void ApplyPosition()
+        {
+            for (int i = 0; i < allPersonDots.Count; ++i)
+            {
+                Canvas.SetLeft(allPersonDots[i].relatedDot, allPersonDots[i].position.X);
+                Canvas.SetTop(allPersonDots[i].relatedDot, allPersonDots[i].position.Y);
+            }
+
+            for (int i = 0; i < RelationLine.allLinks.Count; ++i)
+            {
+                RelationLine.allLinks[i].SetPosition();
+            }
         }
     }
 }

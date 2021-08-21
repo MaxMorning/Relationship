@@ -15,7 +15,8 @@ using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using Relationship.Class;
 using Relationship.Widget;
-
+using System.Threading;
+using System.Diagnostics;
 
 namespace Relationship
 {
@@ -353,17 +354,90 @@ namespace Relationship
             string key = tbStartIdxName.Text;
 
             // todo parallel
-            foreach (Person person in Person.persons)
+            if (Person.persons.Count >= 2048)
             {
-                if (FuzzySearch(person.name, key))
+                // Parallel Search
+                Thread[] threads = new Thread[THREAD_NUM - 1];
+                List<Person>[] threadSearchResult = new List<Person>[THREAD_NUM];
+                int idxTask = Person.persons.Count / THREAD_NUM;
+                for (int i = 0; i < THREAD_NUM - 1; ++i)
                 {
+                    threadSearchResult[i + 1] = new List<Person>(idxTask);
+                    int newI = i;
+                    threads[i] = new Thread(() =>
+                    {
+                        for (int idx = newI * idxTask; idx < (newI + 1) * idxTask; ++idx)
+                        {
+                            if (FuzzySearch(Person.persons[idx].name, key))
+                            {
+                                threadSearchResult[newI + 1].Add(Person.persons[idx]);
+                            }
+                        }
+                    });
+                }
+                for (int i = 0; i < THREAD_NUM - 1; ++i)
+                {
+                    threads[i].Start();
+                }
+
+                // main thread
+                threadSearchResult[0] = new List<Person>(idxTask);
+                for (int idx = (THREAD_NUM - 1) * idxTask; idx < Person.persons.Count; ++idx)
+                {
+                    if (FuzzySearch(Person.persons[idx].name, key))
+                    {
+                        threadSearchResult[0].Add(Person.persons[idx]);
+                    }
+                }
+
+                for (int i = 0; i < THREAD_NUM - 1; ++i)
+                {
+                    threads[i].Join();
+                }
+
+
+                for (int i = 1; i < THREAD_NUM; ++i)
+                {
+                    int newI = i;
+                    for (int idx = 0; idx < threadSearchResult[i].Count; ++idx)
+                    {
+                        int newIdx = idx;
+                        RoutedEventHandler routedEventHandler = (sArg, eArg) =>
+                        {
+                            SetRole(threadSearchResult[newI][newIdx]);
+                            InitPanel(1, threadSearchResult[newI][newIdx].id);
+                            SwitchPanel(1, null);
+                        };
+                        spStartSearchResult.Children.Add(new UserInfoDetailWithName(threadSearchResult[newI][newIdx], "选择", routedEventHandler));
+                    }
+                }
+
+                for (int idx = 0; idx < threadSearchResult[0].Count; ++idx)
+                {
+                    int newIdx = idx;
                     RoutedEventHandler routedEventHandler = (sArg, eArg) =>
                     {
-                        SetRole(person);
-                        InitPanel(1, person.id);
+                        SetRole(threadSearchResult[0][newIdx]);
+                        InitPanel(1, threadSearchResult[0][newIdx].id);
                         SwitchPanel(1, null);
                     };
-                    spStartSearchResult.Children.Add(new UserInfoDetailWithName(person, "选择", routedEventHandler));
+                    spStartSearchResult.Children.Add(new UserInfoDetailWithName(threadSearchResult[0][newIdx], "选择", routedEventHandler));
+                }
+            }
+            else
+            {
+                foreach (Person person in Person.persons)
+                {
+                    if (FuzzySearch(person.name, key))
+                    {
+                        RoutedEventHandler routedEventHandler = (sArg, eArg) =>
+                        {
+                            SetRole(person);
+                            InitPanel(1, person.id);
+                            SwitchPanel(1, null);
+                        };
+                        spStartSearchResult.Children.Add(new UserInfoDetailWithName(person, "选择", routedEventHandler));
+                    }
                 }
             }
         }
@@ -959,19 +1033,29 @@ namespace Relationship
                     canvasVisualizeDrawCanvas.Children.Add(relationLine);
                 }
 
+                Person.allPersonDots.Clear();
                 for (int i = 0; i < PersonDot.allPersonDots.Count; ++i)
                 {
                     canvasVisualizeDrawCanvas.Children.Add(PersonDot.allPersonDots[i]);
+                    Person.allPersonDots.Add(PersonDot.allPersonDots[i].relatedPerson);
+                    PersonDot.allPersonDots[i].relatedPerson.links.Clear();
 
                     // set nolinks
                     PersonDot.allPersonDots[i].SetNoLinks();
                 }
 
+                foreach (RelationLine relationLine in uniqueRelations.Values)
+                {
+                    relationLine.personDot0.relatedPerson.links.Add(relationLine.personDot1.relatedPerson);
+                    relationLine.personDot1.relatedPerson.links.Add(relationLine.personDot0.relatedPerson);
+                }
+
                 // start iter
                 for (int i = 0; i < iterTime; ++i)
                 {
-                    PersonDot.ExecEpoch();
+                    Person.ExecEpoch();
                 }
+                Person.ApplyPosition();
 
                 canvasLeftBias = 400 - Canvas.GetLeft(roleDot);
                 canvasTopBias = 300 - Canvas.GetTop(roleDot);
@@ -1012,7 +1096,7 @@ namespace Relationship
             prevVerChange = 0;
         }
 
-        private void thumbVisualize_MouseWheel(object sender, MouseWheelEventArgs e)
+        public void thumbVisualize_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta == 0)
             {
@@ -1119,8 +1203,9 @@ namespace Relationship
                 btVisualizeContIter.MinWidth = 0;
                 for (int i = 0; i < iterTime; ++i)
                 {
-                    PersonDot.ExecEpoch();
+                    Person.ExecEpoch();
                 }
+                Person.ApplyPosition();
 
                 canvasLeftBias = 400 - Canvas.GetLeft(PersonDot.allPersonDots[0]);
                 canvasTopBias = 300 - Canvas.GetTop(PersonDot.allPersonDots[0]);
