@@ -384,10 +384,13 @@ namespace Relationship
                 {
                     filePath = dialog.FileName;
                     lbStartLoadStatus.Content = "已加载: " + dialog.FileName;
+                    spStartSearchResult.Children.Clear();
+                    canvasVisualizeDrawCanvas.Children.Clear();
                 }
                 else
                 {
                     lbStartLoadStatus.Content = "载入错误: " + dialog.FileName;
+                    filePath = null;
 
                     Person.persons.Clear();
                     LiveGroup.liveGroups.Clear();
@@ -636,7 +639,7 @@ namespace Relationship
                     for (int i = 1; i < relationChain.Count; ++i)
                     {
                         spRelationRelationship.Children.Add(Person.GetRelationLabel(relations[i]));
-                        spRelationRelationship.Children.Add(new FriendRecordGrid(relationChain[i], -2));
+                        spRelationRelationship.Children.Add(new FriendRecordGrid(relationChain[i], -1));
                     }
                 }
                 else
@@ -727,6 +730,7 @@ namespace Relationship
                 for (int i = 0; i < Person.persons.Count; ++i)
                 {
                     Person.persons[i].tempSchoolmates = null;
+                    Person.persons[i].tempGroupmates = null;
                     Person.persons[i].tempColleagues = null;
                     Person.persons[i].tempCitizens = null;
                 }
@@ -783,6 +787,30 @@ namespace Relationship
                                 if (!searchSuccess || relationLine.relationRate < Person.schoolmateRate)
                                 {
                                     uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.schoolmateRate, "校友");
+                                }
+                            }
+                        }
+
+                        // check groupmates
+                        HashSet<Person> relatedGroupmates = personInLayers[i][idx].GetRelatedGroupmates();
+                        foreach (Person person in relatedGroupmates)
+                        {
+                            if (person.enable)
+                            {
+                                if (!uniquePerson.Contains(person))
+                                {
+                                    PersonDot personDot = new PersonDot(person, personInLayers[i][idx].relatedDot);
+                                    PersonDot.allPersonDots.Add(personDot);
+                                    personInLayers[i + 1].Add(person);
+                                    uniquePerson.Add(person);
+                                }
+
+                                int key = person.id > personInLayers[i][idx].id ? personInLayers[i][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[i][idx].id;
+                                bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+
+                                if (!searchSuccess || relationLine.relationRate < Person.groupmateRate)
+                                {
+                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.groupmateRate, "群友");
                                 }
                             }
                         }
@@ -872,6 +900,22 @@ namespace Relationship
                         }
                     }
 
+                    // check schoolmates
+                    HashSet<Person> relatedGroupmates = personInLayers[totalLayer][idx].GetRelatedGroupmates();
+                    foreach (Person person in relatedGroupmates)
+                    {
+                        if (person.enable && uniquePerson.Contains(person))
+                        {
+                            int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
+                            bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+
+                            if (!searchSuccess || relationLine.relationRate < Person.groupmateRate)
+                            {
+                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.groupmateRate, "群友");
+                            }
+                        }
+                    }
+
                     // check colleagues
                     HashSet<Person> relatedColleagues = personInLayers[totalLayer][idx].GetRelatedColleagues();
                     foreach (Person person in relatedColleagues)
@@ -924,11 +968,9 @@ namespace Relationship
                 }
 
                 // start iter
-                double damping = 1;
                 for (int i = 0; i < iterTime; ++i)
                 {
-                    PersonDot.ExecEpoch(damping);
-                    damping *= 0.95;
+                    PersonDot.ExecEpoch();
                 }
 
                 canvasLeftBias = 400 - Canvas.GetLeft(roleDot);
@@ -1077,8 +1119,13 @@ namespace Relationship
                 btVisualizeContIter.MinWidth = 0;
                 for (int i = 0; i < iterTime; ++i)
                 {
-                    PersonDot.ExecEpoch(1);
+                    PersonDot.ExecEpoch();
                 }
+
+                canvasLeftBias = 400 - Canvas.GetLeft(PersonDot.allPersonDots[0]);
+                canvasTopBias = 300 - Canvas.GetTop(PersonDot.allPersonDots[0]);
+                Canvas.SetLeft(vbVisualizeCanvasViewbox, canvasLeftBias);
+                Canvas.SetTop(vbVisualizeCanvasViewbox, canvasTopBias);
 
                 btVisualizeStart.MinWidth = 1;
                 btVisualizeContIter.MinWidth = 1;

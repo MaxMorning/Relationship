@@ -25,6 +25,7 @@ namespace Relationship.Class
 
         // temp sets
         public HashSet<Person> tempSchoolmates = null;
+        public HashSet<Person> tempGroupmates = null;
         public HashSet<Person> tempColleagues = null;
         public HashSet<Person> tempCitizens = null;
 
@@ -287,6 +288,31 @@ namespace Relationship.Class
             return relatedSchoolmates;
         }
 
+        public HashSet<Person> GetRelatedGroupmates()
+        {
+            if (tempGroupmates != null)
+            {
+                return tempGroupmates;
+            }
+
+            HashSet<Person> relatedGroupmates = new HashSet<Person>();
+
+            for (int i = 0; i < this.socialGroups.Count; ++i)
+            {
+                SocialGroup relatedGroup = this.socialGroups[i];
+                for (int j = 0; j < relatedGroup.members.Count; ++j)
+                {
+                    if (relatedGroup.members[j].enable)
+                    {
+                        relatedGroupmates.Add(relatedGroup.members[j]);
+                    }
+                }
+            }
+
+            tempGroupmates = relatedGroupmates;
+            return relatedGroupmates;
+        }
+
         public HashSet<Person> GetRelatedColleagues()
         {
             if (tempColleagues != null)
@@ -366,6 +392,7 @@ namespace Relationship.Class
                     currentFrom = this.id
                 };
                 Person.persons[i].tempSchoolmates = null;
+                Person.persons[i].tempGroupmates = null;
                 Person.persons[i].tempColleagues = null;
                 Person.persons[i].tempCitizens = null;
             }
@@ -392,6 +419,17 @@ namespace Relationship.Class
                 {
                     records[person.id].currentCost = schoolmateRate;
                     records[person.id].currentFromRelation = "校友";
+                }
+            }
+
+            // init group part
+            HashSet<Person> relatedGroupmates = GetRelatedGroupmates();
+            foreach (Person person in relatedGroupmates)
+            {
+                if (records[person.id].currentCost < groupmateRate)
+                {
+                    records[person.id].currentCost = groupmateRate;
+                    records[person.id].currentFromRelation = "群友";
                 }
             }
 
@@ -465,6 +503,19 @@ namespace Relationship.Class
                         record.currentCost = maxCost * schoolmateRate;
                         record.currentFrom = maxIdx;
                         record.currentFromRelation = "校友";
+                    }
+                }
+
+                // ease groupmates
+                HashSet<Person> maxRelatedGroupmates = maxPerson.GetRelatedGroupmates();
+                foreach (Person person in maxRelatedGroupmates)
+                {
+                    Record record = records[person.id];
+                    if (!record.isSelected && record.currentCost < maxCost * groupmateRate)
+                    {
+                        record.currentCost = maxCost * groupmateRate;
+                        record.currentFrom = maxIdx;
+                        record.currentFromRelation = "群友";
                     }
                 }
 

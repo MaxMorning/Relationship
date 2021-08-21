@@ -197,7 +197,8 @@
             <Canvas
                 Name="UISwitchCanvas"
                 Grid.Column="2"
-                Margin="5 5 5 5">
+                Margin="5 5 5 5"
+                ClipToBounds="True">
 
                 <!--Begin Panel-->
                 <Grid

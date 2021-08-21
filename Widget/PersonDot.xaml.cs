@@ -72,7 +72,7 @@ namespace Relationship.Widget
 
             for (int i = 0; i < links.Count; ++i)
             {
-                double deltaLength = links[i].Width - 100;
+                double deltaLength = links[i].Width - 200;
                 double angle = links[i].rotateTransform.Angle * Math.PI / 180;
                 if (links[i].personDot0 != this)
                 {
@@ -136,17 +136,14 @@ namespace Relationship.Widget
             }
         }
 
-        public static void ExecEpoch(double damping)
+        public static void ExecEpoch()
         {
             for (int i = 0; i < allPersonDots.Count; ++i)
             {
                 Point deltaForce = allPersonDots[i].MoveDelta();
 
-                allPersonDots[i].speed.X += deltaForce.X * damping;
-                allPersonDots[i].speed.Y += deltaForce.Y * damping;
-
-                Canvas.SetLeft(allPersonDots[i], Canvas.GetLeft(allPersonDots[i]) + deltaForce.X * damping);
-                Canvas.SetTop(allPersonDots[i], Canvas.GetTop(allPersonDots[i]) + deltaForce.Y * damping);
+                Canvas.SetLeft(allPersonDots[i], Canvas.GetLeft(allPersonDots[i]) + deltaForce.X);
+                Canvas.SetTop(allPersonDots[i], Canvas.GetTop(allPersonDots[i]) + deltaForce.Y);
                 
             }
 

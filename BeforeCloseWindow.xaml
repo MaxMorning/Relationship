@@ -18,8 +18,8 @@
             <RowDefinition Height="0.7*"/>
             <RowDefinition Height="1.2*"/>
             <RowDefinition Height="1.2*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1.2*"/>
+            <RowDefinition Height="0.9*"/>
+            <RowDefinition Height="1.3*"/>
         </Grid.RowDefinitions>
         <Path
             Grid.Row="0"
@@ -95,7 +95,7 @@
                 Style="{StaticResource SwitchButton}"
                 Content="仅保存"
                 FontSize="26"
-                Margin="7"
+                Margin="7 7 7 10"
                 MinWidth="1"
                 Click="btSaveDialogSave_Click">
 
@@ -107,7 +107,7 @@
                 Style="{StaticResource SwitchButton}"
                 Content="保存并关闭"
                 FontSize="26"
-                Margin="7"
+                Margin="7 7 7 10"
                 MinWidth="1"
                 Click="btSaveDialogSaveQuit_Click">
 
@@ -119,7 +119,7 @@
                 Style="{StaticResource SwitchButton}"
                 Content="仅关闭"
                 FontSize="26"
-                Margin="7"
+                Margin="7 7 7 10"
                 MinWidth="1"
                 Click="btSaveDialogQuit_Click">
 
@@ -131,7 +131,7 @@
                 Style="{StaticResource SwitchButton}"
                 Content="取消"
                 FontSize="26"
-                Margin="7"
+                Margin="7 7 7 10"
                 MinWidth="1"
                 Click="btSaveDialogCancel_Click">
 

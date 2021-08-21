@@ -42,7 +42,13 @@ namespace Relationship.Widget
             }
             relationRate = rate;
 
-            pathLine.Fill = new SolidColorBrush(LabColorSpace.LabToRGB(rate * 60 +33, LabColorSpace.LabA, LabColorSpace.LabB));
+            double LabL = (1 - rate) * 60 + 50;
+
+            if (LabL > 80)
+            {
+                LabL = 80;
+            }
+            pathLine.Fill = new SolidColorBrush(LabColorSpace.LabToRGB(LabL, LabColorSpace.LabA, LabColorSpace.LabB));
             ToolTip = relationName;
             SetPosition();
         }
@@ -60,7 +66,7 @@ namespace Relationship.Widget
             this.Width = length;
 
             Canvas.SetLeft(this, person0Left + 7.5);
-            Canvas.SetTop(this, person0Top + 7.5 - 2.5);
+            Canvas.SetTop(this, person0Top + 7.5 - 1.5);
         }
     }
 }
