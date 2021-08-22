@@ -68,6 +68,12 @@ namespace Relationship.Class
                                 Person.citizenRate = double.Parse(realResult[i + 1]);
                                 break;
                             }
+
+                        case "ShowCommonFriendItem":
+                            {
+                                MainWindow.showCommonFriendsMax = int.Parse(realResult[i + 1]);
+                                break;
+                            }
                     }
                 }
             }
@@ -245,6 +251,7 @@ namespace Relationship.Class
                 int friendPairCount = 0;
 
                 List<string> allStr = new List<string>();
+                allStr.Add("");
                 for (int i = 0; i < personCount; ++i)
                 {
                     allStr.Add(Person.persons[i].ToString());
@@ -297,16 +304,11 @@ namespace Relationship.Class
                     }
                 }
 
-                string finalStr = string.Format("{0} {1} {2} {3} {4} {5}\n", personCount, groupCount, liveExpCount, eduExpCount, workExpCount, friendPairCount);
-                for (int i = 0; i < allStr.Count; ++i)
-                {
-                    finalStr += allStr[i] + '\n';
-                }
+                string finalStr = string.Format("{0} {1} {2} {3} {4} {5}", personCount, groupCount, liveExpCount, eduExpCount, workExpCount, friendPairCount);
+                allStr[0] = finalStr;
 
-                byte[] tempBytes = Encoding.UTF8.GetBytes(finalStr);
-                FileStream fileOutStream = new FileStream(filePath, FileMode.Create);
-                fileOutStream.Write(tempBytes, 0, tempBytes.Length - 1);
-                fileOutStream.Close();
+                File.WriteAllLines(filePath, allStr);
+
                 return true;
             }
             catch (Exception)

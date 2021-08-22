@@ -34,6 +34,7 @@ namespace Relationship
         public static MainWindow mainWindow;
 
         public static string filePath = null;
+        public static int showCommonFriendsMax;
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -101,6 +102,7 @@ namespace Relationship
             {
                 case 1:
                     {
+                        LeaveStartPanel();
                         Person currentPerson = Person.persons[personID];
                         infoPanelPerson = currentPerson;
                         tbInfoName.Text = currentPerson.name;
@@ -141,6 +143,7 @@ namespace Relationship
 
                 case 2:
                     {
+                        LeaveStartPanel();
                         FreshFriendList();
                         FreshGroupList();
                         break;
@@ -148,11 +151,13 @@ namespace Relationship
 
                 case 3:
                     {
+                        LeaveStartPanel();
                         break;
                     }
 
                 case 4:
                     {
+                        LeaveStartPanel();
                         spPossibleFriend.Children.Clear();
                         spRelationRelationship.Children.Clear();
                         break;
@@ -160,6 +165,7 @@ namespace Relationship
 
                 case 5:
                     {
+                        LeaveStartPanel();
                         groupPanelGroup = null;
                         gridGroupDetail.Opacity = 0;
                         btGroupSave.Opacity = 0;
@@ -168,6 +174,12 @@ namespace Relationship
             }
         }
         
+        private void LeaveStartPanel()
+        {
+            tbStartIdxName.Text = "";
+            spStartSearchResult.Children.Clear();
+        }
+
         // 左侧切换栏实现
         private Button[] switchButtons = new Button[6];
         public int currentPanelIdx = 0;
@@ -353,7 +365,6 @@ namespace Relationship
             //List<UserInfoWithoutNameGrid> searchResult = new List<UserInfoWithoutNameGrid>();
             string key = tbStartIdxName.Text;
 
-            // todo parallel
             if (Person.persons.Count >= 2048)
             {
                 // Parallel Search
@@ -730,7 +741,13 @@ namespace Relationship
 
             SortPossibleFriend(possibleFriend, commonFriendCount);
             spPossibleFriend.Children.Clear();
-            for (int i = 0; i < possibleFriend.Count; ++i)
+
+            int showItemCount = commonFriendCount.Count;
+            if (MainWindow.showCommonFriendsMax >= 0 && MainWindow.showCommonFriendsMax < showItemCount)
+            {
+                showItemCount = MainWindow.showCommonFriendsMax;
+            }
+            for (int i = 0; i < showItemCount; ++i)
             {
                 spPossibleFriend.Children.Add(new FriendRecordGrid(possibleFriend[i], commonFriendCount[i]));
             }
@@ -739,23 +756,121 @@ namespace Relationship
         // todo parallel
         private void SortPossibleFriend(List<Person> possibleFriend, List<int> commonFriendCount)
         {
-            for (int i = commonFriendCount.Count - 1; i >= 0; --i)
+            if (possibleFriend.Count >= 32768)
             {
-                for (int j = 0; j < i; ++j)
+                QuickSortPack sortPack = new QuickSortPack()
                 {
-                    if (commonFriendCount[j] < commonFriendCount[j + 1])
+                    possibleFriend = possibleFriend,
+                    commonFriendCount = commonFriendCount,
+                    left = 0,
+                    right = possibleFriend.Count - 1
+                };
+                QuickSortPackFunc(sortPack);
+            }
+            else
+            {
+                QuickSort(possibleFriend, commonFriendCount, 0, possibleFriend.Count - 1);
+            }
+        }
+
+        private class QuickSortPack
+        {
+            public List<Person> possibleFriend;
+            public List<int> commonFriendCount;
+            public int left;
+            public int right;
+
+            public static ParallelOptions parallelOptions = new ParallelOptions()
+            {
+                MaxDegreeOfParallelism = THREAD_NUM
+            };
+        }
+
+        private void QuickSortPackFunc(object state)
+        {
+            QuickSortPack quickSortPack = (QuickSortPack)state;
+
+            if (quickSortPack.right - quickSortPack.left < 1024)
+            {
+                QuickSort(quickSortPack.possibleFriend, quickSortPack.commonFriendCount, quickSortPack.left, quickSortPack.right);
+                return;
+            }
+
+
+            if (quickSortPack.left < quickSortPack.right)
+            {
+                int pivot = Division(quickSortPack.possibleFriend, quickSortPack.commonFriendCount, quickSortPack.left, quickSortPack.right);
+
+                QuickSortPack leftPack = new QuickSortPack()
+                {
+                    possibleFriend = quickSortPack.possibleFriend,
+                    commonFriendCount = quickSortPack.commonFriendCount,
+                    left = quickSortPack.left,
+                    right = pivot - 1
+                };
+
+                QuickSortPack rightPack = new QuickSortPack()
+                {
+                    possibleFriend = quickSortPack.possibleFriend,
+                    commonFriendCount = quickSortPack.commonFriendCount,
+                    left = pivot + 1,
+                    right = quickSortPack.right
+                };
+
+                Parallel.Invoke(QuickSortPack.parallelOptions, 
+                    () =>
                     {
-                        int tempInt = commonFriendCount[j];
-                        Person tempPerson = possibleFriend[j];
+                        QuickSortPackFunc(leftPack);
+                    },
+                    () =>
+                    {
+                        QuickSortPackFunc(rightPack);
+                    });
+            }
+        }
 
-                        commonFriendCount[j] = commonFriendCount[j + 1];
-                        possibleFriend[j] = possibleFriend[j + 1];
+        private void QuickSort(List<Person> possibleFriend, List<int> commonFriendCount, int left, int right)
+        {
+            if (left < right)
+            {
+                int pivot = Division(possibleFriend, commonFriendCount, left, right);
 
-                        commonFriendCount[j + 1] = tempInt;
-                        possibleFriend[j + 1] = tempPerson;
-                    }
+                QuickSort(possibleFriend, commonFriendCount, left, pivot - 1);
+                QuickSort(possibleFriend, commonFriendCount, pivot + 1, right);
+            }
+        }
+
+        private int Division(List<Person> possibleFriend, List<int> commonFriendCount, int left, int right)
+        {
+            while (left < right)
+            {
+                int num = commonFriendCount[left];
+                Person person = possibleFriend[left];
+                if (num < commonFriendCount[left + 1])
+                {
+                    commonFriendCount[left] = commonFriendCount[left + 1];
+                    commonFriendCount[left + 1] = num;
+
+                    possibleFriend[left] = possibleFriend[left + 1];
+                    possibleFriend[left + 1] = person;
+
+                    ++left;
+                }
+                else
+                {
+                    int temp = commonFriendCount[right];
+                    commonFriendCount[right] = commonFriendCount[left + 1];
+                    commonFriendCount[left + 1] = temp;
+
+                    Person tempPerson = possibleFriend[right];
+                    possibleFriend[right] = possibleFriend[left + 1];
+                    possibleFriend[left + 1] = tempPerson;
+
+                    --right;
                 }
             }
+
+            return left;
         }
 
         // Visualize Panel

@@ -185,7 +185,7 @@ namespace Relationship.Class
         public List<Person> PossibleFriend(out List<int> commonFriendCount)
         {
             List<Person> notFriend = new List<Person>(Person.persons.Count - friends.Count);
-            commonFriendCount = new List<int>(Person.persons.Count - friends.Count);
+            List<int> commonFriendCountTemp = new List<int>(Person.persons.Count - friends.Count);
 
             int friendListIdx = 0;
             for (int idx = 0; idx < Person.persons.Count; ++idx)
@@ -200,10 +200,32 @@ namespace Relationship.Class
                 }
             }
 
-            for (int i = 0; i < notFriend.Count; ++i)
+            if (notFriend.Count >= 32768)
             {
-                commonFriendCount.Add(GetCommonFriendsCount(notFriend[i]));
+                ParallelOptions parallelOptions = new ParallelOptions()
+                {
+                    MaxDegreeOfParallelism = MainWindow.THREAD_NUM
+                };
+
+                for (int i = 0; i < notFriend.Count; ++i)
+                {
+                    commonFriendCountTemp.Add(0);
+                }
+
+                Parallel.For(0, notFriend.Count, parallelOptions, (i) =>
+                {
+                    commonFriendCountTemp[i] = GetCommonFriendsCount(notFriend[i]);
+                });
             }
+            else
+            {
+                for (int i = 0; i < notFriend.Count; ++i)
+                {
+                    commonFriendCountTemp.Add(GetCommonFriendsCount(notFriend[i]));
+                }
+            }
+
+            commonFriendCount = commonFriendCountTemp;
             return notFriend;
         }
 
