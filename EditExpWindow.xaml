@@ -13,7 +13,8 @@
         WindowStyle="None" 
         Background="Transparent"
         Style="{StaticResource CustomWindow}">
-    <Grid>
+    <Grid
+        Name="gridGeneral">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="60"/>
@@ -198,4 +199,34 @@
             </Button>
         </Grid>
     </Grid>
+
+    <Window.Resources>
+        <Storyboard
+            x:Key="showAnim">
+            <DoubleAnimation
+                Storyboard.TargetName="gridGeneral"
+                Storyboard.TargetProperty="Opacity"
+                Duration="0:0:0.1"
+                From="0"
+                To="1">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard
+            x:Key="exitAnim">
+            <DoubleAnimation
+                Storyboard.TargetName="gridGeneral"
+                Storyboard.TargetProperty="Opacity"
+                Duration="0:0:0.2"
+                From="1"
+                To="0">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </Window.Resources>
 </Window>

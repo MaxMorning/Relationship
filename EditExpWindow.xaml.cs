@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Relationship.Class;
@@ -41,7 +42,14 @@ namespace Relationship
             {
                 tbEditExpValue.Text = experience.relatedGroup.name;
             }
-            
+
+            this.Loaded += EditExpWindow_Loaded; ;
+        }
+
+        private void EditExpWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Storyboard storyboard = (Storyboard)this.Resources["showAnim"];
+            storyboard.Begin();
         }
 
         private void rectEditExpTop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -51,7 +59,7 @@ namespace Relationship
 
         private void btEditExpClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.CloseWindow();
         }
 
         private void btEditExpConfirm_Click(object sender, RoutedEventArgs e)
@@ -288,7 +296,7 @@ namespace Relationship
                             }
                     }
                 }
-                this.Close();
+                this.CloseWindow();
             }
             catch (Exception)
             {
@@ -304,6 +312,16 @@ namespace Relationship
                             .FirstOrDefault(window => window is MainWindow) as MainWindow;
             this.ShowInTaskbar = false;
             return this.ShowDialog();
+        }
+
+        private void CloseWindow()
+        {
+            Storyboard storyboard = (Storyboard)this.Resources["exitAnim"];
+            storyboard.Completed += (sArg, eArg) =>
+            {
+                this.Close();
+            };
+            storyboard.Begin();
         }
     }
 }

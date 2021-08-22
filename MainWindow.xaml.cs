@@ -68,6 +68,14 @@ namespace Relationship
             panelGrids[3] = gridVisualizePanel;
             panelGrids[4] = gridRelationPanel;
             panelGrids[5] = gridGroupPanel;
+
+            this.Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Storyboard storyboard = (Storyboard)this.Resources["showAnim"];
+            storyboard.Begin();
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -77,7 +85,12 @@ namespace Relationship
 
             if (beforeCloseWindow.shouldClose)
             {
-                System.Windows.Application.Current.Shutdown();
+                Storyboard storyboard = (Storyboard)this.Resources["exitAnim"];
+                storyboard.Completed += (sArg, eArg) =>
+                {
+                    System.Windows.Application.Current.Shutdown();
+                };
+                storyboard.Begin();
             }
         }
 

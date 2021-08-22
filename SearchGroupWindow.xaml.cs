@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Relationship.Class;
@@ -30,11 +31,19 @@ namespace Relationship
 
             spSearchGroup.Children.Clear();
             spSearchGroupButton.Children.Clear();
+
+            this.Loaded += SearchGroupWindow_Loaded;
+        }
+
+        private void SearchGroupWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Storyboard storyboard = (Storyboard)this.Resources["showAnim"];
+            storyboard.Begin();
         }
 
         private void btSearchGroupClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            this.CloseWindow();
         }
 
         private void rectSearchGroupTop_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -56,7 +65,7 @@ namespace Relationship
                     RoutedEventHandler routedEventHandler = (sArg, eArg) =>
                     {
                         selectSocialGroup = socialGroup;
-                        this.Close();
+                        this.CloseWindow();
                     };
                     Button confirmButton = new Button();
                     confirmButton.Margin = new Thickness(5);
@@ -100,7 +109,7 @@ namespace Relationship
             else
             {
                 selectSocialGroup = SocialGroup.socialGroups[index];
-                this.Close();
+                this.CloseWindow();
             }
         }
 
@@ -109,6 +118,16 @@ namespace Relationship
             this.Owner = MainWindow.mainWindow;
             this.ShowInTaskbar = false;
             return this.ShowDialog();
+        }
+
+        private void CloseWindow()
+        {
+            Storyboard storyboard = (Storyboard)this.Resources["exitAnim"];
+            storyboard.Completed += (sArg, eArg) =>
+            {
+                this.Close();
+            };
+            storyboard.Begin();
         }
     }
 }

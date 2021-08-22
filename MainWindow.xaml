@@ -2041,4 +2041,34 @@
         </DockPanel>
 
     </Grid>
+
+    <Window.Resources>
+        <Storyboard
+            x:Key="showAnim">
+            <DoubleAnimation
+                Storyboard.TargetName="GeneralGrid"
+                Storyboard.TargetProperty="Opacity"
+                Duration="0:0:0.1"
+                From="0"
+                To="1">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard
+            x:Key="exitAnim">
+            <DoubleAnimation
+                Storyboard.TargetName="GeneralGrid"
+                Storyboard.TargetProperty="Opacity"
+                Duration="0:0:0.2"
+                From="1"
+                To="0">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase EasingMode="EaseOut"/>
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+    </Window.Resources>
 </Window>

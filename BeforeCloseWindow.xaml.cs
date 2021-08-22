@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Relationship.Class;
@@ -25,6 +26,14 @@ namespace Relationship
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             InitializeComponent();
+
+            this.Loaded += BeforeCloseWindow_Loaded;
+        }
+
+        private void BeforeCloseWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            Storyboard storyboard = (Storyboard)this.Resources["showAnim"];
+            storyboard.Begin();
         }
 
         private void DragWidget_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -57,7 +66,7 @@ namespace Relationship
                 return;
             }
             this.shouldClose = false;
-            this.Close();
+            this.CloseWindow();
         }
 
         private void btSaveDialogSaveQuit_Click(object sender, RoutedEventArgs e)
@@ -76,19 +85,29 @@ namespace Relationship
                 return;
             }
             this.shouldClose = true;
-            this.Close();
+            this.CloseWindow();
         }
 
         private void btSaveDialogQuit_Click(object sender, RoutedEventArgs e)
         {
             this.shouldClose = true;
-            this.Close();
+            this.CloseWindow();
         }
 
         private void btSaveDialogCancel_Click(object sender, RoutedEventArgs e)
         {
             this.shouldClose = false;
-            this.Close();
+            this.CloseWindow();
+        }
+
+        private void CloseWindow()
+        {
+            Storyboard storyboard = (Storyboard)this.Resources["exitAnim"];
+            storyboard.Completed += (sArg, eArg) =>
+            {
+                this.Close();
+            };
+            storyboard.Begin();
         }
     }
 }
