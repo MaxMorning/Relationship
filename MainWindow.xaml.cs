@@ -30,7 +30,7 @@ namespace Relationship
             EasingMode = EasingMode.EaseIn
         };
 
-        public static int THREAD_NUM;
+        public static int THREAD_NUM = 8;
         public static MainWindow mainWindow;
 
         public static string filePath = null;

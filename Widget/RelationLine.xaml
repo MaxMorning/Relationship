@@ -9,7 +9,7 @@
              Width="220"
              MouseWheel="Grid_MouseWheel">
     <Grid.RenderTransform>
-        <RotateTransform x:Name="rotateTransform" Angle="0" CenterX="0" CenterY="2.5"/>
+        <RotateTransform x:Name="rotateTransform" Angle="0" CenterX="0" CenterY="1.5"/>
     </Grid.RenderTransform>
 
     <Grid.ColumnDefinitions>
