@@ -34,7 +34,7 @@ namespace Relationship
         public static MainWindow mainWindow;
 
         public static string filePath = null;
-        public static int showCommonFriendsMax;
+        public static int showCommonFriendsMax = 128;
         public MainWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
