@@ -265,6 +265,11 @@ namespace Relationship
             LabColorSpace.LabA = random.NextDouble() * 88 - 128;
             LabColorSpace.LabB = random.NextDouble() * 100 - 50;
 
+            if (person == null)
+            {
+                return;
+            }
+
             if (person.name.Length == 2)
             {
                 lbSwitchRole.Content = person.name[0] + " " + person.name[1];
@@ -484,6 +489,12 @@ namespace Relationship
                     lbStartLoadStatus.Content = "已加载: " + dialog.FileName;
                     spStartSearchResult.Children.Clear();
                     canvasVisualizeDrawCanvas.Children.Clear();
+                    SetRole(null);
+                    lbSwitchRole.Content = "";
+                    for (int i = 1; i < 6; ++i)
+                    {
+                        switchButtons[i].MinWidth = 0;
+                    }
                 }
                 else
                 {
