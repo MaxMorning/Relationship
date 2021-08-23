@@ -30,7 +30,15 @@ namespace Relationship.Widget
             relatedSocialGroup = socialGroup;
             lbGroupRecordID.Content = socialGroup.id;
             lbGroupRecordName.Content = socialGroup.name;
-            lbGroupRecordSize.Content = socialGroup.members.Count;
+            int memberCount = 0;
+            for (int i = 0; i < socialGroup.members.Count; ++i)
+            {
+                if (socialGroup.members[i].enable)
+                {
+                    ++memberCount;
+                }
+            }
+            lbGroupRecordSize.Content = memberCount;
 
             if (!showContext)
             {
