@@ -919,7 +919,7 @@ namespace Relationship
                 // set lists
                 PersonDot.allPersonDots.Clear();
                 canvasVisualizeDrawCanvas.Children.Clear();
-                Dictionary<int, RelationLine> uniqueRelations = new Dictionary<int, RelationLine>();
+                Dictionary<int, LightRelation> uniqueRelations = new Dictionary<int, LightRelation>();
                 HashSet<Person> uniquePerson = new HashSet<Person>();
 
                 List<Person>[] personInLayers = new List<Person>[totalLayer + 1];
@@ -960,11 +960,11 @@ namespace Relationship
                                 }
 
                                 int key = person.id > personInLayers[i][idx].id ? personInLayers[i][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[i][idx].id;
-                                bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+                                bool searchSuccess = uniqueRelations.TryGetValue(key, out LightRelation relationLine);
 
-                                if (!searchSuccess || relationLine.relationRate < Person.friendRate)
+                                if (!searchSuccess || relationLine.rate < Person.friendRate)
                                 {
-                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.friendRate, "好友");
+                                    uniqueRelations[key] = new LightRelation(person, personInLayers[i][idx], Person.friendRate, "好友");
                                 }
                             }
                         }
@@ -984,11 +984,11 @@ namespace Relationship
                                 }
 
                                 int key = person.id > personInLayers[i][idx].id ? personInLayers[i][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[i][idx].id;
-                                bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+                                bool searchSuccess = uniqueRelations.TryGetValue(key, out LightRelation relationLine);
 
-                                if (!searchSuccess || relationLine.relationRate < Person.schoolmateRate)
+                                if (!searchSuccess || relationLine.rate < Person.schoolmateRate)
                                 {
-                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.schoolmateRate, "校友");
+                                    uniqueRelations[key] = new LightRelation(person, personInLayers[i][idx], Person.schoolmateRate, "校友");
                                 }
                             }
                         }
@@ -1008,11 +1008,11 @@ namespace Relationship
                                 }
 
                                 int key = person.id > personInLayers[i][idx].id ? personInLayers[i][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[i][idx].id;
-                                bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+                                bool searchSuccess = uniqueRelations.TryGetValue(key, out LightRelation relationLine);
 
-                                if (!searchSuccess || relationLine.relationRate < Person.groupmateRate)
+                                if (!searchSuccess || relationLine.rate < Person.groupmateRate)
                                 {
-                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.groupmateRate, "群友");
+                                    uniqueRelations[key] = new LightRelation(person, personInLayers[i][idx], Person.groupmateRate, "群友");
                                 }
                             }
                         }
@@ -1032,11 +1032,11 @@ namespace Relationship
                                 }
 
                                 int key = person.id > personInLayers[i][idx].id ? personInLayers[i][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[i][idx].id;
-                                bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+                                bool searchSuccess = uniqueRelations.TryGetValue(key, out LightRelation relationLine);
 
-                                if (!searchSuccess || relationLine.relationRate < Person.colleagueRate)
+                                if (!searchSuccess || relationLine.rate < Person.colleagueRate)
                                 {
-                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.colleagueRate, "同事");
+                                    uniqueRelations[key] = new LightRelation(person, personInLayers[i][idx], Person.colleagueRate, "同事");
                                 }
                             }
                         }
@@ -1056,11 +1056,11 @@ namespace Relationship
                                 }
 
                                 int key = person.id > personInLayers[i][idx].id ? personInLayers[i][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[i][idx].id;
-                                bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+                                bool searchSuccess = uniqueRelations.TryGetValue(key, out LightRelation relationLine);
 
-                                if (!searchSuccess || relationLine.relationRate < Person.citizenRate)
+                                if (!searchSuccess || relationLine.rate < Person.citizenRate)
                                 {
-                                    uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[i][idx].relatedDot, Person.citizenRate, "同乡");
+                                    uniqueRelations[key] = new LightRelation(person, personInLayers[i][idx], Person.citizenRate, "同乡");
                                 }
                             }
                         }
@@ -1077,11 +1077,11 @@ namespace Relationship
                         if (person.enable && uniquePerson.Contains(person))
                         {
                             int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
-                            bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+                            bool searchSuccess = uniqueRelations.TryGetValue(key, out LightRelation relationLine);
 
-                            if (!searchSuccess || relationLine.relationRate < Person.friendRate)
+                            if (!searchSuccess || relationLine.rate < Person.friendRate)
                             {
-                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.friendRate, "好友");
+                                uniqueRelations[key] = new LightRelation(person, personInLayers[totalLayer][idx], Person.friendRate, "好友");
                             }
                         }
                     }
@@ -1093,11 +1093,11 @@ namespace Relationship
                         if (person.enable && uniquePerson.Contains(person))
                         {
                             int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
-                            bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+                            bool searchSuccess = uniqueRelations.TryGetValue(key, out LightRelation relationLine);
 
-                            if (!searchSuccess || relationLine.relationRate < Person.schoolmateRate)
+                            if (!searchSuccess || relationLine.rate < Person.schoolmateRate)
                             {
-                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.schoolmateRate, "校友");
+                                uniqueRelations[key] = new LightRelation(person, personInLayers[totalLayer][idx], Person.schoolmateRate, "校友");
                             }
                         }
                     }
@@ -1109,11 +1109,11 @@ namespace Relationship
                         if (person.enable && uniquePerson.Contains(person))
                         {
                             int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
-                            bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+                            bool searchSuccess = uniqueRelations.TryGetValue(key, out LightRelation relationLine);
 
-                            if (!searchSuccess || relationLine.relationRate < Person.groupmateRate)
+                            if (!searchSuccess || relationLine.rate < Person.groupmateRate)
                             {
-                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.groupmateRate, "群友");
+                                uniqueRelations[key] = new LightRelation(person, personInLayers[totalLayer][idx], Person.groupmateRate, "群友");
                             }
                         }
                     }
@@ -1125,11 +1125,11 @@ namespace Relationship
                         if (person.enable && uniquePerson.Contains(person))
                         {
                             int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
-                            bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+                            bool searchSuccess = uniqueRelations.TryGetValue(key, out LightRelation relationLine);
 
-                            if (!searchSuccess || relationLine.relationRate < Person.colleagueRate)
+                            if (!searchSuccess || relationLine.rate < Person.colleagueRate)
                             {
-                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.colleagueRate, "同事");
+                                uniqueRelations[key] = new LightRelation(person, personInLayers[totalLayer][idx], Person.colleagueRate, "同事");
                             }
                         }
                     }
@@ -1141,11 +1141,11 @@ namespace Relationship
                         if (person.enable && uniquePerson.Contains(person))
                         {
                             int key = person.id > personInLayers[totalLayer][idx].id ? personInLayers[totalLayer][idx].id * Person.persons.Count + person.id : person.id * Person.persons.Count + personInLayers[totalLayer][idx].id;
-                            bool searchSuccess = uniqueRelations.TryGetValue(key, out RelationLine relationLine);
+                            bool searchSuccess = uniqueRelations.TryGetValue(key, out LightRelation relationLine);
 
-                            if (!searchSuccess || relationLine.relationRate < Person.citizenRate)
+                            if (!searchSuccess || relationLine.rate < Person.citizenRate)
                             {
-                                uniqueRelations[key] = new RelationLine(person.relatedDot, personInLayers[totalLayer][idx].relatedDot, Person.citizenRate, "同乡");
+                                uniqueRelations[key] = new LightRelation(person, personInLayers[totalLayer][idx], Person.citizenRate, "同乡");
                             }
                         }
                     }
@@ -1153,8 +1153,9 @@ namespace Relationship
 
                 // write to allLinks
                 RelationLine.allLinks.Clear();
-                foreach (RelationLine relationLine in uniqueRelations.Values)
+                foreach (LightRelation lightRelation in uniqueRelations.Values)
                 {
+                    RelationLine relationLine = lightRelation.ConvertToWidget();
                     relationLine.personDot0.links.Add(relationLine);
                     relationLine.personDot1.links.Add(relationLine);
                     RelationLine.allLinks.Add(relationLine);
@@ -1172,10 +1173,10 @@ namespace Relationship
                     PersonDot.allPersonDots[i].SetNoLinks();
                 }
 
-                foreach (RelationLine relationLine in uniqueRelations.Values)
+                foreach (LightRelation relationLine in uniqueRelations.Values)
                 {
-                    relationLine.personDot0.relatedPerson.links.Add(relationLine.personDot1.relatedPerson);
-                    relationLine.personDot1.relatedPerson.links.Add(relationLine.personDot0.relatedPerson);
+                    relationLine.person0.links.Add(relationLine.person1);
+                    relationLine.person1.links.Add(relationLine.person0);
                 }
 
                 // start iter

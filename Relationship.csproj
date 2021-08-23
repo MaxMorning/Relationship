@@ -116,6 +116,7 @@
     <Compile Include="Class\EduGroup.cs" />
     <Compile Include="Class\Experience.cs" />
     <Compile Include="Class\Group.cs" />
+    <Compile Include="Class\LightRelation.cs" />
     <Compile Include="Class\LiveGroup.cs" />
     <Compile Include="Class\Person.cs" />
     <Compile Include="Class\SocialGroup.cs" />
